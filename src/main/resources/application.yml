@@ -1,4 +1,6 @@
 
+server:
+  port: 8070
 
 spring:
   datasource-mysql:
@@ -6,3 +8,8 @@ spring:
     jdbc-url: jdbc:mysql://packingtour.co.kr:3306/gongpe?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
     username: gongpe
     password: rhdvP$
+  datasource-h2:
+    driver-class-name: org.h2.Driver 
+    jdbc-url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;
+    username: sa
+    password: 

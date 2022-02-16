@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mybatis.demo.biz.domain.FaqVo;
-import com.mybatis.demo.biz.service.MybatisService;
+import com.mybatis.demo.biz.service.FaqService;
+import com.mybatis.demo.biz2.domain.BoardVo;
+import com.mybatis.demo.biz2.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,17 +17,29 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MainController {
 
-	private final MybatisService mybatisService;
+	private final FaqService FaqService;
 	
-	@RequestMapping("/main")
-	public String main() {
-		return "main";
+	private final BoardService boardService;
+	
+	@RequestMapping("/faq")
+	public String faq() {
+		return "faq/faq";
 	}
 	
 	@RequestMapping("/selectList")
 	@ResponseBody
 	public List<FaqVo> selectList() {
-		return mybatisService.selectList();
+		return FaqService.selectList();
 	}
 	
+	@RequestMapping("/board")
+	public String board() {
+		return "board/board";
+	}
+	
+	@RequestMapping("/boardList")
+	@ResponseBody
+	public List<BoardVo> getBoardList() {
+		return boardService.getBoardList();
+	}
 }
