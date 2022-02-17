@@ -3,8 +3,8 @@
 
 <configuration>
 	<settings>
-		<setting name="mapUnderscoreToCamelCase" value="true"/>
-		<setting name="callSettersOnNulls" value="true"/>
-		<setting name="jdbcTypeForNull" value="NULL"/>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>	<!-- VO에 리턴값을 받을때 카멜케이스를 적용 -->
+		<setting name="callSettersOnNulls" value="true"/> <!-- 쿼리 결과가 NULL일경우 공백이 아닌 NULL로 받겠다. -->
+		<setting name="jdbcTypeForNull" value="NULL"/>	<!-- 쿼리에 매핑되는 파라미터에 Null값이 있을경우 에러 발생 방지 -->
 	</settings>
 </configuration>

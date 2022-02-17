@@ -7,20 +7,78 @@
 </head>
 <body>
 <h1>MyBatis DataSource</h1>
+	<form id="faqFrm" action="/faqDetail">
+		<input type="hidden" id="faqSeq" name="faqSeq" value="1">
+	</form>
+	<input type="button" onclick="detail()" value="상세보기">
 </body>
 <script>
 	$(function(){
+		
 		$.ajax({
-			type : "get",
-			url : "/selectList",
-			datatype : "json",
+			url : '/faqImgList',
+			type : 'get',
+			datatype : 'json',
+			data : {},
 			success : function(res) {
-				console.log(res)
+				console.log('select collection');
+				console.log(res);
 			},
+			
 			error : function(request, status, error) {
-				console.log("에러발생");
+				console.log('error');
 			}
 		})
-	})
+		
+		$.ajax({
+			url : '/faqImgList2',
+			type : 'get',
+			datatype : 'json',
+			data : {},
+			success : function(res) {
+				console.log('join collection');
+				console.log(res)	
+			},
+			
+			error : function(request, status, error) {
+				console.log('error');
+			}
+		})
+		
+		$.ajax({
+			url : '/getFaqOneImg',
+			type : 'get',
+			datatype : 'json',
+			data : {},
+			success : function(res) {
+				console.log('select assciation');
+				console.log(res);
+			},
+			
+			error : function(request, status, error) {
+				console.log('error');
+			}
+		})
+		
+		/* $.ajax({
+			url : '/getAcFaqImgList',
+			type : 'get',
+			datatype : 'json',
+			data : {},
+			success : function(res) {
+				console.log('join assciation');
+				console.log(res);
+			},
+			
+			error : function(request, status, error) {
+				console.log('error');
+			}
+		}) */
+	});
+	
+	function detail() {
+		$('#faqSeq').val(1);
+		$('#faqFrm').submit();
+	}
 </script>
 </html>

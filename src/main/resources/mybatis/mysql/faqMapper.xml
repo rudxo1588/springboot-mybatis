@@ -1,9 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.demo.biz.mapper.FaqMapper">
+	
+	<!-- 
+		selec를 사용한 컬렉션 방법 기본 select문을 따로 만들어서 컬렉션에서 불러와서 사용 
+		
+		collection을 사용하면 조인으로 데이터를 가져올때와는 달리 1:N의 경우 N개만큼의 부모데이터가 아닌
+		1개의 부모데이터만 불러오고 N개의 자식 데이터를 포함하여 가져온다.
+		id값(key)를 포함시켜줘야 한다.
+	-->
+	<resultMap type="FaqVo" id="faqAllList" autoMapping="true">
+		<id column="faq_seq" property="faqSeq" />
+		<collection column="faq_seq" select="selectFaqImgList" ofType="FaqImgVo" property="faqImgList" autoMapping="true" javaType="java.util.ArrayList">
+		</collection>
+	</resultMap>
+	
+	<!-- join을 사용한 컬렉션 방법 컬렉션의 select불필요. -->
+	<resultMap type="FaqVo" id="faqAllList2" autoMapping="true">
+		<id column="faq_seq" property="faqSeq" jdbcType="BIGINT"></id>
+		<collection property="faqImgList" ofType="FaqImgVo" javaType="java.util.ArrayList" autoMapping="true" />
+	</resultMap>
+	
 	<select id="selectList" resultType="FaqVo">
 		select
 			*
-		from faq
+		from 
+			faq
+	</select>
+	
+	<select id="selectFaqList" resultMap="faqAllList">
+		select
+			*
+		from 
+			faq
+	</select>
+	
+	<select id="selectFaqList2" resultMap="faqAllList2">
+		select
+			f.faq_seq
+			, f.faq_title
+			, f.faq_content
+			, f.faq_createdt
+			, fi.img_seq
+			, fi.faq_img
+		from
+			faq f, faq_img fi
+		where
+			f.faq_seq = fi.faq_seq		
 	</select>
 </mapper>
