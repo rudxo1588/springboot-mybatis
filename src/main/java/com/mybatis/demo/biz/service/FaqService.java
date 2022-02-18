@@ -1,6 +1,8 @@
 package com.mybatis.demo.biz.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -8,6 +10,7 @@ import com.mybatis.demo.biz.domain.FaqImgVo;
 import com.mybatis.demo.biz.domain.FaqVo;
 import com.mybatis.demo.biz.mapper.FaqMapper;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 
@@ -17,31 +20,36 @@ import lombok.RequiredArgsConstructor;
 @Service
 /**
  * lombok 사용시 @RequiredArgsConstructor 릉 사용하면 
- * @Autowired를 사용하지 않아도 final로 의존성 주입이 가능하다.
+ * @Autowired를 사용하지 않아도 final or @NonNull 로 의존성 주입이 가능하다.
  */
 @RequiredArgsConstructor
 public class FaqService {
 
-	private final FaqMapper faqMapper;
+	@NonNull
+	private FaqMapper faqMapper;
 	
 	public List<FaqVo> selectList() {
 		return faqMapper.selectList();
 	}
 	
-	public List<FaqVo> selectFaqImgList() {
-		return faqMapper.selectFaqList();
+	public List<FaqVo> faqImgListBySelectCollection(FaqImgVo param) {
+		return faqMapper.faqImgListBySelectCollection(param);
 	}
 	
-	public List<FaqVo> selectFaqImgList2() {
-		return faqMapper.selectFaqList2();
+	public List<FaqVo> faqImgListByJoinCollection() {
+		return faqMapper.faqImgListByJoinCollection();
 	}
 	
-	public List<FaqImgVo> getFaqOneImg() {
-		return faqMapper.getFaqOneImg();
+	public List<FaqImgVo> faqImgListByAssciation() {
+		return faqMapper.faqImgListByAssciation();
 	}
 	
 	public List<FaqImgVo> getAcFaqImgList() {
 		return faqMapper.getAcFaqImgList();
+	}
+	
+	public List<FaqImgVo> faqImgListByJoinAssociation() {
+		return faqMapper.faqImgListByJoinAssociation();
 	}
 	
 }

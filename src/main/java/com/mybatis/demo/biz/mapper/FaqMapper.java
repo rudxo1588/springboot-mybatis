@@ -16,11 +16,13 @@ public interface FaqMapper {
 	 */
 	List<FaqVo> selectList();
 	
-	List<FaqVo> selectFaqList();
+	List<FaqVo> faqImgListBySelectCollection(FaqImgVo param);
 	
-	List<FaqVo> selectFaqList2();
+	List<FaqVo> faqImgListByJoinCollection();
 	
-	List<FaqImgVo> getFaqOneImg();
+	List<FaqImgVo> faqImgListByAssciation();
 	
 	List<FaqImgVo> getAcFaqImgList();
+	
+	List<FaqImgVo> faqImgListByJoinAssociation();
 }

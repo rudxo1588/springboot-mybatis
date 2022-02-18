@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -39,16 +38,16 @@ public class MainController {
 		return "board/board";
 	}
 	
-	@GetMapping("/faqImgList")
+	@GetMapping("/faqImgListBySelectCollection")
 	@ResponseBody
-	public List<FaqVo> selectFaqImgList() {
-		return faqService.selectFaqImgList();
+	public List<FaqVo> faqImgListBySelectCollection(FaqImgVo param) {
+		return faqService.faqImgListBySelectCollection(param);
 	}
 	
-	@GetMapping("/faqImgList2")
+	@GetMapping("/faqImgListByJoinCollection")
 	@ResponseBody
-	public List<FaqVo> selectFaqImgList2() {
-		return faqService.selectFaqImgList2();
+	public List<FaqVo> faqImgListByJoinCollection() {
+		return faqService.faqImgListByJoinCollection();
 	}
 	
 	@GetMapping("/faqDetail")
@@ -63,10 +62,16 @@ public class MainController {
 		return boardService.getBoardList();
 	}
 	
-	@RequestMapping("/getFaqOneImg")
+	@RequestMapping("/faqImgListByAssciation")
 	@ResponseBody
-	public List<FaqImgVo> getFaqOneImg() {
-		return faqService.getFaqOneImg();
+	public List<FaqImgVo> faqImgListByAssciation() {
+		return faqService.faqImgListByAssciation();
+	}
+	
+	@RequestMapping("/faqImgListByJoinAssociation")
+	@ResponseBody
+	public List<FaqImgVo> faqImgListByJoinAssociation() {
+		return faqService.faqImgListByJoinAssociation();
 	}
 	
 	@RequestMapping("/getAcFaqImgList")
