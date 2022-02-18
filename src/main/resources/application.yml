@@ -5,9 +5,9 @@ server:
 spring:
   datasource-mysql:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    jdbc-url: jdbc:mysql://packingtour.co.kr:3306/gongpe?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
-    username: gongpe
-    password: rhdvP$
+    jdbc-url: jdbc:mysql://test:3306/gongpe?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    username: test
+    password: test
   datasource-h2:
     driver-class-name: org.h2.Driver 
     jdbc-url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;
