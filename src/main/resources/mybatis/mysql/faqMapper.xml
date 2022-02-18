@@ -39,6 +39,8 @@
 			*
 		from 
 			faq
+		where
+			faq_seq = #{faqSeq}
 	</select>
 	
 	<select id="faqImgListBySelectCollection" resultMap="faqSelectCollectionMap">

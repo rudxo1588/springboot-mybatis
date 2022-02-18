@@ -9,7 +9,8 @@
 	 -->
 	<resultMap type="FaqImgVo" id="faqImgSelectAssciation" autoMapping="true">
 		<result column="faq_seq" property="faqSeq" />
-		<association column="faq_seq" property="faqVo" select="com.mybatis.demo.biz.mapper.FaqMapper.selectFaqList">
+		<association column="faq_seq" property="faqVo" javaType="com.mybatis.demo.biz.domain.FaqVo" 
+		select="com.mybatis.demo.biz.mapper.FaqMapper.selectFaqList">
 		</association>
 	</resultMap>
 	
