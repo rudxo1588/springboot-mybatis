@@ -7,10 +7,9 @@
 </head>
 <body>
 <h1>MyBatis DataSource</h1>
-	<form id="faqFrm">
-		<input type="hidden" id="faqSeq" name="faqSeq" value="1">
-		<input type="hidden" id="faqSeq" name="delYn" value="N">
+	<form id="faqFrm" action="/faqWrite">
 	</form>
+	<button onclick="faqWrite()">등록</button>
 </body>
 <script>
 	$(function(){
@@ -78,6 +77,10 @@
 			}
 		})
 	});
+	
+	function faqWrite() {
+		$('#faqFrm').submit();
+	}
 	
 </script>
 </html>

@@ -52,4 +52,8 @@ public class FaqService {
 		return faqMapper.faqImgListByJoinAssociation();
 	}
 	
+	public void faqInsert(FaqVo faqVo) {
+		faqMapper.insertFaqWrite(faqVo);
+	}
+	
 }

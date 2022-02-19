@@ -25,4 +25,6 @@ public interface FaqMapper {
 	List<FaqImgVo> getAcFaqImgList();
 	
 	List<FaqImgVo> faqImgListByJoinAssociation();
+	
+	void insertFaqWrite(FaqVo faqVo);
 }

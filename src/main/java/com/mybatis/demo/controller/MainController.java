@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.mybatis.demo.biz.domain.FaqImgVo;
 import com.mybatis.demo.biz.domain.FaqVo;
@@ -78,6 +79,20 @@ public class MainController {
 	@ResponseBody
 	public List<FaqImgVo> getAcFaqImgList() {
 		return faqService.getAcFaqImgList();
+	}
+	
+	@RequestMapping("/faqWrite")
+	public String faqWrite() {
+		return "faq/faqWrite";
+	}
+	
+	@RequestMapping("/faqInsert")
+	@ResponseBody
+	public ModelAndView faqInsert(FaqVo faqVo) {
+		faqService.faqInsert(faqVo);
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++= "+faqVo);
+		ModelAndView model = new ModelAndView("faq/faq");
+		return model;
 	}
 	
 }

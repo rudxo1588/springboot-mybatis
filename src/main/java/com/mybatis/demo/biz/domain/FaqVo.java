@@ -24,6 +24,8 @@ public class FaqVo {
 	
 	private String faqCreatedt;
 	
+	private String faqDelYn;
+	
 	private List<FaqImgVo> faqImgList;
 	 
 }

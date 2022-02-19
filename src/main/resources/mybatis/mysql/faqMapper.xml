@@ -69,4 +69,12 @@
 		where
 			f.faq_seq = fi.faq_seq		
 	</select>
+	
+	<insert id="insertFaqWrite" parameterType="FaqVo">
+		insert into
+		faq
+		(faq_title, faq_content, faq_del_yn)
+		values
+		(#{faqTitle}, #{faqContent}, #{faqDelYn})
+	</insert>
 </mapper>
