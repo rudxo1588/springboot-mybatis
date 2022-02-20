@@ -31,4 +31,6 @@ public interface FaqMapper {
 	void deleteFaqImg(int faqSeq);
 	
 	FaqVo faqImgListBySelectCollection(int faqSeq);
+	
+	void faqUpdate(FaqVo faqVo);
 }

@@ -62,4 +62,9 @@ public class FaqService {
 		return faqMapper.faqImgListBySelectCollection(faqSeq);
 	}
 	
+	@Transactional
+	public void faqUpdate(FaqVo faqVo) {
+		faqMapper.faqUpdate(faqVo);
+	}
+	
 }

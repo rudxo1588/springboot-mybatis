@@ -1,28 +1,41 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
-<body>
-	<form id="faqWriteFrm" action="/faqUpdate" method="post">
-		<input type="hidden" name="faqDelYn" value="N">
-		<div align="center">
-			<h1>FAQ수정</h1>
-			제목 : <input type="text" id="faqTitle" name="faqTitle" th:value="${faqList.faqTitle}" readonly="readonly">
-			<br>
-			내용 : <textarea id="faqContent" name="faqContent" th:value="${faqList.faqContent}" readonly="readonly"></textarea>
-			<br>
-			등록일시 : <input id="text" name="faqCreatedt" th:value="${faqList.faqCreatedt}" readonly="readonly">
-			<br>
-			<button onclick="faqWrite()">등록하기</button>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<div align="center" th:object="${faqVo}">
+			<table>
+				<tr>
+					<td colspan="2">
+						<h1>FAQ상세보기</h1>
+					</td>
+				</tr>
+				<tr>
+					<td>게시글 번호</td>
+					<td th:text="*{faqSeq}"></td>
+				</tr>
+				<tr>
+					<td>제목</td>
+					<td th:text="*{faqTitle}"></td>
+				</tr>
+				<tr>
+					<td>내용</td>
+					<td th:text="*{faqContent}"></td>
+				</tr>
+				<tr>
+					<td>등록일시</td>
+					<td th:text="*{faqCreatedt}"></td>
+				</tr>
+				<tr>
+					<td>
+						<button th:onclick="'location.href=\''+@{/faq/faqUpdatePage(faqSeq=*{faqSeq})}+'\'">수정</button>
+						<input type="button" onclick="javascript:history.back(-1);" value="뒤로가기">
+					</td>
+				</tr>
+			</table>
 		</div>
-	</form>
-</body>
-<script>
-	$(function(){
-		
-	});
-</script>
+	</body>
 </html>
