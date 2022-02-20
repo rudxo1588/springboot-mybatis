@@ -6,10 +6,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>MyBatis DataSource</h1>
 	<form id="faqFrm" action="/faqWrite">
-		<div id="faqListDiv">
-			<table border="1" style="align-content: center;">
+	</form>
+		<div id="faqListDiv" align="center">
+			<h1>Faq 리스트</h1>
+			<table border="1">
 				<thead>
 					<tr>
 						<th>순번</th>
@@ -22,17 +23,22 @@
 				<tbody>
 					<tr th:each="faqList : ${faqList}">
 						<td th:text="${faqList.faqSeq}"></td>
-						<td th:text="${faqList.faqTitle}"></td>
+						<td><a th:href="@{/faq/faqDetail(faqSeq=${faqList.faqSeq})}" th:text="${faqList.faqTitle}"></a></td>
 						<td th:text="${faqList.faqContent}"></td>
 						<td th:text="${faqList.faqCreatedt}"></td>
 						<td><input type="button" th:onclick="|faqUpdate('${faqList.faqSeq}')|" value="수정">
 						<input type="button" th:onclick="|faqDel('${faqList.faqSeq}')|" value="삭제"></td>
 					</tr>
+					<tr>
+						<td colspan="5" align="right">
+							<button onclick="faqWrite()">등록하기</button>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
-	</form>
-	<button onclick="faqWrite()">등록</button>
+	
+	
 </body>
 <script>
 	$(function(){
@@ -146,11 +152,16 @@
 				'faqSeq' : seq
 				},
 			type : 'get',
+			dataType : 'json',
 			success : function(res) {
 			},
 			error : function(request, status, error) {
 			}
 		});
+	}
+	
+	function faqDetail(seq) {
+		$('#faqDetail').submit();
 	}
 	
 </script>

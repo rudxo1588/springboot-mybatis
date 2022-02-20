@@ -14,8 +14,6 @@ public interface FaqMapper {
 	 * interface파일에서는 기본 public으로 생성되기 때문에 선언을 하지 않아도 됨
 	 * class파일은 protected가 기본
 	 */
-	List<FaqVo> selectList();
-	
 	List<FaqVo> faqImgListBySelectCollection(FaqImgVo param);
 	
 	List<FaqVo> faqImgListByJoinCollection();
@@ -23,8 +21,6 @@ public interface FaqMapper {
 	List<FaqVo> getFaqAllList();
 	
 	List<FaqImgVo> faqImgListByAssciation();
-	
-	List<FaqImgVo> getAcFaqImgList();
 	
 	List<FaqImgVo> faqImgListByJoinAssociation();
 	
@@ -35,4 +31,6 @@ public interface FaqMapper {
 	void deleteFaqImg(int faqSeq);
 	
 	FaqVo faqImgListBySelectCollection(int faqSeq);
+	
+	void faqUpdate(FaqVo faqVo);
 }

@@ -100,4 +100,14 @@
 		where 
 			faq_seq = #{faqSeq}
 	</update>
+	
+	<update id="faqUpdate" parameterType="FaqVo">
+		update 
+			faq
+		set 
+			faq_title = #{faqTitle}
+			, faq_content = #{faqContent}
+		where 
+			faq_seq = #{faqSeq}
+	</update>
 </mapper>
