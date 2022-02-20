@@ -26,6 +26,10 @@ public class FaqController {
 
 	private final FaqService faqService;
 	
+	/**
+	 * faqList 페이지로 이동하기
+	 * @return
+	 */
 	@RequestMapping("/faqList")
 	public ModelAndView faq() {
 		ModelAndView mav = new ModelAndView("faq/faqList");
@@ -33,53 +37,60 @@ public class FaqController {
 		return mav;
 	}
 	
-	@RequestMapping("/board")
-	public String board() {
-		return "board/board";
-	}
-	
-	@GetMapping("/faqImgListBySelectCollection")
-	@ResponseBody
-	public List<FaqVo> faqImgListBySelectCollection(FaqImgVo param) {
-		return faqService.faqImgListBySelectCollection(param);
-	}
-	
+	/**
+	 * faqImg select collcetion이용하여 리스트 가져오기
+	 * @return
+	 */
 	@GetMapping("/getFaqAllList")
 	@ResponseBody
 	public List<FaqVo> getFaqAllList() {
 		return faqService.getFaqAllList();
 	}
 	
+	/**
+	 * faqImg select collcetion이용하여 리스트 가져오기
+	 * @return
+	 */
+	@GetMapping("/faqImgListBySelectCollection")
+	@ResponseBody
+	public List<FaqVo> faqImgListBySelectCollection(FaqImgVo param) {
+		return faqService.faqImgListBySelectCollection(param);
+	}
+	
+	/**
+	 * faqImg join collcetion이용하여 리스트 가져오기
+	 * @return
+	 */
 	@GetMapping("/faqImgListByJoinCollection")
 	@ResponseBody
 	public List<FaqVo> faqImgListByJoinCollection() {
 		return faqService.faqImgListByJoinCollection();
 	}
 	
-	@GetMapping("/faqDetail")
-	@ResponseBody
-	public List<FaqVo> selectList(FaqVo faqVo) {
-		return faqService.selectList();
-	}
-	
+	/**
+	 * faqImg select association이용하여 리스트 가져오기
+	 * @return
+	 */
 	@RequestMapping("/faqImgListByAssciation")
 	@ResponseBody
 	public List<FaqImgVo> faqImgListByAssciation() {
 		return faqService.faqImgListByAssciation();
 	}
 	
+	/**
+	 * faqImg join association이용하여 리스트 가져오기
+	 * @return
+	 */
 	@RequestMapping("/faqImgListByJoinAssociation")
 	@ResponseBody
 	public List<FaqImgVo> faqImgListByJoinAssociation() {
 		return faqService.faqImgListByJoinAssociation();
 	}
 	
-	@RequestMapping("/getAcFaqImgList")
-	@ResponseBody
-	public List<FaqImgVo> getAcFaqImgList() {
-		return faqService.getAcFaqImgList();
-	}
-	
+	/**
+	 * faq등록페이지로 이동
+	 * @return
+	 */
 	@RequestMapping("/faqWrite")
 	public String faqWrite() {
 		return "faq/faqWrite";
@@ -104,7 +115,7 @@ public class FaqController {
 	@RequestMapping("/faq/faqDetail")
 	public ModelAndView faqDetail(@Param(value = "faqSeq")int faqSeq) {
 		FaqVo faqVo = faqService.faqDetail(faqSeq);
-		ModelAndView mav = new ModelAndView("faq/faqDetail");
+		ModelAndView mav = new ModelAndView("faq/faqUpdate");
 		mav.addObject("faqVo", faqVo);
 		return mav;
 	}

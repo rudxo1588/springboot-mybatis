@@ -27,10 +27,6 @@ public class FaqService {
 	@NonNull
 	private FaqMapper faqMapper;
 	
-	public List<FaqVo> selectList() {
-		return faqMapper.selectList();
-	}
-	
 	public List<FaqVo> faqImgListBySelectCollection(FaqImgVo param) {
 		return faqMapper.faqImgListBySelectCollection(param);
 	}
@@ -45,10 +41,6 @@ public class FaqService {
 	
 	public List<FaqImgVo> faqImgListByAssciation() {
 		return faqMapper.faqImgListByAssciation();
-	}
-	
-	public List<FaqImgVo> getAcFaqImgList() {
-		return faqMapper.getAcFaqImgList();
 	}
 	
 	public List<FaqImgVo> faqImgListByJoinAssociation() {

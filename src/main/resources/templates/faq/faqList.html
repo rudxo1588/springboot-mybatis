@@ -8,6 +8,7 @@
 <body>
 <h1>MyBatis DataSource</h1>
 	<form id="faqFrm" action="/faqWrite">
+	</form>
 		<div id="faqListDiv">
 			<table border="1" style="align-content: center;">
 				<thead>
@@ -22,7 +23,7 @@
 				<tbody>
 					<tr th:each="faqList : ${faqList}">
 						<td th:text="${faqList.faqSeq}"></td>
-						<td th:text="${faqList.faqTitle}"></td>
+						<td><a href="#" th:text="${faqList.faqTitle}"></a></td>
 						<td th:text="${faqList.faqContent}"></td>
 						<td th:text="${faqList.faqCreatedt}"></td>
 						<td><input type="button" th:onclick="|faqUpdate('${faqList.faqSeq}')|" value="수정">
@@ -31,7 +32,7 @@
 				</tbody>
 			</table>
 		</div>
-	</form>
+	
 	<button onclick="faqWrite()">등록</button>
 </body>
 <script>
@@ -151,6 +152,10 @@
 			error : function(request, status, error) {
 			}
 		});
+	}
+	
+	function faqDetail(seq) {
+		$('#faqDetail').submit();
 	}
 	
 </script>
