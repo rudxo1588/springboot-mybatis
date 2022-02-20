@@ -10,11 +10,11 @@
 		<input type="hidden" name="faqDelYn" value="N">
 		<div align="center">
 			<h1>FAQ수정</h1>
-			제목 : <input type="text" id="faqTitle" name="faqTitle" th:value="${faqList.faqTitle}">
+			제목 : <input type="text" id="faqTitle" name="faqTitle" th:value="${faqList.faqTitle}" readonly="readonly">
 			<br>
-			내용 : <textarea id="faqContent" name="faqContent" th:value="${faqList.faqContent}"></textarea>
+			내용 : <textarea id="faqContent" name="faqContent" th:value="${faqList.faqContent}" readonly="readonly"></textarea>
 			<br>
-			등록일시 : <input id="text" name="faqCreatedt" th:value="${faqList.faqCreatedt}"></textarea>
+			등록일시 : <input id="text" name="faqCreatedt" th:value="${faqList.faqCreatedt}" readonly="readonly">
 			<br>
 			<button onclick="faqWrite()">등록하기</button>
 		</div>

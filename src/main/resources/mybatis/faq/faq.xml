@@ -54,7 +54,7 @@
 			, faq_title
 			, faq_content
 			, faq_createdt
-			, 'N' as del_yn
+			, faq_del_yn as del_yn
 		from 
 			faq
 		where

@@ -101,4 +101,12 @@ public class FaqController {
 		return mav;
 	}
 	
+	@RequestMapping("/faq/faqDetail")
+	public ModelAndView faqDetail(@Param(value = "faqSeq")int faqSeq) {
+		FaqVo faqVo = faqService.faqDetail(faqSeq);
+		ModelAndView mav = new ModelAndView("faq/faqDetail");
+		mav.addObject("faqVo", faqVo);
+		return mav;
+	}
+	
 }

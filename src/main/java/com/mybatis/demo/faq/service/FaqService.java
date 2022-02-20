@@ -66,4 +66,8 @@ public class FaqService {
 		faqMapper.deleteFaqImg(faqSeq);
 	}
 	
+	public FaqVo faqDetail(int faqSeq) {
+		return faqMapper.faqImgListBySelectCollection(faqSeq);
+	}
+	
 }

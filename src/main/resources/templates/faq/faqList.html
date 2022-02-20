@@ -140,6 +140,17 @@
 	}
 	
 	function faqUpdate(seq) {
+		$.ajax({
+			url: '/faq/faqDetail',
+			data : {
+				'faqSeq' : seq
+				},
+			type : 'get',
+			success : function(res) {
+			},
+			error : function(request, status, error) {
+			}
+		});
 	}
 	
 </script>
