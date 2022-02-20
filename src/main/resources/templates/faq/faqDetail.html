@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+	<form id="faqWriteFrm" action="/faqUpdate" method="post">
+		<input type="hidden" name="faqDelYn" value="N">
+		<div align="center">
+			<h1>FAQ수정</h1>
+			제목 : <input type="text" id="faqTitle" name="faqTitle" th:value="${faqList.faqTitle}">
+			<br>
+			내용 : <textarea id="faqContent" name="faqContent" th:value="${faqList.faqContent}"></textarea>
+			<br>
+			등록일시 : <input id="text" name="faqCreatedt" th:value="${faqList.faqCreatedt}"></textarea>
+			<br>
+			<button onclick="faqWrite()">등록하기</button>
+		</div>
+	</form>
+</body>
+<script>
+	$(function(){
+		
+	});
+</script>
+</html>
