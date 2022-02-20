@@ -8,13 +8,49 @@
 <body>
 <h1>MyBatis DataSource</h1>
 	<form id="faqFrm" action="/faqWrite">
+		<div id="faqListDiv">
+			<table border="1" style="align-content: center;">
+				<thead>
+					<tr>
+						<th>순번</th>
+						<th>제목</th>
+						<th>내용</th>
+						<th>날짜</th>
+						<th>버튼</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="faqList : ${faqList}">
+						<td th:text="${faqList.faqSeq}"></td>
+						<td th:text="${faqList.faqTitle}"></td>
+						<td th:text="${faqList.faqContent}"></td>
+						<td th:text="${faqList.faqCreatedt}"></td>
+						<td><input type="button" th:onclick="|faqUpdate('${faqList.faqSeq}')|" value="수정">
+						<input type="button" th:onclick="|faqDel('${faqList.faqSeq}')|" value="삭제"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</form>
 	<button onclick="faqWrite()">등록</button>
 </body>
 <script>
 	$(function(){
-		
 		$.ajax({
+			url : '/getFaqAllList',
+			type : 'get',
+			datatype : 'json',
+			data : {},
+			success : function(res) {
+				console.log('select collection');
+				console.log(res);
+			},
+			
+			error : function(request, status, error) {
+				console.log('error');
+			}
+		})
+		/* $.ajax({
 			url : '/faqImgListBySelectCollection',
 			type : 'get',
 			datatype : 'json',
@@ -75,11 +111,36 @@
 			error : function(request, status, error) {
 				console.log('error');
 			}
-		})
+		}) */
 	});
 	
 	function faqWrite() {
 		$('#faqFrm').submit();
+	}
+	
+	function faqDel(seq) {
+		if(!confirm('삭제하시겠습니까?')) {
+			return;
+		}
+		
+		$.ajax({
+			url: '/faq/faqDel',
+			data : {
+				'faqSeq' : seq
+				},
+			type : 'get',
+			success : function(res) {
+				alert('삭제되었습니다.');
+				location.reload();
+			},
+			error : function(request, status, error) {
+				alert('error발생');
+			}
+		})
+	}
+	
+	function faqUpdate(seq) {
+		location.href = '/faq/faqUpdate';
 	}
 	
 </script>

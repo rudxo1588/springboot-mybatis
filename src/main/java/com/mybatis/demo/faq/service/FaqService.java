@@ -1,14 +1,13 @@
-package com.mybatis.demo.biz.service;
+package com.mybatis.demo.faq.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.mybatis.demo.biz.domain.FaqImgVo;
-import com.mybatis.demo.biz.domain.FaqVo;
-import com.mybatis.demo.biz.mapper.FaqMapper;
+import com.mybatis.demo.faq.domain.FaqImgVo;
+import com.mybatis.demo.faq.domain.FaqVo;
+import com.mybatis.demo.faq.mapper.FaqMapper;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +35,10 @@ public class FaqService {
 		return faqMapper.faqImgListBySelectCollection(param);
 	}
 	
+	public List<FaqVo> getFaqAllList() {
+		return faqMapper.getFaqAllList();
+	}
+	
 	public List<FaqVo> faqImgListByJoinCollection() {
 		return faqMapper.faqImgListByJoinCollection();
 	}
@@ -52,8 +55,15 @@ public class FaqService {
 		return faqMapper.faqImgListByJoinAssociation();
 	}
 	
+	@Transactional
 	public void faqInsert(FaqVo faqVo) {
 		faqMapper.insertFaqWrite(faqVo);
+	}
+	
+	@Transactional
+	public void faqDelete(int faqSeq) {
+		faqMapper.deleteFaq(faqSeq);
+		faqMapper.deleteFaqImg(faqSeq);
 	}
 	
 }

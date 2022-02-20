@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mybatis.demo.biz.mapper.FaqMapper">
+<mapper namespace="com.mybatis.demo.faq.mapper.FaqMapper">
 	
 	<!-- 
 		selec를 사용한 컬렉션 방법 기본 select문을 따로 만들어서 컬렉션에서 불러와서 사용 
@@ -13,7 +13,7 @@
 	-->
 	<resultMap type="FaqVo" id="faqSelectCollectionMap">
 		<id column="faq_seq" property="faqSeq"/>
-		<collection column="faqSeq = faq_seq, delYn = del_yn" select="com.mybatis.demo.biz.mapper.FaqMapper.selectFaqImgList" 
+		<collection column="faqSeq = faq_seq, delYn = del_yn" select="com.mybatis.demo.faq.mapper.FaqMapper.selectFaqImgList" 
 			ofType="FaqImgVo" autoMapping="true" property="faqImgList">
 		</collection>
 	</resultMap>
@@ -32,6 +32,11 @@
 			<result column="img_seq" property="imgSeq" />
 			<result column="faq_img" property="faqImg" />
 		</collection>
+	</resultMap>
+	
+	<resultMap type="FaqVo" id="getAllFaqListMap" autoMapping="true">
+		<id column="faq_seq" property="faqSeq" />
+		<collection column="faq_seq" property="faqImgList" ofType="FaqImgVo" select="getAllFaqImgList" autoMapping="true" />
 	</resultMap>
 	
 	<select id="selectFaqList" resultType="FaqVo">
@@ -77,4 +82,22 @@
 		values
 		(#{faqTitle}, #{faqContent}, #{faqDelYn})
 	</insert>
+	
+	<select id="getFaqAllList" resultMap="getAllFaqListMap">
+		select
+			*
+		from
+			faq
+		where
+			faq_del_yn = 'N'
+	</select>
+	
+	<update id="deleteFaq" parameterType="int">
+		update 
+			faq
+		set 
+			faq_del_yn = 'Y'
+		where 
+			faq_seq = #{faqSeq}
+	</update>
 </mapper>

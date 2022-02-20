@@ -1,9 +1,9 @@
-package com.mybatis.demo.biz.mapper;
+package com.mybatis.demo.faq.mapper;
 
 import java.util.List;
 
-import com.mybatis.demo.biz.domain.FaqImgVo;
-import com.mybatis.demo.biz.domain.FaqVo;
+import com.mybatis.demo.faq.domain.FaqImgVo;
+import com.mybatis.demo.faq.domain.FaqVo;
 
 /**
  * MySqlDataSourceConfig에서 매퍼스캔을 사용했기때문애 따로 @Mapper 어노테이션이 필요하지 않음.
@@ -20,6 +20,8 @@ public interface FaqMapper {
 	
 	List<FaqVo> faqImgListByJoinCollection();
 	
+	List<FaqVo> getFaqAllList();
+	
 	List<FaqImgVo> faqImgListByAssciation();
 	
 	List<FaqImgVo> getAcFaqImgList();
@@ -27,4 +29,8 @@ public interface FaqMapper {
 	List<FaqImgVo> faqImgListByJoinAssociation();
 	
 	void insertFaqWrite(FaqVo faqVo);
+	
+	void deleteFaq(int faqSeq);
+	
+	void deleteFaqImg(int faqSeq);
 }

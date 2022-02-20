@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mybatis.demo.biz.mapper.FaqMapper">
+<mapper namespace="com.mybatis.demo.faq.mapper.FaqMapper">
 	
 	<!-- 
 		select를 사용한 association 방법 기본 select문을 따로 만들어서 컬렉션에서 불러와 사용
@@ -9,8 +9,8 @@
 	 -->
 	<resultMap type="FaqImgVo" id="faqImgSelectAssciation" autoMapping="true">
 		<result column="faq_seq" property="faqSeq" />
-		<association column="faq_seq" property="faqVo" javaType="com.mybatis.demo.biz.domain.FaqVo" 
-		select="com.mybatis.demo.biz.mapper.FaqMapper.selectFaqList">
+		<association column="faq_seq" property="faqVo" javaType="com.mybatis.demo.faq.domain.FaqVo" 
+		select="com.mybatis.demo.faq.mapper.FaqMapper.selectFaqList">
 		</association>
 	</resultMap>
 	
@@ -67,4 +67,24 @@
 		where 
 			fi.faq_seq = f.faq_seq
 	</select>
+	
+	<select id="getAllFaqImgList" resultType="FaqImgVo">
+		select
+			*
+		from
+			faq_img
+		where
+			faq_seq = #{faqSeq}
+		and
+			del_yn = 'N'
+	</select>
+	
+	<update id="deleteFaqImg" parameterType="int">
+		update
+			faq_img
+		set
+			del_yn = 'Y'
+		where
+			faq_seq = #{faqSeq}
+	</update>
 </mapper>

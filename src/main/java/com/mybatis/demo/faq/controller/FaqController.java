@@ -1,18 +1,17 @@
-package com.mybatis.demo.controller;
+package com.mybatis.demo.faq.controller;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mybatis.demo.biz.domain.FaqImgVo;
-import com.mybatis.demo.biz.domain.FaqVo;
-import com.mybatis.demo.biz.service.FaqService;
-import com.mybatis.demo.biz2.domain.BoardVo;
-import com.mybatis.demo.biz2.service.BoardService;
+import com.mybatis.demo.faq.domain.FaqImgVo;
+import com.mybatis.demo.faq.domain.FaqVo;
+import com.mybatis.demo.faq.service.FaqService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,15 +22,15 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-public class MainController {
+public class FaqController {
 
 	private final FaqService faqService;
 	
-	private final BoardService boardService;
-	
-	@RequestMapping("/faq")
-	public String faq() {
-		return "faq/faq";
+	@RequestMapping("/faqList")
+	public ModelAndView faq() {
+		ModelAndView mav = new ModelAndView("faq/faqList");
+		mav.addObject("faqList",faqService.getFaqAllList());
+		return mav;
 	}
 	
 	@RequestMapping("/board")
@@ -45,6 +44,12 @@ public class MainController {
 		return faqService.faqImgListBySelectCollection(param);
 	}
 	
+	@GetMapping("/getFaqAllList")
+	@ResponseBody
+	public List<FaqVo> getFaqAllList() {
+		return faqService.getFaqAllList();
+	}
+	
 	@GetMapping("/faqImgListByJoinCollection")
 	@ResponseBody
 	public List<FaqVo> faqImgListByJoinCollection() {
@@ -55,12 +60,6 @@ public class MainController {
 	@ResponseBody
 	public List<FaqVo> selectList(FaqVo faqVo) {
 		return faqService.selectList();
-	}
-	
-	@RequestMapping("/boardList")
-	@ResponseBody
-	public List<BoardVo> getBoardList() {
-		return boardService.getBoardList();
 	}
 	
 	@RequestMapping("/faqImgListByAssciation")
@@ -90,9 +89,16 @@ public class MainController {
 	@ResponseBody
 	public ModelAndView faqInsert(FaqVo faqVo) {
 		faqService.faqInsert(faqVo);
-		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++= "+faqVo);
-		ModelAndView model = new ModelAndView("faq/faq");
+		ModelAndView model = new ModelAndView("faq/faqList");
 		return model;
+	}
+	
+	@RequestMapping("/faq/faqDel")
+	@ResponseBody
+	public ModelAndView faqDelete(@Param(value = "faqSeq")int faqSeq) {
+		faqService.faqDelete(faqSeq);
+		ModelAndView mav = new ModelAndView("faq/faqList");
+		return mav;
 	}
 	
 }
