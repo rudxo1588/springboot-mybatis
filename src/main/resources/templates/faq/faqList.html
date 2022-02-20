@@ -10,7 +10,7 @@
 	</form>
 		<div id="faqListDiv" align="center">
 			<h1>Faq 리스트</h1>
-			<table border="1">
+			<table>
 				<thead>
 					<tr>
 						<th>순번</th>
@@ -26,7 +26,7 @@
 						<td><a th:href="@{/faq/faqDetail(faqSeq=${faqList.faqSeq})}" th:text="${faqList.faqTitle}"></a></td>
 						<td th:text="${faqList.faqContent}"></td>
 						<td th:text="${faqList.faqCreatedt}"></td>
-						<td><input type="button" th:onclick="|faqUpdate('${faqList.faqSeq}')|" value="수정">
+						<td><input type="button" th:onclick="'location.href=\''+@{/faq/faqUpdatePage(faqSeq=${faqList.faqSeq})}+'\';'" value="수정">
 						<input type="button" th:onclick="|faqDel('${faqList.faqSeq}')|" value="삭제"></td>
 					</tr>
 					<tr>

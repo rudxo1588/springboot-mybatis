@@ -151,7 +151,6 @@ public class FaqController {
 	@RequestMapping("/faq/faqUpdate")
 	@ResponseBody
 	public ModelAndView faqUpdate(FaqVo faqVo) {
-		System.out.println(faqVo);
 		faqService.faqUpdate(faqVo);
 		ModelAndView mav = new ModelAndView("faq/faqList");
 		mav.addObject("faqList",faqService.getFaqAllList());
