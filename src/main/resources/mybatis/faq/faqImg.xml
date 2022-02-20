@@ -87,4 +87,13 @@
 		where
 			faq_seq = #{faqSeq}
 	</update>
+	
+	<update id="deleteFaqImg2" parameterType="int">
+		update
+			faq_img
+		set
+			del_yn = 'Y'
+		where
+			img_seq = #{imgSeq}
+	</update>
 </mapper>

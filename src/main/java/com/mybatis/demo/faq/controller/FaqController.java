@@ -157,4 +157,17 @@ public class FaqController {
 		return mav;
 	}
 	
+	/**
+	 * faqImg 삭제하기
+	 * @return
+	 */
+	@RequestMapping("/faq/faqImgDel")
+	@ResponseBody
+	public ModelAndView faqImgDel(FaqImgVo faqImgVo) {
+		faqService.faqImgDelete(faqImgVo.getImgSeq());
+		FaqVo faqVo = faqService.faqDetail(faqImgVo.getFaqSeq());
+		ModelAndView mav = new ModelAndView("faq/faqDetail");
+		mav.addObject(faqVo);
+		return mav;
+	}
 }

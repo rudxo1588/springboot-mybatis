@@ -75,4 +75,10 @@ public interface FaqMapper {
 	 * @return
 	 */
 	void faqUpdate(FaqVo faqVo);
+	
+	/**
+	 * faqImg 삭제하기
+	 * @return
+	 */
+	void deleteFaqImg2(int imgSeq);
 }

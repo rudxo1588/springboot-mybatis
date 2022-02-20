@@ -103,4 +103,13 @@ public class FaqService {
 		faqMapper.faqUpdate(faqVo);
 	}
 	
+	/**
+	 * faqImg 삭제하기
+	 * @return
+	 */
+	@Transactional
+	public void faqImgDelete(int imgSeq) {
+		faqMapper.deleteFaqImg2(imgSeq);
+	}
+	
 }

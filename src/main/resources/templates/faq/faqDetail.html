@@ -36,18 +36,25 @@
 					</td>
 				</tr>
 			</table>
-			
 			<br>
 			<table>
 				<tr>
-					<th>IMG순번</th>
-					<th>FAQIMG</th>
+					<th>순번</th>
+					<th>이미지</th>
 					<th>버튼</th>
 				</tr>
-				<tr th:each="faqImgList : *{faqImgList}">
+				<tr th:if="*{faqImgList != null && faqImgList.size() > 0}" th:each="faqImgList : *{faqImgList}">
 					<td th:text="${faqImgList.imgSeq}"></td>
 					<td th:text="${faqImgList.faqImg}"></td>
 					<td><input type="button" th:onclick="|faqDel('${faqImgList.imgSeq}','${faqImgList.faqSeq}')|" value="삭제"></td>
+				</tr>
+				<tr th:unless="*{faqImgList == null || faqImgList.size < 0}">
+					<td colspan="3">등록된 이미지가 없습니다.</td>
+				</tr>
+				<tr>
+					<td colspan="3" align="right">
+						<button>등록하기</button>
+					</td>
 				</tr>
 			</table>
 		</div>
