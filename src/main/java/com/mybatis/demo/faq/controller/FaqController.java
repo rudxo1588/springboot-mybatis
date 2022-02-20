@@ -145,7 +145,7 @@ public class FaqController {
 	}
 	
 	/**
-	 * faq 수정화면으로 이동하기
+	 * faq 수정하기
 	 * @return
 	 */
 	@RequestMapping("/faq/faqUpdate")
