@@ -6,21 +6,36 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form id="faqWriteFrm" action="/faqInsert" method="post">
+	<div align="center">
+		<form id="faqWriteFrm" action="/faqInsert" method="post">
 		<input type="hidden" name="faqDelYn" value="N">
-		<div align="center">
-			<h1>FAQ등록</h1>
-			
-			제목 : <input type="text" id="faqTitle" name="faqTitle">
-			<br>
-			내용 : <textarea id="faqContent" name="faqContent"></textarea>
-			<br>
+			<table>
+				<tr>
+					<td colspan="2">
+						<h1>FAQ등록하기</h1>
+					</td>
+				</tr>
+				<tr>
+					<td>제목</td>
+					<td><input type="text" id="faqTitle" name="faqTitle"></td>
+				</tr>
+				<tr>
+					<td>내용</td>
+					<td><textarea id="faqContent" name="faqContent"></textarea></td>
+				</tr>
+			</table>
+		</form>
+		<div>
 			<button onclick="faqWrite()">등록하기</button>
+			<button onclick="javascript:history.back(-1)">뒤로가기</button>
 		</div>
-	</form>
+	</div>
 </body>
 <script>
 	function faqWrite() {
+		if(!confirm('등록하시겠습니까?')) {
+			return;
+		}
 		$('#faqWriteFrm').submit();
 	}
 </script>
