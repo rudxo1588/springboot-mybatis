@@ -27,41 +27,77 @@ public class FaqService {
 	@NonNull
 	private FaqMapper faqMapper;
 	
+	/**
+	 * faqImg select collcetion이용하여 리스트 가져오기
+	 * @return
+	 */
 	public List<FaqVo> faqImgListBySelectCollection(FaqImgVo param) {
 		return faqMapper.faqImgListBySelectCollection(param);
 	}
 	
+	/**
+	 * faqImg select collcetion이용하여 리스트 가져오기
+	 * @return
+	 */
 	public List<FaqVo> getFaqAllList() {
 		return faqMapper.getFaqAllList();
 	}
 	
+	/**
+	 * faqImg join collcetion이용하여 전체리스트 가져오기
+	 * @return
+	 */
 	public List<FaqVo> faqImgListByJoinCollection() {
 		return faqMapper.faqImgListByJoinCollection();
 	}
 	
+	/**
+	 * faqImg select association이용하여 리스트 가져오기
+	 * @return
+	 */
 	public List<FaqImgVo> faqImgListByAssciation() {
 		return faqMapper.faqImgListByAssciation();
 	}
 	
+	/**
+	 * faqImg join association이용하여 리스트 가져오기
+	 * @return
+	 */
 	public List<FaqImgVo> faqImgListByJoinAssociation() {
 		return faqMapper.faqImgListByJoinAssociation();
 	}
 	
+	/**
+	 * faq 등록하기
+	 * @return
+	 */
 	@Transactional
 	public void faqInsert(FaqVo faqVo) {
 		faqMapper.insertFaqWrite(faqVo);
 	}
 	
+	/**
+	 * faq 삭제하기
+	 * @return
+	 */
 	@Transactional
 	public void faqDelete(int faqSeq) {
 		faqMapper.deleteFaq(faqSeq);
 		faqMapper.deleteFaqImg(faqSeq);
 	}
 	
+	/**
+	 * faq 상세페이지로 이동하기
+	 * @return
+	 */
 	public FaqVo faqDetail(int faqSeq) {
 		return faqMapper.faqImgListBySelectCollection(faqSeq);
 	}
 	
+	/**
+	 * faq 수정하기
+	 * @return
+	 */
 	@Transactional
 	public void faqUpdate(FaqVo faqVo) {
 		faqMapper.faqUpdate(faqVo);

@@ -14,23 +14,65 @@ public interface FaqMapper {
 	 * interface파일에서는 기본 public으로 생성되기 때문에 선언을 하지 않아도 됨
 	 * class파일은 protected가 기본
 	 */
+	
+	
+	/**
+	 * faqImg select collcetion이용하여 리스트 가져오기
+	 * @return
+	 */
 	List<FaqVo> faqImgListBySelectCollection(FaqImgVo param);
 	
+	/**
+	 * faqImg join collcetion이용하여 리스트 가져오기
+	 * @return
+	 */
 	List<FaqVo> faqImgListByJoinCollection();
 	
+	/**
+	 * faq, faqImg select collcetion이용하여 전체리스트 가져오기
+	 * @return
+	 */
 	List<FaqVo> getFaqAllList();
 	
+	/**
+	 * faqImg select association이용하여 리스트 가져오기
+	 * @return
+	 */
 	List<FaqImgVo> faqImgListByAssciation();
 	
+	/**
+	 * faqImg join association이용하여 리스트 가져오기
+	 * @return
+	 */
 	List<FaqImgVo> faqImgListByJoinAssociation();
 	
+	/**
+	 * faq 등록하기
+	 * @return
+	 */
 	void insertFaqWrite(FaqVo faqVo);
 	
+	/**
+	 * faq 삭제하기
+	 * @return
+	 */
 	void deleteFaq(int faqSeq);
 	
+	/**
+	 * faqImg 삭제하기
+	 * @return
+	 */
 	void deleteFaqImg(int faqSeq);
 	
+	/**
+	 * faq 상세페이지로 이동하기
+	 * @return
+	 */
 	FaqVo faqImgListBySelectCollection(int faqSeq);
 	
+	/**
+	 * faq 수정하기
+	 * @return
+	 */
 	void faqUpdate(FaqVo faqVo);
 }
