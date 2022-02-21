@@ -79,21 +79,28 @@
 			del_yn = 'N'
 	</select>
 	
-	<update id="deleteFaqImg" parameterType="int">
+	<update id="deleteFaqImgByImgSeq" parameterType="int">
 		update
 			faq_img
 		set
 			del_yn = 'Y'
+		where
+			img_seq = #{imgSeq}	
+	</update>
+	
+	<update id="deleteFaqImgByFaqSeq" parameterType="int">
+		delete
+		from
+		faq_img
 		where
 			faq_seq = #{faqSeq}
 	</update>
 	
-	<update id="deleteFaqImg2" parameterType="int">
-		update
+	<insert id="insertFaqImg" parameterType="FaqImgVo">
+		insert	into
 			faq_img
-		set
-			del_yn = 'Y'
-		where
-			img_seq = #{imgSeq}
-	</update>
+			(faq_seq, faq_img, del_yn)
+			values
+			(#{faqSeq}, #{faqImg}, 'N')
+	</insert>
 </mapper>

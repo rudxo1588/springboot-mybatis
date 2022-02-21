@@ -8,7 +8,6 @@
 <body>
 	<div align="center">
 		<form id="faqWriteFrm">
-		<input type="hidden" name="faqDelYn" value="N">
 			<table id="insertFaqTable">
 				<tr>
 					<td colspan="2">
@@ -37,19 +36,40 @@
 	</div>
 </body>
 <script>
+	jQuery.fn.serializeObject = function() {
+	    var obj = null;
+	    try {
+	        if (this[0].tagName && this[0].tagName.toUpperCase() == "FORM") {
+	            var arr = this.serializeArray();
+	            if (arr) {
+	                obj = {};
+	                jQuery.each(arr, function() {
+	                    obj[this.name] = this.value;
+	                });
+	            }//if ( arr ) {
+	        }
+	    } catch (e) {
+	        alert(e.message);
+	    } finally {
+	    }
+	 
+	    return obj;
+	};
 	function faqWrite() {
 		if(!confirm('등록하시겠습니까?')) {
 			return;
 		}
+		const formData = $('#faqWriteFrm').serializeObject();
 		
 		$.ajax({
 			url : '/insertFaq',
 			type : 'get',
-			data : $('#faqWriteFrm').serialize(), 
-			contentType : 'application/json; charset=utf-8',
+			data : JSON.stringify($('#faqWriteFrm').serialize()),
+			contentType : 'application/json',
+			dataType : 'json',
 			success : function(res) {
-				alert('등록되었습니다.');
-				location.href = '/faqList';
+				alert(res);
+// 				location.href = '/faqList';
 			}, 
 			error : function(request, status, error) {
 				

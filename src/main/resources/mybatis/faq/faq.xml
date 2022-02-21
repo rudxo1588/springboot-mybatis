@@ -80,7 +80,7 @@
 		faq
 		(faq_title, faq_content, faq_del_yn)
 		values
-		(#{faqTitle}, #{faqContent}, #{faqDelYn})
+		(#{faqTitle}, #{faqContent}, 'N')
 	</insert>
 	
 	<select id="getFaqAllList" resultMap="getAllFaqListMap">

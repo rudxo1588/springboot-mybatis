@@ -6,45 +6,111 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-	<form id="faqUpdateFrm" action="/faq/faqUpdate" method="post">
-		<input type="hidden" name="faqDelYn" value="N">
-		<div align="center" th:object="${faqVo}">
-		<input type="hidden" id="faqSeq" name="faqSeq" th:value="*{faqSeq}">
-			<table>
+	<div align="center" th:object="${faqVo}">
+		<form id="faqUpdateFrm" action="/faq/faqUpdate" method="post">
+			<input type="hidden" name="faqDelYn" value="N">
+			<input type="hidden" id="faqSeq" name="faqSeq" th:value="*{faqSeq}">
+			<table id="faqImgTable">
 				<tr>
-					<td colspan="2">
+					<th colspan="2">
 						<h1>FAQ수정하기</h1>
-					</td>
+					</th>
 				</tr>
 				<tr>
-					<td>게시글 번호</td>
+					<th>게시글 번호</th>
 					<td th:text="*{faqSeq}"></td>
 				</tr>
 				<tr>
-					<td>제목</td>
+					<th>제목</th>
 					<td><input type="text" id="faqTitle" name="faqTitle" th:value="*{faqTitle}"></td>
 				</tr>
 				<tr>
-					<td>내용</td>
+					<th>내용</th>
 					<td><input type="text" id="faqContent" name="faqContent" th:value="*{faqContent}"></td>
 				</tr>
 				<tr>
-					<td>등록일시</td>
-					<td th:text="*{faqCreatedt}"></td>
+					<th>등록일시</th>
+					<td th:text="*{faqCreatedt.substring(0,10)}"></td>
 				</tr>
 				<tr>
-					<td>
-						<button onclick="faqUpdate()">수정하기</button>
-						<input type="button" onclick="javascript:history.back(-1);" value="뒤로가기">
+					<th rowspan="6">첨부파일</th>
+					<td><button type="button" onclick="addRow()">+</button></td>
+				</tr>
+				<tr th:if="*{faqImgList != null && faqImgList.size() > 0}" th:each="faqImgList : *{faqImgList}">
+					<td><input type="text" id="faqImg" name="faqImg" th:value="${faqImgList.faqImg}">
+						<button type="button" th:onclick="|deleteImg('${faqImgList.imgSeq}','${faqImgList.faqSeq}')|">삭제</button>
 					</td>
 				</tr>
 			</table>
-		</div>
-	</form>
+			<br>
+			<div align="right" style="width:400px;">
+				<button type="button" onclick="updateFaq()">수정하기</button>
+				<button type="button" onclick="javascript:history.back(-1);">뒤로가기</button>
+			</div>
+		</form>
+	</div>
 </body>
 <script>
-	function faqUpdate() {
-		$('#faqUpdateFrm').submit();
+	function updateFaq() {
+		$.ajax({
+			url : '/faq/updateFaq',
+			data : $('#faqUpdateFrm').serialize(),
+			type : 'get',
+			contentType : 'application/json; charset=utf-8',
+			success : function(res) {
+				alert('수정되었습니다.');
+				location.reload();
+			},
+			
+			error(request, status, error) {
+				alert('에러');
+			}
+			
+		});
+	}
+	
+	function deleteImg(imgSeq, faqSeq) {
+		if(!confirm('삭제하시겠습니까?')) {
+			return;
+		}
+		 
+		$.ajax({
+			url: '/faq/deleteFaqImg',
+			data : {
+				'imgSeq' : imgSeq,
+				'faqSeq' : faqSeq
+				},
+			type : 'get',
+			success : function(res) {
+				alert('삭제되었습니다.');
+				location.reload();
+			},
+			error : function(request, status, error) {
+				alert('error발생');
+			}
+		});
+	}
+	
+	function addRow() {
+		
+		var cnt = $('input[name=faqImg]').length+1;
+		console.log(cnt);
+		if(cnt > 5) {
+			alert('이미지는 최대 5개까지 등록 가능합니다.');
+			return;
+		} 
+		
+		var tr = '';
+		tr += '<tr>';
+		tr += '<td><input type="text" id="faqImg" name="faqImg">';
+		tr += '	<button type="button" onclick="delRow(this)">삭제</button></td>';
+		tr += '</tr>';
+		
+		$('#faqImgTable').append(tr);
+	}
+	
+	function delRow(obj) {
+		$(obj).parent().parent().remove();	
 	}
 </script>
 </html>

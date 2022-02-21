@@ -2,6 +2,8 @@ package com.mybatis.demo.faq.domain;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 
 
@@ -16,10 +18,13 @@ import lombok.Data;
 @Data
 public class FaqVo {
 	
+	
 	private int faqSeq;
 	
+	@NotNull(message = "제목에 NULL값이 들어갈 수 없습니다")
 	private String faqTitle;
 	
+	@NotNull(message = "내용은 필수 입력값입니다.")
 	private String faqContent;
 	
 	private String faqCreatedt;

@@ -2,10 +2,20 @@ package com.mybatis.demo.faq.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.apache.ibatis.annotations.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -102,19 +112,34 @@ public class FaqController {
 	 */
 	@GetMapping("/insertFaq")
 	@ResponseBody
-	public void insertFaq(FaqVo faqVo, FaqImgVo faqImgVo) {
-		int result = faqService.insertFaq(faqVo);
-		// 부모 테이블 insert 성공시 자식테이블 insert해주기
-		if(result > 0) {
-			String[] imgList = faqImgVo.getFaqImg().split(",");
-			if(imgList != null && imgList.length > 0) {
-				faqImgVo.setFaqSeq(maxFaqSeq());
-				for(int i = 0; i<imgList.length; i++) {
-					faqImgVo.setFaqImg(imgList[i]);
-					faqService.insertFaqImg(faqImgVo);
+	public ResponseEntity<String> insertFaq(@Valid FaqVo faqVo, BindingResult bindingResult, FaqImgVo faqImgVo) {
+		System.out.println(bindingResult.hasErrors());
+		if(bindingResult.hasErrors()) {	// 객체에 선언해준 NotNull에 의해 값이 null이면 true를 반환
+			List<FieldError> errorList = bindingResult.getFieldErrors();
+			String errorMsg = "";
+			for (FieldError error : errorList) {
+				errorMsg = error.getDefaultMessage();
+				System.out.println(errorMsg);
+				System.out.println(error.getCode());
+				System.out.println(error.getObjectName());
+			}
+				
+				return ResponseEntity.ok().body(errorMsg);
+		} else {
+			int result = faqService.insertFaq(faqVo);
+			// 부모 테이블 insert 성공시 자식테이블 insert해주기
+			if(result > 0) {
+				String[] imgList = faqImgVo.getFaqImg().split(",");
+				if(imgList != null && imgList.length > 0) {
+					faqImgVo.setFaqSeq(maxFaqSeq());
+					for(int i = 0; i<imgList.length; i++) {
+						faqImgVo.setFaqImg(imgList[i]);
+						faqService.insertFaqImg(faqImgVo);
+					}
 				}
 			}
 		}
+		return ResponseEntity.noContent().build();
 	}
 	
 	/**
@@ -136,7 +161,6 @@ public class FaqController {
 		FaqVo faqVo = faqService.faqDetail(faqSeq);
 		ModelAndView mav = new ModelAndView("faq/faqDetail");
 		mav.addObject("faqVo", faqVo);
-		mav.addObject("imgSize",faqVo.getFaqImgList().size()+1);
 		return mav;
 	}
 	
@@ -149,7 +173,6 @@ public class FaqController {
 		FaqVo faqVo = faqService.faqDetail(faqSeq);
 		ModelAndView mav = new ModelAndView("faq/faqUpdate");
 		mav.addObject("faqVo", faqVo);
-		mav.addObject("imgSize",faqVo.getFaqImgList().size()+1);
 		return mav;
 	}
 	
@@ -160,8 +183,6 @@ public class FaqController {
 	@GetMapping("/faq/updateFaq")
 	@ResponseBody
 	public void updateFaq(FaqVo faqVo, FaqImgVo faqImgVo) {
-		System.out.println(faqVo);
-		System.out.println(faqImgVo);
 		int result = faqService.updateFaq(faqVo);
 		if(result > 0) {
 			faqService.updateFaqImg(faqImgVo);

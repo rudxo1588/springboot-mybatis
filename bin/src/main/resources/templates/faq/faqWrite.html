@@ -7,9 +7,9 @@
 </head>
 <body>
 	<div align="center">
-		<form id="faqWriteFrm" action="/faqInsert" method="post">
+		<form id="faqWriteFrm">
 		<input type="hidden" name="faqDelYn" value="N">
-			<table>
+			<table id="insertFaqTable">
 				<tr>
 					<td colspan="2">
 						<h1>FAQ등록하기</h1>
@@ -21,7 +21,12 @@
 				</tr>
 				<tr>
 					<td>내용</td>
-					<td><textarea id="faqContent" name="faqContent"></textarea></td>
+					<td><input type="text" id="faqContent" name="faqContent"></td>
+				</tr>
+				<tr>
+					<td rowspan="6">첨부파일</td>
+					<td><button type="button" onclick="addRow();">+</button>
+					</td>
 				</tr>
 			</table>
 		</form>
@@ -36,7 +41,47 @@
 		if(!confirm('등록하시겠습니까?')) {
 			return;
 		}
-		$('#faqWriteFrm').submit();
+		
+		$.ajax({
+			url : '/insertFaq',
+			type : 'get',
+			data : $('#faqWriteFrm').serialize(), 
+			contentType : 'application/json; charset=utf-8',
+			success : function(res) {
+				alert('등록되었습니다.');
+				location.href = '/faqList';
+			}, 
+			error : function(request, status, error) {
+				
+			}
+			
+		})
+	}
+	
+	function addRow() {
+		
+		var imgCnt = $('#insertFaqTable >tbody tr').length;
+		
+		var cnt = $('input[name=faqImg]').length+1;
+		
+		if(cnt > 5) {
+			alert('최대 등록가능한 이미지 갯수는 5개 입니다.');
+			return;
+		}
+		var tr = '';
+		
+		tr += '<tr>';
+		tr += '<td><input type="text" id="faqImg" name="faqImg">';
+		tr += '	<button type="button" onclick="delRow(this)">-</button></td>'
+		tr += '</tr>';
+		
+		$('#insertFaqTable').append(tr);
+		
+		
+	}
+	
+	function delRow(obj) {
+		$(obj).parent().parent().remove();
 	}
 </script>
 </html>
