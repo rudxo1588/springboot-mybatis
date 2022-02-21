@@ -1,4 +1,4 @@
-package com.mybatis.demo;
+package com.mybatis.demo.config;
 
 import javax.sql.DataSource;
 
