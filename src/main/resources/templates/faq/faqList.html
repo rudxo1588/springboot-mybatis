@@ -11,9 +11,16 @@
 		<div id="faqListDiv" align="center">
 			<h1>Faq 리스트</h1>
 			<table>
+				<colgroup>
+					<col width="40px">
+					<col width="150px">
+					<col width="150px">
+					<col width="150px">
+					<col width="150px">
+				</colgroup>
 				<thead>
 					<tr>
-						<th>순번</th>
+						<th>번호</th>
 						<th>제목</th>
 						<th>내용</th>
 						<th>날짜</th>
@@ -25,7 +32,7 @@
 						<td th:text="${faqList.faqSeq}"></td>
 						<td><a th:href="@{/faq/faqDetail(faqSeq=${faqList.faqSeq})}" th:text="${faqList.faqTitle}"></a></td>
 						<td th:text="${faqList.faqContent}"></td>
-						<td th:text="${faqList.faqCreatedt}"></td>
+						<td th:text="${faqList.faqCreatedt.substring(0,10)}"></td>
 						<td><input type="button" th:onclick="'location.href=\''+@{/faq/updateFaqPage(faqSeq=${faqList.faqSeq})}+'\';'" value="수정">
 						<input type="button" th:onclick="|deleteFaq('${faqList.faqSeq}')|" value="삭제"></td>
 					</tr>
@@ -143,25 +150,6 @@
 				alert('error발생');
 			}
 		});
-	}
-	
-	function faqUpdate(seq) {
-		$.ajax({
-			url: '/faq/faqDetail',
-			data : {
-				'faqSeq' : seq
-				},
-			type : 'get',
-			dataType : 'json',
-			success : function(res) {
-			},
-			error : function(request, status, error) {
-			}
-		});
-	}
-	
-	function faqDetail(seq) {
-		$('#faqDetail').submit();
 	}
 	
 </script>
