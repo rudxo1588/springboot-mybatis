@@ -75,7 +75,7 @@
 			f.faq_seq = fi.faq_seq		
 	</select>
 	
-	<insert id="insertFaq" parameterType="FaqVo">
+	<insert id="insertFaqWrite" parameterType="FaqVo">
 		insert into
 		faq
 		(faq_title, faq_content, faq_del_yn)
@@ -92,7 +92,7 @@
 			faq_del_yn = 'N'
 	</select>
 	
-	<update id="deleteFaqByFaqSeq" parameterType="int">
+	<update id="deleteFaq" parameterType="int">
 		update 
 			faq
 		set 
@@ -101,7 +101,7 @@
 			faq_seq = #{faqSeq}
 	</update>
 	
-	<update id="updateFaq" parameterType="FaqVo">
+	<update id="faqUpdate" parameterType="FaqVo">
 		update 
 			faq
 		set 
@@ -110,11 +110,4 @@
 		where 
 			faq_seq = #{faqSeq}
 	</update>
-	
-	<select id="maxFaqSeq" resultType="int">
-		select
-			max(faq_seq)
-		from
-			faq
-	</select>
 </mapper>

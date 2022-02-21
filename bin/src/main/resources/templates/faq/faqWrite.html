@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+	<div align="center">
+		<form id="faqWriteFrm" action="/faqInsert" method="post">
+		<input type="hidden" name="faqDelYn" value="N">
+			<table>
+				<tr>
+					<td colspan="2">
+						<h1>FAQ등록하기</h1>
+					</td>
+				</tr>
+				<tr>
+					<td>제목</td>
+					<td><input type="text" id="faqTitle" name="faqTitle"></td>
+				</tr>
+				<tr>
+					<td>내용</td>
+					<td><textarea id="faqContent" name="faqContent"></textarea></td>
+				</tr>
+			</table>
+		</form>
+		<div>
+			<button onclick="faqWrite()">등록하기</button>
+			<button onclick="javascript:history.back(-1)">뒤로가기</button>
+		</div>
+	</div>
+</body>
+<script>
+	function faqWrite() {
+		if(!confirm('등록하시겠습니까?')) {
+			return;
+		}
+		$('#faqWriteFrm').submit();
+	}
+</script>
+</html>

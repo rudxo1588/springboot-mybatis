@@ -100,24 +100,31 @@ public class FaqController {
 	 * faq 등록하기
 	 * @return
 	 */
-	@RequestMapping("/faqInsert")
+	@GetMapping("/insertFaq")
 	@ResponseBody
-	public ModelAndView faqInsert(FaqVo faqVo) {
-		faqService.faqInsert(faqVo);
-		ModelAndView model = new ModelAndView("faq/faqList");
-		return model;
+	public void insertFaq(FaqVo faqVo, FaqImgVo faqImgVo) {
+		int result = faqService.insertFaq(faqVo);
+		// 부모 테이블 insert 성공시 자식테이블 insert해주기
+		if(result > 0) {
+			String[] imgList = faqImgVo.getFaqImg().split(",");
+			if(imgList != null && imgList.length > 0) {
+				faqImgVo.setFaqSeq(maxFaqSeq());
+				for(int i = 0; i<imgList.length; i++) {
+					faqImgVo.setFaqImg(imgList[i]);
+					faqService.insertFaqImg(faqImgVo);
+				}
+			}
+		}
 	}
 	
 	/**
 	 * faq 삭제하기
 	 * @return
 	 */
-	@RequestMapping("/faq/faqDel")
+	@RequestMapping("/faq/deleteFaq")
 	@ResponseBody
-	public ModelAndView faqDelete(@Param(value = "faqSeq")int faqSeq) {
-		faqService.faqDelete(faqSeq);
-		ModelAndView mav = new ModelAndView("faq/faqList");
-		return mav;
+	public void faqDelete(@Param(value = "faqSeq")int faqSeq) {
+		faqService.deleteFaq(faqSeq);
 	}
 	
 	/**
@@ -129,6 +136,7 @@ public class FaqController {
 		FaqVo faqVo = faqService.faqDetail(faqSeq);
 		ModelAndView mav = new ModelAndView("faq/faqDetail");
 		mav.addObject("faqVo", faqVo);
+		mav.addObject("imgSize",faqVo.getFaqImgList().size()+1);
 		return mav;
 	}
 	
@@ -136,11 +144,12 @@ public class FaqController {
 	 * faq 수정화면으로 이동하기
 	 * @return
 	 */
-	@RequestMapping("/faq/faqUpdatePage")
+	@RequestMapping("/faq/updateFaqPage")
 	public ModelAndView faqUpdatePage(@Param(value = "faqSeq")int faqSeq) {
 		FaqVo faqVo = faqService.faqDetail(faqSeq);
 		ModelAndView mav = new ModelAndView("faq/faqUpdate");
 		mav.addObject("faqVo", faqVo);
+		mav.addObject("imgSize",faqVo.getFaqImgList().size()+1);
 		return mav;
 	}
 	
@@ -148,26 +157,30 @@ public class FaqController {
 	 * faq 수정하기
 	 * @return
 	 */
-	@RequestMapping("/faq/faqUpdate")
+	@GetMapping("/faq/updateFaq")
 	@ResponseBody
-	public ModelAndView faqUpdate(FaqVo faqVo) {
-		faqService.faqUpdate(faqVo);
-		ModelAndView mav = new ModelAndView("faq/faqList");
-		mav.addObject("faqList",faqService.getFaqAllList());
-		return mav;
+	public void updateFaq(FaqVo faqVo, FaqImgVo faqImgVo) {
+		System.out.println(faqVo);
+		System.out.println(faqImgVo);
+		int result = faqService.updateFaq(faqVo);
+		if(result > 0) {
+			faqService.updateFaqImg(faqImgVo);
+		}
 	}
 	
 	/**
 	 * faqImg 삭제하기
 	 * @return
 	 */
-	@RequestMapping("/faq/faqImgDel")
+	@RequestMapping("/faq/deleteFaqImg")
 	@ResponseBody
-	public ModelAndView faqImgDel(FaqImgVo faqImgVo) {
-		faqService.faqImgDelete(faqImgVo.getImgSeq());
-		FaqVo faqVo = faqService.faqDetail(faqImgVo.getFaqSeq());
-		ModelAndView mav = new ModelAndView("faq/faqDetail");
-		mav.addObject(faqVo);
-		return mav;
+	public void deleteFaqImg(@Param(value = "imgSeq")int imgSeq) {
+		faqService.deleteFaqImgByImgSeq(imgSeq);
+	}
+	
+	public int maxFaqSeq() {
+		return faqService.maxFaqSeq();
 	}
 }
+
+

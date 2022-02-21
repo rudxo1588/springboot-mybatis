@@ -50,19 +50,19 @@ public interface FaqMapper {
 	 * faq 등록하기
 	 * @return
 	 */
-	void insertFaqWrite(FaqVo faqVo);
+	int insertFaq(FaqVo faqVo);
 	
 	/**
 	 * faq 삭제하기
 	 * @return
 	 */
-	void deleteFaq(int faqSeq);
+	void deleteFaqByFaqSeq(int faqSeq);
 	
 	/**
 	 * faqImg 삭제하기
 	 * @return
 	 */
-	void deleteFaqImg(int faqSeq);
+	int deleteFaqImgByFaqSeq(int faqSeq);
 	
 	/**
 	 * faq 상세페이지로 이동하기
@@ -74,11 +74,25 @@ public interface FaqMapper {
 	 * faq 수정하기
 	 * @return
 	 */
-	void faqUpdate(FaqVo faqVo);
+	int updateFaq(FaqVo faqVo);
 	
 	/**
 	 * faqImg 삭제하기
 	 * @return
 	 */
-	void deleteFaqImg2(int imgSeq);
+	void deleteFaqImgByImgSeq(int imgSeq);
+	
+	/**
+	 * faqImg 등록하기
+	 * @return
+	 */
+	void insertFaqImg(FaqImgVo faqImgVo);
+	
+	/**
+	 * Max faq_seq구하기
+	 * @return int
+	 */
+	int maxFaqSeq();
+	
+	
 }

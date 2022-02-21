@@ -26,8 +26,8 @@
 						<td><a th:href="@{/faq/faqDetail(faqSeq=${faqList.faqSeq})}" th:text="${faqList.faqTitle}"></a></td>
 						<td th:text="${faqList.faqContent}"></td>
 						<td th:text="${faqList.faqCreatedt}"></td>
-						<td><input type="button" th:onclick="'location.href=\''+@{/faq/updateFaqPage(faqSeq=${faqList.faqSeq})}+'\';'" value="수정">
-						<input type="button" th:onclick="|deleteFaq('${faqList.faqSeq}')|" value="삭제"></td>
+						<td><input type="button" th:onclick="'location.href=\''+@{/faq/faqUpdatePage(faqSeq=${faqList.faqSeq})}+'\';'" value="수정">
+						<input type="button" th:onclick="|faqDel('${faqList.faqSeq}')|" value="삭제"></td>
 					</tr>
 					<tr>
 						<td colspan="5" align="right">
@@ -124,13 +124,13 @@
 		$('#faqFrm').submit();
 	}
 	 
-	function deleteFaq(seq) {
+	function faqDel(seq) {
 		if(!confirm('삭제하시겠습니까?')) {
 			return;
 		}
 		 
 		$.ajax({
-			url: '/faq/deleteFaq',
+			url: '/faq/faqDel',
 			data : {
 				'faqSeq' : seq
 				},

@@ -6,80 +6,40 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	</head>
 	<body>
-		<div align="center" th:object="${faqVo}">
+		<div align="center"  th:object="${faqVo}">
 			<table>
 				<tr>
-					<td colspan="2">
+					<th colspan="2">
 						<h1>FAQ상세보기</h1>
-					</td>
+					</th>
 				</tr>
 				<tr>
-					<td>게시글 번호</td>
+					<th>게시글 번호</th>
 					<td th:text="*{faqSeq}"></td>
 				</tr>
 				<tr>
-					<td>제목</td>
+					<th>제목</th>
 					<td th:text="*{faqTitle}"></td>
 				</tr>
 				<tr>
-					<td>내용</td>
+					<th>내용</th>
 					<td th:text="*{faqContent}"></td>
 				</tr>
 				<tr>
-					<td>등록일시</td>
-					<td th:text="*{faqCreatedt}"></td>
+					<th>등록일시</th>
+					<td th:text="*{faqCreatedt.substring(0,10)}"></td>
 				</tr>
 				<tr>
-					<td>
-						<button th:onclick="'location.href=\''+@{/faq/faqUpdatePage(faqSeq=*{faqSeq})} +'\';'">수정</button>
-						<input type="button" onclick="javascript:history.back(-1);" value="뒤로가기">
-					</td>
-				</tr>
-			</table>
-			<br>
-			<table>
-				<tr>
-					<th>순번</th>
-					<th>이미지</th>
-					<th>버튼</th>
+					<th rowspan="6">첨부파일</th>
 				</tr>
 				<tr th:if="*{faqImgList != null && faqImgList.size() > 0}" th:each="faqImgList : *{faqImgList}">
-					<td th:text="${faqImgList.imgSeq}"></td>
 					<td th:text="${faqImgList.faqImg}"></td>
-					<td><input type="button" th:onclick="|faqDel('${faqImgList.imgSeq}','${faqImgList.faqSeq}')|" value="삭제"></td>
-				</tr>
-				<tr th:unless="*{faqImgList == null || faqImgList.size < 0}">
-					<td colspan="3">등록된 이미지가 없습니다.</td>
-				</tr>
-				<tr>
-					<td colspan="3" align="right">
-						<button>등록하기</button>
-					</td>
 				</tr>
 			</table>
+			<div align="right" style="width:400px;">
+				<button th:onclick="'location.href=\''+@{/faq/updateFaqPage(faqSeq=*{faqSeq})} +'\';'">수정하기</button>
+				<button type="button" onclick="javascript:history.back(-1);">뒤로가기</button>
+			</div>
 		</div>
 	</body>
-	<script>
-	function faqDel(imgSeq, faqSeq) {
-		if(!confirm('삭제하시겠습니까?')) {
-			return;
-		}
-		 
-		$.ajax({
-			url: '/faq/faqImgDel',
-			data : {
-				'imgSeq' : imgSeq,
-				'faqSeq' : faqSeq
-				},
-			type : 'get',
-			success : function(res) {
-				alert('삭제되었습니다.');
-				location.reload();
-			},
-			error : function(request, status, error) {
-				alert('error발생');
-			}
-		});
-	}
-	</script>
 </html>

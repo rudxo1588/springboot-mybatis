@@ -72,18 +72,17 @@ public class FaqService {
 	 * @return
 	 */
 	@Transactional
-	public void faqInsert(FaqVo faqVo) {
-		faqMapper.insertFaqWrite(faqVo);
+	public int insertFaq(FaqVo faqVo) {
+		return faqMapper.insertFaq(faqVo);
 	}
 	
 	/**
-	 * faq 삭제하기
+	 * faq 삭제
 	 * @return
 	 */
 	@Transactional
-	public void faqDelete(int faqSeq) {
-		faqMapper.deleteFaq(faqSeq);
-		faqMapper.deleteFaqImg(faqSeq);
+	public void deleteFaq(int faqSeq) {
+		faqMapper.deleteFaqByFaqSeq(faqSeq);
 	}
 	
 	/**
@@ -99,8 +98,8 @@ public class FaqService {
 	 * @return
 	 */
 	@Transactional
-	public void faqUpdate(FaqVo faqVo) {
-		faqMapper.faqUpdate(faqVo);
+	public int updateFaq(FaqVo faqVo) {
+		return faqMapper.updateFaq(faqVo);
 	}
 	
 	/**
@@ -108,8 +107,45 @@ public class FaqService {
 	 * @return
 	 */
 	@Transactional
-	public void faqImgDelete(int imgSeq) {
-		faqMapper.deleteFaqImg2(imgSeq);
+	public void deleteFaqImgByImgSeq(int imgSeq) {
+		faqMapper.deleteFaqImgByImgSeq(imgSeq);
+	}
+	
+	/**
+	 * faqImg 등록하기
+	 * @return
+	 */
+	@Transactional
+	public void insertFaqImg(FaqImgVo faqImgVo) {
+		faqMapper.insertFaqImg(faqImgVo);
+	}
+	
+	/**
+	 * Max faq_seq 값 구하기
+	 * @return
+	 */
+	public int maxFaqSeq() {
+		return faqMapper.maxFaqSeq();
+	}
+	
+	
+	/**
+	 * 수정시 기존 faqImg 전부 삭제 후 인서트
+	 * @return
+	 */
+	@Transactional
+	public void updateFaqImg(FaqImgVo faqImgVo) {
+		int faqSeq = faqImgVo.getFaqSeq();
+		int result = faqMapper.deleteFaqImgByFaqSeq(faqSeq);
+		if(result > 0) {
+			String[] faqImgList = faqImgVo.getFaqImg().split(",");
+			if(faqImgList.length > 0) {
+				for(int i = 0; i < faqImgList.length; i++) {
+					faqImgVo.setFaqImg(faqImgList[i]);
+					faqMapper.insertFaqImg(faqImgVo);
+				}
+			}
+		}
 	}
 	
 }

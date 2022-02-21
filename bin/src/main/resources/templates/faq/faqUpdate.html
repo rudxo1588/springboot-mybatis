@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+	<form id="faqUpdateFrm" action="/faq/faqUpdate" method="post">
+		<input type="hidden" name="faqDelYn" value="N">
+		<div align="center" th:object="${faqVo}">
+		<input type="hidden" id="faqSeq" name="faqSeq" th:value="*{faqSeq}">
+			<table>
+				<tr>
+					<td colspan="2">
+						<h1>FAQ수정하기</h1>
+					</td>
+				</tr>
+				<tr>
+					<td>게시글 번호</td>
+					<td th:text="*{faqSeq}"></td>
+				</tr>
+				<tr>
+					<td>제목</td>
+					<td><input type="text" id="faqTitle" name="faqTitle" th:value="*{faqTitle}"></td>
+				</tr>
+				<tr>
+					<td>내용</td>
+					<td><input type="text" id="faqContent" name="faqContent" th:value="*{faqContent}"></td>
+				</tr>
+				<tr>
+					<td>등록일시</td>
+					<td th:text="*{faqCreatedt}"></td>
+				</tr>
+				<tr>
+					<td>
+						<button onclick="faqUpdate()">수정하기</button>
+						<input type="button" onclick="javascript:history.back(-1);" value="뒤로가기">
+					</td>
+				</tr>
+			</table>
+		</div>
+	</form>
+</body>
+<script>
+	function faqUpdate() {
+		$('#faqUpdateFrm').submit();
+	}
+</script>
+</html>
