@@ -1,86 +1,93 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<title>Insert title here</title>
-</head>
-<body>
-	<div align="center">
-		<form id="faqWriteFrm">
-			<table id="insertFaqTable">
-				<tr>
-					<td colspan="2">
-						<h1>FAQ등록하기</h1>
-					</td>
-				</tr>
-				<tr>
-					<td>제목</td>
-					<td><input type="text" id="faqTitle" name="faqTitle"></td>
-				</tr>
-				<tr>
-					<td>내용</td>
-					<td><input type="text" id="faqContent" name="faqContent"></td>
-				</tr>
-				<tr>
-					<td rowspan="6">첨부파일</td>
-					<td><button type="button" onclick="addRow();">+</button>
-					</td>
-				</tr>
-			</table>
-		</form>
-		<div>
-			<button onclick="faqWrite()">등록하기</button>
-			<button onclick="javascript:history.back(-1)">뒤로가기</button>
-		</div>
-	</div>
-</body>
-<script>
-	function faqWrite() {
-		if(!confirm('등록하시겠습니까?')) {
-			return;
-		}
-		
-		$.ajax({
-			url : '/insertFaq',
-			type : 'get',
-			data : $('#faqWriteFrm').serialize(),
-			dataType : 'json',
-			success : function(request,res) {
-				alert(request.responseText);
-				location.href = '/faqList';
-			}, 
-			error : function(request, status, error) {
-				alert(request.responseText);
+	<head>
+		<meta charset="UTF-8">
+		<title>faq작성화면</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script>
+			function faqWrite() {
+				if(!confirm('등록하시겠습니까?')) {
+					return;
+				}
+				
+				$.ajax({
+					url : '/insertFaq',
+					type : 'get',
+					data : $('#faqWriteFrm').serialize(),
+					success : function(res) {
+						if(res[1] == 'E') {
+							alert(res[0]);
+						} else {
+							alert(res[0]);
+							location.href = '/';
+						}
+					}, 
+					error : function(request, status, error) {
+						alert(request.responseText);
+					}
+					
+				})
 			}
 			
-		})
-	}
-	
-	function addRow() {
-		
-		var imgCnt = $('#insertFaqTable >tbody tr').length;
-		
-		var cnt = $('input[name=faqImg]').length+1;
-		
-		if(cnt > 5) {
-			alert('최대 등록가능한 이미지 갯수는 5개 입니다.');
-			return;
-		}
-		var tr = '';
-		
-		tr += '<tr>';
-		tr += '<td><input type="text" id="faqImg" name="faqImg">';
-		tr += '	<button type="button" onclick="delRow(this)">-</button></td>'
-		tr += '</tr>';
-		
-		$('#insertFaqTable').append(tr);
-		
-		
-	}
-	
-	function delRow(obj) {
-		$(obj).parent().parent().remove();
-	}
-</script>
+			function addRow() {
+				
+				var imgCnt = $('#insertFaqTable >tbody tr').length;
+				
+				var cnt = $('input[name=faqImg]').length+1;
+				
+				if(cnt > 5) {
+					alert('최대 등록가능한 이미지 갯수는 5개 입니다.');
+					return;
+				}
+				var tr = '';
+				
+				tr += '<tr>';
+				tr += '<td><input type="text" id="faqImg" name="faqImg">';
+				tr += '	<button type="button" onclick="delRow(this)">-</button></td>'
+				tr += '</tr>';
+				
+				$('#insertFaqTable').append(tr);
+				
+				
+			}
+			
+			function delRow(obj) {
+				$(obj).parent().parent().remove();
+			}
+			
+			function fnCnclBtn() {
+				location.href = '/';
+			}
+		</script>
+	</head>
+	<body>
+		<div align="center">
+			<form id="faqWriteFrm">
+				<table id="insertFaqTable">
+					<tr>
+						<td colspan="2">
+							<h1>FAQ등록하기</h1>
+						</td>
+					</tr>
+					<tr>
+						<td>제목</td>
+						<td><input type="text" id="faqTitle" name="faqTitle"></td>
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td><input type="text" id="faqContent" name="faqContent"></td>
+					</tr>
+					<tr>
+						<td rowspan="6">첨부파일</td>
+						<td><button type="button" onclick="addRow();">+</button>
+						</td>
+					</tr>
+				</table>
+			</form>
+			<div>
+				<button onclick="faqWrite()">등록하기</button>
+				<button onclick="fnCnclBtn()">취소</button>
+			</div>
+		</div>
+	</body>
 </html>

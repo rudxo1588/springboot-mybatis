@@ -1,5 +1,6 @@
 package com.mybatis.demo.faq.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -36,7 +37,7 @@ public class FaqController {
 	 * faqList 페이지로 이동하기
 	 * @return
 	 */
-	@RequestMapping("/faqList")
+	@GetMapping("/")
 	public String faq(Model model) {
 		model.addAttribute("faqList",faqService.getFaqAllList());
 		return "faq/faqList";
@@ -105,20 +106,21 @@ public class FaqController {
 	 * faq 등록하기
 	 * @return
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked"})
 	@GetMapping("/insertFaq")
 	@ResponseBody
-	public ResponseEntity<String> insertFaq(@Valid FaqVo faqVo, BindingResult bindingResult, FaqImgVo faqImgVo) {
+	public ResponseEntity<List> insertFaq(@Valid FaqVo faqVo, BindingResult bindingResult, FaqImgVo faqImgVo) {
 		String errorMsg = "";
-		System.out.println(bindingResult.hasErrors());
-		System.out.println(faqVo);
+		List errorList = new ArrayList();
 		if(bindingResult.hasErrors()) {	// 객체에 선언해준 NotNull에 의해 값이 null이면 true를 반환
-			List<ObjectError> errorList = bindingResult.getAllErrors();
+			List<ObjectError> objectError = bindingResult.getAllErrors();
 			
-			for (ObjectError error : errorList) {
+			for (ObjectError error : objectError) 
 				errorMsg = error.getDefaultMessage();
-			}
-			
-			return ResponseEntity.ok().body(errorMsg);
+				
+			errorList.add(errorMsg);
+			errorList.add("E");
+			return ResponseEntity.ok().body(errorList);
 		} else {
 			int result = faqService.insertFaq(faqVo);
 			// 부모 테이블 insert 성공시 자식테이블 insert해주기
@@ -134,9 +136,10 @@ public class FaqController {
 					}
 				}
 			}
-			errorMsg = "등록되었습니다.";
+			errorList.add("등록되었습니다.");
+			errorList.add("S");
+			return ResponseEntity.ok().body(errorList);
 		}
-		return ResponseEntity.ok().body(errorMsg);
 	}
 	
 	/**
@@ -179,11 +182,28 @@ public class FaqController {
 	 */
 	@GetMapping("/faq/updateFaq")
 	@ResponseBody
-	public void updateFaq(FaqVo faqVo, FaqImgVo faqImgVo) {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public ResponseEntity<List> updateFaq(@Valid FaqVo faqVo,BindingResult bindingResult , FaqImgVo faqImgVo) {
+		String errorMsg = "";
+		List errorList = new ArrayList();
+		if(bindingResult.hasErrors()) {
+			List<ObjectError> objectError = bindingResult.getAllErrors();
+			
+			for(ObjectError error : objectError)
+				errorMsg = error.getDefaultMessage();
+			
+			errorList.add(errorMsg);
+			errorList.add("E");
+			return ResponseEntity.ok().body(errorList); 
+		}
+		
 		int result = faqService.updateFaq(faqVo);
 		if(result > 0) {
 			faqService.updateFaqImg(faqImgVo);
 		}
+		errorList.add("수정되었습니다");
+		errorList.add("S");
+		return ResponseEntity.ok().body(errorList);
 	}
 	
 	/**

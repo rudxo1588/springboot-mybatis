@@ -1,155 +1,91 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<title>Insert title here</title>
-</head>
-<body>
-	<form id="faqFrm" action="/faqWrite">
-	</form>
-		<div id="faqListDiv" align="center">
-			<h1>Faq 리스트</h1>
-			<table>
-				<colgroup>
-					<col width="40px">
-					<col width="150px">
-					<col width="150px">
-					<col width="150px">
-					<col width="150px">
-				</colgroup>
-				<thead>
-					<tr>
-						<th>번호</th>
-						<th>제목</th>
-						<th>내용</th>
-						<th>날짜</th>
-						<th>버튼</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="faqList : ${faqList}">
-						<td th:text="${faqList.faqSeq}"></td>
-						<td><a th:href="@{/faq/faqDetail(faqSeq=${faqList.faqSeq})}" th:text="${faqList.faqTitle}"></a></td>
-						<td th:text="${faqList.faqContent}"></td>
-						<td th:text="${faqList.faqCreatedt.substring(0,10)}"></td>
-						<td><input type="button" th:onclick="'location.href=\''+@{/faq/updateFaqPage(faqSeq=${faqList.faqSeq})}+'\';'" value="수정">
-						<input type="button" th:onclick="|deleteFaq('${faqList.faqSeq}')|" value="삭제"></td>
-					</tr>
-					<tr>
-						<td colspan="5" align="right">
-							<button onclick="faqWrite()">등록하기</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	
-	
-</body>
-<script>
-	$(function(){
-		$.ajax({
-			url : '/getFaqAllList',
-			type : 'get',
-			datatype : 'json',
-			data : {},
-			success : function(res) {
-				
-			},
+	<head>
+		<meta charset="UTF-8">
+		<title>faq목록화면</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script>
+			$(function(){
+				$.ajax({
+					url : '/getFaqAllList',
+					type : 'get',
+					datatype : 'json',
+					data : {},
+					success : function(res) {
+						
+					},
+					
+					error : function(request, status, error) {
+						console.log('error');
+					}
+				})
+			});
 			
-			error : function(request, status, error) {
-				console.log('error');
+			function faqWrite() {
+				$('#faqFrm').submit();
 			}
-		})
-		/* $.ajax({
-			url : '/faqImgListBySelectCollection',
-			type : 'get',
-			datatype : 'json',
-			data : {
-				'faqSeq' : 1,
-				'delYn' : 'N'
-			},
-			success : function(res) {
-				console.log('select collection');
-				console.log(res);
-			},
+			 
+			function deleteFaq(seq) {
+				if(!confirm('삭제하시겠습니까?')) {
+					return;
+				}
+				 
+				$.ajax({
+					url: '/faq/deleteFaq',
+					data : {
+						'faqSeq' : seq
+						},
+					type : 'get',
+					success : function(res) {
+						alert('삭제되었습니다.');
+						location.reload();
+					},
+					error : function(request, status, error) {
+						alert('error발생');
+					}
+				});
+			}
 			
-			error : function(request, status, error) {
-				console.log('error');
-			}
-		})
-		
-		$.ajax({
-			url : '/faqImgListByJoinCollection',
-			type : 'get',
-			datatype : 'json',
-			data : {},
-			success : function(res) {
-				console.log('join collection');
-				console.log(res)	
-			},
-			
-			error : function(request, status, error) {
-				console.log('error');
-			}
-		})
-		
-		$.ajax({
-			url : '/faqImgListByAssciation',
-			type : 'get',
-			datatype : 'json',
-			data : {},
-			success : function(res) {
-				console.log('select assciation');
-				console.log(res);
-			},
-			
-			error : function(request, status, error) {
-				console.log('error');
-			}
-		})
-		
-		$.ajax({
-			url : '/faqImgListByJoinAssociation',
-			type : 'get',
-			datatype : 'json',
-			data : {},
-			success : function(res) {
-				console.log('join assciation');
-				console.log(res);
-			},
-			
-			error : function(request, status, error) {
-				console.log('error');
-			}
-		}) */
-	});
-	
-	function faqWrite() {
-		$('#faqFrm').submit();
-	}
-	 
-	function deleteFaq(seq) {
-		if(!confirm('삭제하시겠습니까?')) {
-			return;
-		}
-		 
-		$.ajax({
-			url: '/faq/deleteFaq',
-			data : {
-				'faqSeq' : seq
-				},
-			type : 'get',
-			success : function(res) {
-				alert('삭제되었습니다.');
-				location.reload();
-			},
-			error : function(request, status, error) {
-				alert('error발생');
-			}
-		});
-	}
-	
-</script>
+		</script>
+	</head>
+	<body>
+		<form id="faqFrm" action="/faqWrite">
+		</form>
+			<div id="faqListDiv" align="center">
+				<h1>Faq 리스트</h1>
+				<table>
+					<colgroup>
+						<col width="40px">
+						<col width="150px">
+						<col width="150px">
+						<col width="150px">
+						<col width="150px">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>제목</th>
+							<th>내용</th>
+							<th>날짜</th>
+							<th>버튼</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="faqList : ${faqList}">
+							<td th:text="${faqList.faqSeq}"></td>
+							<td><a th:href="@{/faq/faqDetail(faqSeq=${faqList.faqSeq})}" th:text="${faqList.faqTitle}"></a></td>
+							<td th:text="${faqList.faqContent}"></td>
+							<td th:text="${faqList.faqCreatedt.substring(0,10)}"></td>
+							<td><input type="button" th:onclick="'location.href=\''+@{/faq/updateFaqPage(faqSeq=${faqList.faqSeq})}+'\';'" value="수정">
+							<input type="button" th:onclick="|deleteFaq('${faqList.faqSeq}')|" value="삭제"></td>
+						</tr>
+						<tr>
+							<td colspan="5" align="right">
+								<button onclick="faqWrite()">등록하기</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+	</body>
 </html>

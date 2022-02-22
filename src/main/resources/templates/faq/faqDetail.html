@@ -2,8 +2,13 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Insert title here</title>
+		<title>faq상세화면</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script>
+			function fnCnclBtn() {
+				location.href = '/';
+			}
+		</script>
 	</head>
 	<body>
 		<div align="center"  th:object="${faqVo}">
@@ -38,7 +43,7 @@
 			</table>
 			<div align="right" style="width:400px;">
 				<button th:onclick="'location.href=\''+@{/faq/updateFaqPage(faqSeq=*{faqSeq})} +'\';'">수정하기</button>
-				<button type="button" onclick="javascript:history.back(-1);">뒤로가기</button>
+				<button type="button" onclick="fnCnclBtn()">취소</button>
 			</div>
 		</div>
 	</body>

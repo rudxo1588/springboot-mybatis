@@ -2,7 +2,6 @@ package com.mybatis.demo.faq.domain;
 
 import java.util.List;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 
 import lombok.Data;
@@ -23,11 +22,9 @@ public class FaqVo {
 	private int faqSeq;
 	
 	@NotEmpty(message = "제목은 필수 입력값입니다.")
-	@Max(value = 100, message = "제목은 최대 100자 입력 가능합니다")
 	private String faqTitle;
 	
 	@NotEmpty(message = "내용은 필수 입력값입니다.")
-	@Max(value = 2000, message = "내용은 최대 2000자 입력 가능합니다")
 	private String faqContent;
 	
 	private String faqCreatedt;
