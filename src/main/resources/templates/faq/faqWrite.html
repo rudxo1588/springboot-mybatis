@@ -36,30 +36,10 @@
 	</div>
 </body>
 <script>
-	jQuery.fn.serializeObject = function() {
-	    var obj = null;
-	    try {
-	        if (this[0].tagName && this[0].tagName.toUpperCase() == "FORM") {
-	            var arr = this.serializeArray();
-	            if (arr) {
-	                obj = {};
-	                jQuery.each(arr, function() {
-	                    obj[this.name] = this.value;
-	                });
-	            }//if ( arr ) {
-	        }
-	    } catch (e) {
-	        alert(e.message);
-	    } finally {
-	    }
-	 
-	    return obj;
-	};
 	function faqWrite() {
 		if(!confirm('등록하시겠습니까?')) {
 			return;
 		}
-		const formData = $('#faqWriteFrm').serializeObject();
 		
 		$.ajax({
 			url : '/insertFaq',
@@ -69,10 +49,11 @@
 			dataType : 'json',
 			success : function(res) {
 				alert(res);
-// 				location.href = '/faqList';
+				location.href = '/faqList';
 			}, 
 			error : function(request, status, error) {
-				
+				console.log(request);
+				alert(request.responseText);
 			}
 			
 		})

@@ -112,19 +112,17 @@ public class FaqController {
 	 */
 	@GetMapping("/insertFaq")
 	@ResponseBody
-	public ResponseEntity<String> insertFaq(@Valid FaqVo faqVo, BindingResult bindingResult, FaqImgVo faqImgVo) {
+	public String insertFaq(@Valid FaqVo faqVo, BindingResult bindingResult, FaqImgVo faqImgVo) {
+		String errorMsg = "등록되었습니다.";
 		System.out.println(bindingResult.hasErrors());
 		if(bindingResult.hasErrors()) {	// 객체에 선언해준 NotNull에 의해 값이 null이면 true를 반환
-			List<FieldError> errorList = bindingResult.getFieldErrors();
-			String errorMsg = "";
-			for (FieldError error : errorList) {
+			List<ObjectError> errorList = bindingResult.getAllErrors();
+			
+			for (ObjectError error : errorList) {
 				errorMsg = error.getDefaultMessage();
-				System.out.println(errorMsg);
-				System.out.println(error.getCode());
-				System.out.println(error.getObjectName());
 			}
-				
-				return ResponseEntity.ok().body(errorMsg);
+			
+			return errorMsg;
 		} else {
 			int result = faqService.insertFaq(faqVo);
 			// 부모 테이블 insert 성공시 자식테이블 insert해주기
@@ -139,7 +137,7 @@ public class FaqController {
 				}
 			}
 		}
-		return ResponseEntity.noContent().build();
+		return errorMsg;
 	}
 	
 	/**
