@@ -44,15 +44,13 @@
 		$.ajax({
 			url : '/insertFaq',
 			type : 'get',
-			data : JSON.stringify($('#faqWriteFrm').serialize()),
-			contentType : 'application/json',
+			data : $('#faqWriteFrm').serialize(),
 			dataType : 'json',
-			success : function(res) {
-				alert(res);
+			success : function(request,res) {
+				alert(request.responseText);
 				location.href = '/faqList';
 			}, 
 			error : function(request, status, error) {
-				console.log(request);
 				alert(request.responseText);
 			}
 			

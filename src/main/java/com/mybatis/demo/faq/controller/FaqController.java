@@ -9,13 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -112,9 +107,10 @@ public class FaqController {
 	 */
 	@GetMapping("/insertFaq")
 	@ResponseBody
-	public String insertFaq(@Valid FaqVo faqVo, BindingResult bindingResult, FaqImgVo faqImgVo) {
-		String errorMsg = "등록되었습니다.";
+	public ResponseEntity<String> insertFaq(@Valid FaqVo faqVo, BindingResult bindingResult, FaqImgVo faqImgVo) {
+		String errorMsg = "";
 		System.out.println(bindingResult.hasErrors());
+		System.out.println(faqVo);
 		if(bindingResult.hasErrors()) {	// 객체에 선언해준 NotNull에 의해 값이 null이면 true를 반환
 			List<ObjectError> errorList = bindingResult.getAllErrors();
 			
@@ -122,22 +118,25 @@ public class FaqController {
 				errorMsg = error.getDefaultMessage();
 			}
 			
-			return errorMsg;
+			return ResponseEntity.ok().body(errorMsg);
 		} else {
 			int result = faqService.insertFaq(faqVo);
 			// 부모 테이블 insert 성공시 자식테이블 insert해주기
 			if(result > 0) {
-				String[] imgList = faqImgVo.getFaqImg().split(",");
-				if(imgList != null && imgList.length > 0) {
-					faqImgVo.setFaqSeq(maxFaqSeq());
-					for(int i = 0; i<imgList.length; i++) {
-						faqImgVo.setFaqImg(imgList[i]);
-						faqService.insertFaqImg(faqImgVo);
+				if(faqImgVo.getFaqImg() != null && "".equals(faqImgVo.getFaqImg())) {
+					String[] imgList = faqImgVo.getFaqImg().split(",");
+					if(imgList != null && imgList.length > 0) {
+						faqImgVo.setFaqSeq(maxFaqSeq());
+						for(int i = 0; i<imgList.length; i++) {
+							faqImgVo.setFaqImg(imgList[i]);
+							faqService.insertFaqImg(faqImgVo);
+						}
 					}
 				}
 			}
+			errorMsg = "등록되었습니다.";
 		}
-		return errorMsg;
+		return ResponseEntity.ok().body(errorMsg);
 	}
 	
 	/**
