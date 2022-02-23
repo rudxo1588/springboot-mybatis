@@ -81,8 +81,10 @@ public class FaqService {
 	 * @return
 	 */
 	@Transactional
-	public void deleteFaq(int faqSeq) {
-		faqMapper.deleteFaqByFaqSeq(faqSeq);
+	public void deleteFaq(String[] faqSeq) {
+		for(int i = 0; i < faqSeq.length; i++) {
+			faqMapper.deleteFaqByFaqSeq(faqSeq[i]);
+		}
 	}
 	
 	/**

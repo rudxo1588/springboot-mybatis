@@ -56,7 +56,7 @@ public interface FaqMapper {
 	 * faq 삭제하기
 	 * @return
 	 */
-	void deleteFaqByFaqSeq(int faqSeq);
+	void deleteFaqByFaqSeq(String faqSeq);
 	
 	/**
 	 * faqImg 삭제하기

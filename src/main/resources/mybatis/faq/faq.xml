@@ -92,7 +92,7 @@
 			faq_del_yn = 'N'
 	</select>
 	
-	<update id="deleteFaqByFaqSeq" parameterType="int">
+	<update id="deleteFaqByFaqSeq" parameterType="String">
 		update 
 			faq
 		set 

@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
 		<title>faq수정화면</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.tmpl.min.js"></script>
 		<script>
 			function fnCnclBtn() {
 				location.href = '/';
@@ -56,19 +57,13 @@
 			function addRow() {
 				
 				var cnt = $('input[name=faqImg]').length+1;
-				console.log(cnt);
+				
 				if(cnt > 5) {
 					alert('이미지는 최대 5개까지 등록 가능합니다.');
 					return;
 				} 
 				
-				var tr = '';
-				tr += '<tr>';
-				tr += '<td><input type="text" id="faqImg" name="faqImg">';
-				tr += '	<button type="button" onclick="delRow(this)">삭제</button></td>';
-				tr += '</tr>';
-				
-				$('#faqImgTable').append(tr);
+				$('#addRowTmpl').tmpl().appendTo('#faqImgTable');
 			}
 			
 			function delRow(obj) {
@@ -121,4 +116,11 @@
 			</form>
 		</div>
 	</body>
+	<script type="text/x-jQuery-tmpl" id="addRowTmpl">
+		<tr>
+			<td><input type="text" name="faqImg" id="faqImg">
+				<button type="button" onclick="delRow(this)">-</button>
+			</td>
+		<tr>
+	</script>
 </html>

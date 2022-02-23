@@ -140,7 +140,7 @@ public class FaqController {
 	 */
 	@RequestMapping("/faq/deleteFaq")
 	@ResponseBody
-	public void faqDelete(@Param(value = "faqSeq")int faqSeq) {
+	public void faqDelete(@Param(value = "faqSeq")String[] faqSeq) {
 		faqService.deleteFaq(faqSeq);
 	}
 	

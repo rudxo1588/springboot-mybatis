@@ -22,35 +22,38 @@
 			});
 			
 			function faqWrite() {
-				$('#faqFrm').submit();
+				location.href = '/faqWrite';
 			}
 			 
-			function deleteFaq(seq) {
-				if(!confirm('삭제하시겠습니까?')) {
-					return;
-				}
+			function deleteFaq() {
+				if(confirm('삭제하시겠습니까?')) {
 				 
-				$.ajax({
-					url: '/faq/deleteFaq',
-					data : {
-						'faqSeq' : seq
-						},
-					type : 'get',
-					success : function(res) {
-						alert('삭제되었습니다.');
-						location.reload();
-					},
-					error : function(request, status, error) {
-						alert('error발생');
+					var checkbox = $("input:checkbox[name=faqSeq]:checked");
+					
+					if(checkbox.length == 0) {
+						alert('삭제할 대상을 선택해주세요.');
+						return;
 					}
-				});
+					
+					$.ajax({
+						url: '/faq/deleteFaq',
+						data : $('#faqListFrm').serialize(),
+						type : 'get',
+						success : function(res) {
+							alert('삭제되었습니다.');
+							location.reload();
+						},
+						error : function(request, status, error) {
+							alert('error발생');
+						}
+					});
+				}
 			}
 			
 		</script>
 	</head>
 	<body>
-		<form id="faqFrm" action="/faqWrite">
-		</form>
+		<form id="faqListFrm">
 			<div id="faqListDiv" align="center">
 				<h1>Faq 리스트</h1>
 				<table>
@@ -58,12 +61,12 @@
 						<col width="40px">
 						<col width="150px">
 						<col width="150px">
-						<col width="150px">
-						<col width="150px">
+						<col width="120px">
+						<col width="50px">
 					</colgroup>
 					<thead>
 						<tr>
-							<th>번호</th>
+							<th></th>
 							<th>제목</th>
 							<th>내용</th>
 							<th>날짜</th>
@@ -72,20 +75,22 @@
 					</thead>
 					<tbody>
 						<tr th:each="faqList : ${faqList}">
-							<td th:text="${faqList.faqSeq}"></td>
+							<td><input type="checkbox" name="faqSeq" th:value="${faqList.faqSeq}"></td>
 							<td><a th:href="@{/faq/faqDetail(faqSeq=${faqList.faqSeq})}" th:text="${faqList.faqTitle}"></a></td>
 							<td th:text="${faqList.faqContent}"></td>
 							<td th:text="${faqList.faqCreatedt.substring(0,10)}"></td>
 							<td><input type="button" th:onclick="'location.href=\''+@{/faq/updateFaqPage(faqSeq=${faqList.faqSeq})}+'\';'" value="수정">
-							<input type="button" th:onclick="|deleteFaq('${faqList.faqSeq}')|" value="삭제"></td>
+							</td>
 						</tr>
 						<tr>
 							<td colspan="5" align="right">
+								<button type="button" onclick="deleteFaq()">삭제</button>
 								<button onclick="faqWrite()">등록하기</button>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
+		</form>
 	</body>
 </html>
