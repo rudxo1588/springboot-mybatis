@@ -3,6 +3,7 @@ package com.mybatis.demo.faq.domain;
 import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
+import com.mybatis.demo.common.vo.PagingVo;
 
 import lombok.Data;
 
@@ -16,7 +17,7 @@ import lombok.Data;
  * 이런 부분들은 리펙토링 대상이기 때문에 롬복을 사용할 경우 리팩토링이 힘들어지는 단점이 있다.
  */
 @Data
-public class FaqVo {
+public class FaqVo extends PagingVo{
 	
 	
 	private int faqSeq;

@@ -123,19 +123,11 @@ public class FaqController {
 			return ResponseEntity.ok().body(errorList);
 		} else {
 			int result = faqService.insertFaq(faqVo);
-			// 부모 테이블 insert 성공시 자식테이블 insert해주기
+			
 			if(result > 0) {
-				if(faqImgVo.getFaqImg() != null && "".equals(faqImgVo.getFaqImg())) {
-					String[] imgList = faqImgVo.getFaqImg().split(",");
-					if(imgList != null && imgList.length > 0) {
-						faqImgVo.setFaqSeq(maxFaqSeq());
-						for(int i = 0; i<imgList.length; i++) {
-							faqImgVo.setFaqImg(imgList[i]);
-							faqService.insertFaqImg(faqImgVo);
-						}
-					}
-				}
+				faqService.insertFaqImg(faqImgVo);
 			}
+			
 			errorList.add("등록되었습니다.");
 			errorList.add("S");
 			return ResponseEntity.ok().body(errorList);

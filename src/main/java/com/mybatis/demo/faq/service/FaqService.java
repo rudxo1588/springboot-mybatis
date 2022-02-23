@@ -16,11 +16,11 @@ import lombok.RequiredArgsConstructor;
 /**
  * @Service는 해당 클래스가 Service임을 나타냄 
  */
-@Service
 /**
  * lombok 사용시 @RequiredArgsConstructor 릉 사용하면 
  * @Autowired를 사용하지 않아도 final or @NonNull 로 의존성 주입이 가능하다.
  */
+@Service
 @RequiredArgsConstructor
 public class FaqService {
 
@@ -117,7 +117,16 @@ public class FaqService {
 	 */
 	@Transactional
 	public void insertFaqImg(FaqImgVo faqImgVo) {
-		faqMapper.insertFaqImg(faqImgVo);
+		if(faqImgVo.getFaqImg() != null && "".equals(faqImgVo.getFaqImg())) {
+			String[] imgList = faqImgVo.getFaqImg().split(",");
+			if(imgList != null && imgList.length > 0) {
+				faqImgVo.setFaqSeq(maxFaqSeq());
+				for(int i = 0; i<imgList.length; i++) {
+					faqImgVo.setFaqImg(imgList[i]);
+					faqMapper.insertFaqImg(faqImgVo);
+				}
+			}
+		}
 	}
 	
 	/**
