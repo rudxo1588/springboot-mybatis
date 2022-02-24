@@ -5,36 +5,14 @@
 		<title>faq목록화면</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script>
-			$(function(){
-				$.ajax({
-					url : '/getFaqAllList',
-					type : 'get',
-					datatype : 'json',
-					data : {},
-					success : function(res) {
-						
-					},
-					
-					error : function(request, status, error) {
-						console.log('error');
-					}
-				})
-			});
-			
-			function faqWrite() {
-				location.href = '/faqWrite';
-			}
-			 
 			function deleteFaq() {
+				var checkbox = $("input:checkbox[name=faqSeq]:checked");
+				
+				if(checkbox.length == 0) {
+					alert('삭제할 대상을 선택해주세요.');
+					return;
+				}
 				if(confirm('삭제하시겠습니까?')) {
-				 
-					var checkbox = $("input:checkbox[name=faqSeq]:checked");
-					
-					if(checkbox.length == 0) {
-						alert('삭제할 대상을 선택해주세요.');
-						return;
-					}
-					
 					$.ajax({
 						url: '/faq/deleteFaq',
 						data : $('#faqListFrm').serialize(),
@@ -50,10 +28,13 @@
 				}
 			}
 			
+			function faqWrite() {
+				location.href = '/faqWrite';
+			}
 		</script>
 	</head>
 	<body>
-		<form id="faqListFrm">
+		<form id="faqFrm">
 			<div id="faqListDiv" align="center">
 				<h1>Faq 리스트</h1>
 				<table>

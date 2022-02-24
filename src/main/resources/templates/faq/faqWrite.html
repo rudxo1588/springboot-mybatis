@@ -37,6 +37,9 @@
 				}
 				
 				$('#addRowTmpl').tmpl().appendTo('#insertFaqTable');
+				
+				// 변수에 값 넣기 샘플
+				//$('#sampleData').tmpl([{ sample1: 1, sample2: 2 }]).appendTo('body');
 			}
 			
 			function delRow(obj) {
@@ -44,7 +47,7 @@
 			}
 			
 			function fnCnclBtn() {
-				location.href = '/';
+				location.href = '/?historyback=Y';
 			}
 		</script>
 	</head>
@@ -79,6 +82,7 @@
 		</div>
 	</body>
 	<script type="text/x-jQuery-tmpl" id="addRowTmpl">
+	// {{= sample1}} 변수선언
 		<tr>
 			<td><input type="text" id="faqImg" name="faqImg">
 				<button type="button" onclick="delRow(this)">-</button>

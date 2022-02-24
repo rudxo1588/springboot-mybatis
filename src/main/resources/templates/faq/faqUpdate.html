@@ -73,7 +73,7 @@
 	</head>
 	<body>
 		<div align="center" th:object="${faqVo}">
-			<form id="faqUpdateFrm" action="/faq/faqUpdate" method="post">
+			<form id="faqFrm">
 				<input type="hidden" name="faqDelYn" value="N">
 				<input type="hidden" id="faqSeq" name="faqSeq" th:value="*{faqSeq}">
 				<table id="faqImgTable">
@@ -104,7 +104,7 @@
 					</tr>
 					<tr th:if="*{faqImgList != null && faqImgList.size() > 0}" th:each="faqImgList : *{faqImgList}">
 						<td><input type="text" id="faqImg" name="faqImg" th:value="${faqImgList.faqImg}">
-							<button type="button" th:onclick="|deleteImg('${faqImgList.imgSeq}','${faqImgList.faqSeq}')|">삭제</button>
+							<button type="button" th:onclick="|deleteImg('${faqImgList.imgSeq}','')|">삭제</button>
 						</td>
 					</tr>
 				</table>
