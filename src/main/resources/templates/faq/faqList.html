@@ -6,6 +6,18 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="../js/lodash.min.js"></script>
 		<script>
+			$(function(){
+				
+				$.ajax({
+					url : "getFaqList",
+					type : "post",
+					success : function(html) {
+						$('#asyncBody').html(html);
+					}
+				});
+			});
+			
+			
 			function deleteFaq() {
 				var checkbox = $("input:checkbox[name=faqSeq]:checked");
 				
@@ -38,7 +50,7 @@
 		<form id="faqFrm">
 			<div id="faqListDiv" align="center">
 				<h1>Faq 리스트</h1>
-				<table>
+				<table >
 					<colgroup>
 						<col width="40px">
 						<col width="150px">
@@ -55,21 +67,8 @@
 							<th>버튼</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr th:each="faqList : ${faqList}">
-							<td><input type="checkbox" name="faqSeq" th:value="${faqList.faqSeq}"></td>
-							<td><a th:href="@{/faq/faqDetail(faqSeq=${faqList.faqSeq})}" th:text="${faqList.faqTitle}"></a></td>
-							<td th:text="${faqList.faqContent}"></td>
-							<td th:text="${faqList.faqCreatedt.substring(0,10)}"></td>
-							<td><input type="button" th:onclick="'location.href=\''+@{/faq/updateFaqPage(faqSeq=${faqList.faqSeq})}+'\';'" value="수정">
-							</td>
-						</tr>
-						<tr>
-							<td colspan="5" align="right">
-								<button type="button" onclick="deleteFaq()">삭제</button>
-								<button onclick="faqWrite()">등록하기</button>
-							</td>
-						</tr>
+					<tbody id="asyncBody">
+					
 					</tbody>
 				</table>
 			</div>

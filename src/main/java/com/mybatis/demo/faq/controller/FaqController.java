@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,6 +45,13 @@ public class FaqController {
 		return mv;
 	}
 	
+	@PostMapping("/getFaqList")
+	public ModelAndView faqListAsync() {
+		ModelAndView mv = new ModelAndView("/faq/faqListAsync");
+		mv.addObject("faqList", faqService.getFaqAllList());
+		
+		return mv;
+	}
 	
 	/**
 	 * faqImg select collcetion이용하여 리스트 가져오기
