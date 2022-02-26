@@ -9,7 +9,7 @@
 			$(function(){
 				
 				$.ajax({
-					url : "getFaqList",
+					url : "/faq/getFaqList",
 					type : "post",
 					success : function(html) {
 						$('#asyncBody').html(html);
@@ -26,9 +26,10 @@
 					return;
 				}
 				if(confirm('삭제하시겠습니까?')) {
+					console.log($('#faqFrm').serialize());
 					$.ajax({
 						url: '/faq/deleteFaq',
-						data : $('#faqListFrm').serialize(),
+						data : $('#faqFrm').serialize(),
 						type : 'get',
 						success : function(res) {
 							alert('삭제되었습니다.');
@@ -42,7 +43,7 @@
 			}
 			
 			function faqWrite() {
-				location.href = '/faqWrite';
+				location.href = '/faq/faqWrite';
 			}
 		</script>
 	</head>

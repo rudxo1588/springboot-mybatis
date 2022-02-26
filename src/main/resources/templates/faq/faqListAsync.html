@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>faq목록 html</title>
-	</head>
 	<table>
 		<tr th:each="faqList : ${faqList}">
 			<td><input type="checkbox" name="faqSeq" th:value="${faqList.faqSeq}"></td>
@@ -16,8 +12,8 @@
 		<tr>
 			<td colspan="5" align="right">
 				<button type="button" onclick="deleteFaq()">삭제</button>
-				<button onclick="faqWrite()">등록하기</button>
+				<button type="button" onclick="faqWrite()">등록하기</button>
 			</td>
 		</tr>
 	</table>	
-</html>
+</html> 

@@ -147,14 +147,14 @@ public class FaqService {
 	@Transactional
 	public void updateFaqImg(FaqImgVo faqImgVo) {
 		int faqSeq = faqImgVo.getFaqSeq();
-		int result = faqMapper.deleteFaqImgByFaqSeq(faqSeq);
-		if(result > 0) {
-			String[] faqImgList = faqImgVo.getFaqImg().split(",");
-			if(faqImgList.length > 0) {
-				for(int i = 0; i < faqImgList.length; i++) {
-					faqImgVo.setFaqImg(faqImgList[i]);
-					faqMapper.insertFaqImg(faqImgVo);
-				}
+		
+		faqMapper.deleteFaqImgByFaqSeq(faqSeq);
+		String[] faqImgList = faqImgVo.getFaqImg().split(",");;
+		
+		if(faqImgList != null && faqImgList.length > 0) {
+			for(int i = 0; i < faqImgList.length; i++) {
+				faqImgVo.setFaqImg(faqImgList[i]);
+				faqMapper.insertFaqImg(faqImgVo);
 			}
 		}
 	}

@@ -88,13 +88,13 @@
 			img_seq = #{imgSeq}	
 	</update>
 	
-	<update id="deleteFaqImgByFaqSeq" parameterType="int">
+	<delete id="deleteFaqImgByFaqSeq" parameterType="int">
 		delete
 		from
 		faq_img
 		where
 			faq_seq = #{faqSeq}
-	</update>
+	</delete>
 	
 	<insert id="insertFaqImg" parameterType="FaqImgVo">
 		insert	into
