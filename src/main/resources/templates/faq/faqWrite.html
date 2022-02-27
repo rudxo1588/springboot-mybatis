@@ -6,6 +6,25 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script type="text/javascript" src="../js/jquery.tmpl.min.js"></script>
 		<script>
+			$.fn.serializeObject = function() {
+			  "use strict"
+			  var result = {}
+			  var extend = function(i, element) {
+			    var node = result[element.name]
+			    if ("undefined" !== typeof node && node !== null) {
+			      if ($.isArray(node)) {
+			        node.push(element.value)
+			      } else {
+			        result[element.name] = [node, element.value]
+			      }
+			    } else {
+			      result[element.name] = element.value
+			    }
+			  }
+
+			  $.each(this.serializeArray(), extend)
+			  return result
+			}
 			var idx = 0;
 			function faqWrite() {
 				if(confirm('등록하시겠습니까?')) {
@@ -33,16 +52,27 @@
 						}
 					}
 					
+					var formData = $('#faqFrm').serializeObject();
+					console.log(formData);
+					
+					var faqImgList = [];
+					$("[name=faqImg]").each(function(v) {
+						faqImgList.push({faqImg: $(this).val()});
+					});
+					
+					formData.faqImgList = faqImgList;
+					
 					$.ajax({
-						url : '/faq/insertFaq',
+						url : '/faq/add',
 						type : 'post',
-						data : $('#faqWriteFrm').serialize(),
+						contentType: 'application/json',
+						data : JSON.stringify(formData),
 						success : function(res) {
 							if(res[1] == 'E') {
 								alert(res[0]);
 							} else {
 								alert(res[0]);
-								location.href = '/faq/faqList';
+								location.href = '/faq/list';
 							}
 						}, 
 						error : function(request, status, error) {
@@ -72,13 +102,13 @@
 			}
 			
 			function fnCnclBtn() {
-				location.href = '/faq/faqList';
+				location.href = '/faq/list';
 			}
 		</script>
 	</head>
 	<body>
 		<div align="center">
-			<form id="faqWriteFrm">
+			<form id="faqFrm">
 				<table id="insertFaqTable">
 					<tr>
 						<td colspan="2">

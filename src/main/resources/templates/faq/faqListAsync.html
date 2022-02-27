@@ -3,10 +3,10 @@
 	<table>
 		<tr th:each="faqList : ${faqList}">
 			<td><input type="checkbox" name="faqSeq" th:value="${faqList.faqSeq}"></td>
-			<td><a th:href="@{/faq/faqDetail(faqSeq=${faqList.faqSeq})}" th:text="${faqList.faqTitle}"></a></td>
+			<td><a th:href="@{/faq/getDetail(faqSeq=${faqList.faqSeq})}" th:text="${faqList.faqTitle}"></a></td>
 			<td th:text="${faqList.faqContent}"></td>
 			<td th:text="${faqList.faqCreatedt.substring(0,10)}"></td>
-			<td><input type="button" th:onclick="'location.href=\''+@{/faq/updateFaqPage(faqSeq=${faqList.faqSeq})}+'\';'" value="수정">
+			<td><input type="button" th:onclick="'location.href=\''+@{/faq/edit(faqSeq=${faqList.faqSeq})}+'\';'" value="수정">
 			</td>
 		</tr>
 		<tr>

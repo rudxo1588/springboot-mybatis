@@ -20,12 +20,12 @@
 				}
 				if(confirm('삭제하시겠습니까?')) {
 					$.ajax({
-						url: '/faq/deleteFaq',
+						url: '/faq/deleteList',
 						data : $('#faqFrm').serialize(),
 						type : 'post',
 						success : function(res) {
 							alert('삭제되었습니다.');
-							location.reload();
+							location.href = '/faq/list'
 						},
 						error : function(request, status, error) {
 							alert('error발생');
@@ -35,12 +35,12 @@
 			}
 			
 			function faqWrite() {
-				location.href = '/faq/faqWrite';
+				location.href = '/faq/add';
 			}
 			
 			function fnSearch() {
 				$.ajax({
-					url : "/faq/getFaqList",
+					url : "/faq/getList",
 					data : $('#searchFrm').serialize(),
 					type : "post",
 					success : function(html) {
@@ -102,3 +102,5 @@
 		</form>
 	</body>
 </html>
+
+

@@ -10,8 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,52 +37,13 @@ public class FaqController {
 
 	private final FaqService faqService;
 	
-	/**
-	 * faqImg select collcetion이용하여 리스트 가져오기
-	 * @return
-	 */
-	@GetMapping("/faqImgListBySelectCollection")
-	@ResponseBody
-	public List<FaqVo> faqImgListBySelectCollection(FaqImgVo param) {
-		return faqService.faqImgListBySelectCollection(param);
-	}
-	
-	/**
-	 * faqImg join collcetion이용하여 리스트 가져오기
-	 * @return
-	 */
-	@GetMapping("/faqImgListByJoinCollection")
-	@ResponseBody
-	public List<FaqVo> faqImgListByJoinCollection() {
-		return faqService.faqImgListByJoinCollection();
-	}
-	
-	/**
-	 * faqImg select association이용하여 리스트 가져오기
-	 * @return
-	 */
-	@RequestMapping("/faqImgListByAssciation")
-	@ResponseBody
-	public List<FaqImgVo> faqImgListByAssciation() {
-		return faqService.faqImgListByAssciation();
-	}
-	
-	/**
-	 * faqImg join association이용하여 리스트 가져오기
-	 * @return
-	 */
-	@RequestMapping("/faqImgListByJoinAssociation")
-	@ResponseBody
-	public List<FaqImgVo> faqImgListByJoinAssociation() {
-		return faqService.faqImgListByJoinAssociation();
-	}
 	
 	/**
 	 * faqList 페이지로 이동하기
 	 * @return
 	 */
-	@GetMapping("/faqList")
-	public ModelAndView faqPage() {
+	@GetMapping("/list")
+	public ModelAndView list() {
 		ModelAndView mv = new ModelAndView("/faq/faqList");
 		return mv;
 	}
@@ -88,10 +52,10 @@ public class FaqController {
 	 * faqList 불러오기
 	 * @return
 	 */
-	@PostMapping("/getFaqList")
-	public ModelAndView faqListAsync(FaqVo faqVo) {
+	@PostMapping("/getList")
+	public ModelAndView getList(FaqVo faqVo) {
 		ModelAndView mv = new ModelAndView("/faq/faqListAsync");
-		mv.addObject("faqList", faqService.getFaqAllList(faqVo));
+		mv.addObject("faqList", faqService.getList(faqVo));
 		return mv;
 	}
 	
@@ -99,7 +63,7 @@ public class FaqController {
 	 * faq등록페이지로 이동
 	 * @return
 	 */
-	@GetMapping("/faqWrite")
+	@GetMapping("/add")
 	public String faqWrite() {
 		return "faq/faqWrite";
 	}
@@ -108,8 +72,8 @@ public class FaqController {
 	 * faq 등록하기
 	 * @return
 	 */
-	@PostMapping("/insertFaq")
-	public ResponseEntity<List<String>> insertFaq(@Valid FaqVo faqVo, BindingResult bindingResult, FaqImgVo faqImgVo) {
+	@PostMapping("/add")
+	public ResponseEntity<List<String>> add(@RequestBody @Valid FaqVo faqVo, BindingResult bindingResult) {
 		String errorMsg = "";
 		List<String> errorList = new ArrayList<String>();
 		if(bindingResult.hasErrors()) {	// 객체에 선언해준 NotNull에 의해 값이 null이면 true를 반환
@@ -122,11 +86,7 @@ public class FaqController {
 			errorList.add("E");
 			return ResponseEntity.ok().body(errorList);
 		} else {
-			int result = faqService.insertFaq(faqVo);
-			
-			if(result > 0) {
-				faqService.insertFaqImg(faqImgVo);
-			}
+			faqService.insertFaq(faqVo);
 			
 			errorList.add("등록되었습니다.");
 			errorList.add("S");
@@ -138,9 +98,9 @@ public class FaqController {
 	 * faq 삭제하기
 	 * @return
 	 */
-	@PostMapping("deleteFaq")
-	public ModelAndView faqDelete(@Param(value = "faqSeq")String[] faqSeq) {
-		faqService.deleteFaq(faqSeq);
+	@PostMapping("deleteList")
+	public ModelAndView deleteList(@Param(value = "faqSeq")String[] faqSeq) {
+		faqService.deleteList(faqSeq);
 		ModelAndView mv = new ModelAndView("/faq/faqList");
 		return mv;
 	}
@@ -149,8 +109,8 @@ public class FaqController {
 	 * faq 상세페이지로 이동하기
 	 * @return
 	 */
-	@GetMapping("/faqDetail")  
-	public ModelAndView faqDetail(@Param(value = "faqSeq")int faqSeq) {
+	@GetMapping("/getDetail")  
+	public ModelAndView getDetail(@Param(value = "faqSeq")int faqSeq) {
 		FaqVo faqVo = faqService.faqDetail(faqSeq);
 		ModelAndView mav = new ModelAndView("faq/faqDetail");
 		mav.addObject("faqVo", faqVo);
@@ -161,8 +121,8 @@ public class FaqController {
 	 * faq 수정화면으로 이동하기
 	 * @return
 	 */
-	@GetMapping("/updateFaqPage")
-	public ModelAndView faqUpdatePage(@Param(value = "faqSeq")int faqSeq) {
+	@GetMapping("/edit")
+	public ModelAndView edit(@Param(value = "faqSeq")int faqSeq) {
 		FaqVo faqVo = faqService.faqDetail(faqSeq);
 		ModelAndView mav = new ModelAndView("faq/faqUpdate");
 		mav.addObject("faqVo", faqVo);
@@ -173,9 +133,9 @@ public class FaqController {
 	 * faq 수정하기
 	 * @return
 	 */
-	@PostMapping("/updateFaq")
+	@PostMapping("/modify")
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public ResponseEntity<List> updateFaq(@Valid FaqVo faqVo,BindingResult bindingResult , FaqImgVo faqImgVo) {
+	public ResponseEntity<List> modify(@Valid FaqVo faqVo,BindingResult bindingResult , FaqImgVo faqImgVo) {
 		String errorMsg = "";
 		List errorList = new ArrayList();
 		if(bindingResult.hasErrors()) {
@@ -189,31 +149,11 @@ public class FaqController {
 			return ResponseEntity.ok().body(errorList); 
 		}
 		
-		int result = faqService.updateFaq(faqVo);
-		if(result > 0) {
-			faqService.updateFaqImg(faqImgVo);
-		}
+		faqService.modify(faqVo);
+		
 		errorList.add("수정되었습니다");
 		errorList.add("S");
 		return ResponseEntity.ok().body(errorList);
 	}
-	
-	/**
-	 * faqImg 삭제하기
-	 * @return
-	 */
-	@GetMapping("/deleteFaqImg")
-	public ModelAndView deleteFaqImg(FaqImgVo faqImgVo) {
-		System.out.println(faqImgVo);
-		faqService.deleteFaqImgByImgSeq(faqImgVo.getImgSeq());
-		ModelAndView mv = new ModelAndView("/faq/faqDetail?faqSeq="+faqImgVo.getFaqSeq());
-		
-		return mv;
-	}
-	
-	public int maxFaqSeq() {
-		return faqService.maxFaqSeq();
-	}
-	
 }
 

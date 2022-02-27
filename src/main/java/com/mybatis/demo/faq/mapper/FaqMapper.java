@@ -15,84 +15,34 @@ public interface FaqMapper {
 	 * class파일은 protected가 기본
 	 */
 	
-	
 	/**
-	 * faqImg select collcetion이용하여 리스트 가져오기
+	 * faq 리스트
 	 * @return
 	 */
-	List<FaqVo> faqImgListBySelectCollection(FaqImgVo param);
-	
-	/**
-	 * faqImg join collcetion이용하여 리스트 가져오기
-	 * @return
-	 */
-	List<FaqVo> faqImgListByJoinCollection();
-	
-	/**
-	 * faq, faqImg select collcetion이용하여 전체리스트 가져오기
-	 * @return
-	 */
-	List<FaqVo> getFaqAllList(FaqVo faqVo);
-	
-	/**
-	 * faqImg select association이용하여 리스트 가져오기
-	 * @return
-	 */
-	List<FaqImgVo> faqImgListByAssciation();
-	
-	/**
-	 * faqImg join association이용하여 리스트 가져오기
-	 * @return
-	 */
-	List<FaqImgVo> faqImgListByJoinAssociation();
+	List<FaqVo> getList(FaqVo faqVo);
 	
 	/**
 	 * faq 등록하기
 	 * @return
 	 */
-	int insertFaq(FaqVo faqVo);
+	int insert(FaqVo faqVo);
 	
 	/**
 	 * faq 삭제하기
 	 * @return
 	 */
-	void deleteFaqByFaqSeq(String faqSeq);
-	
-	/**
-	 * faqImg 삭제하기
-	 * @return
-	 */
-	void deleteFaqImgByFaqSeq(int faqSeq);
+	void delete(String faqSeq);
 	
 	/**
 	 * faq 상세페이지로 이동하기
 	 * @return
 	 */
-	FaqVo faqImgListBySelectCollection(int faqSeq);
+	FaqVo getDetail(int faqSeq);
 	
 	/**
 	 * faq 수정하기
 	 * @return
 	 */
-	int updateFaq(FaqVo faqVo);
-	
-	/**
-	 * faqImg 삭제하기
-	 * @return
-	 */
-	void deleteFaqImgByImgSeq(int imgSeq);
-	
-	/**
-	 * faqImg 등록하기
-	 * @return
-	 */
-	void insertFaqImg(FaqImgVo faqImgVo);
-	
-	/**
-	 * Max faq_seq구하기
-	 * @return int
-	 */
-	int maxFaqSeq();
-	
+	int update(FaqVo faqVo);
 	
 }

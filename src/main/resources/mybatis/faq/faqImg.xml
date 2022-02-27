@@ -1,41 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mybatis.demo.faq.mapper.FaqMapper">
+<mapper namespace="com.mybatis.demo.faq.mapper.FaqImgMapper">
 	
-	<!-- 
-		select를 사용한 association 방법 기본 select문을 따로 만들어서 컬렉션에서 불러와 사용
-		
-		1:1일 경우에만 사용한다.
-	 -->
-	<resultMap type="FaqImgVo" id="faqImgSelectAssciation" autoMapping="true">
-		<result column="faq_seq" property="faqSeq" />
-		<association column="faq_seq" property="faqVo" javaType="com.mybatis.demo.faq.domain.FaqVo" 
-		select="com.mybatis.demo.faq.mapper.FaqMapper.selectFaqList">
-		</association>
-	</resultMap>
-	
-	<!-- 
-		join을 이용한 association 방법
-		
-		키값은 보통 id태그를 쓰지만 result나 id 둘중 하나 아무거나 사용하여 어떤것이든 가져올수만 있다면 상관X
-		
-		result는 autoMapping="true" 를 통하여 선언해주지 않아도 자동 매핑 시켜주지만
-		직관성을 위해서 적어놓으면 유지보수나 개발 편리성에 있어서 편리하다.
-	 -->
-	<resultMap type="FaqImgVo" id="faqImgJoinAssociation">
-		<id column="img_seq" property="imgSeq" />
-		<result column="faq_seq" property="faqSeq" />
-		<result column="faq_img" property="faqImg"/>
-		<result column="del_yn" property="delYn"/>
-		<association property="faqVo">
-			<result column="faq_seq" property="faqSeq" />
-			<result column="faq_title" property="faqTitle"/>
-			<result column="faq_content" property="faqContent"/>
-			<result column="faq_createdt" property="faqCreatedt"/>
-		</association>
-	</resultMap>
-	
-	<select id="selectFaqImgList" resultType="FaqImgVo" parameterType="map">
+	<select id="getList" resultType="FaqImgVo">
 		select
 			*
 		from 
@@ -43,43 +10,10 @@
 		where 
 			faq_seq = #{faqSeq}
 		and
-			del_yn = #{delYn}
+			del_yn = 'Y'
 	</select>
 	
-	<select id="faqImgListByAssciation" resultMap="faqImgSelectAssciation">
-		select
-			*
-		from
-			faq_img
-	</select>
-	
-	<select id="faqImgListByJoinAssociation" resultMap="faqImgJoinAssociation">
-		select
-			fi.img_seq
-			, fi.faq_seq
-			, fi.faq_img
-			, fi.del_yn
-			, f.faq_title
-			, f.faq_content
-			, f.faq_createdt
-		from
-			faq_img fi , faq f
-		where 
-			fi.faq_seq = f.faq_seq
-	</select>
-	
-	<select id="getAllFaqImgList" resultType="FaqImgVo">
-		select
-			*
-		from
-			faq_img
-		where
-			faq_seq = #{faqSeq}
-		and
-			del_yn = 'N'
-	</select>
-	
-	<update id="deleteFaqImgByImgSeq" parameterType="String">
+	<update id="delete" parameterType="int">
 		update
 			faq_img
 		set
@@ -88,7 +22,7 @@
 			img_seq = #{imgSeq}	
 	</update>
 	
-	<delete id="deleteFaqImgByFaqSeq" parameterType="int">
+	<delete id="deleteByFaqSeq" parameterType="int">
 		delete
 		from
 		faq_img
@@ -96,7 +30,7 @@
 			faq_seq = #{faqSeq}
 	</delete>
 	
-	<insert id="insertFaqImg" parameterType="FaqImgVo">
+	<insert id="insert" parameterType="FaqImgVo">
 		insert	into
 			faq_img
 			(faq_seq, faq_img, del_yn)
