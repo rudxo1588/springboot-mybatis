@@ -79,7 +79,7 @@
 			del_yn = 'N'
 	</select>
 	
-	<update id="deleteFaqImgByImgSeq" parameterType="int">
+	<update id="deleteFaqImgByImgSeq" parameterType="String">
 		update
 			faq_img
 		set

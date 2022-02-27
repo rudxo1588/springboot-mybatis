@@ -39,8 +39,8 @@ public class FaqService {
 	 * faqImg select collcetion이용하여 리스트 가져오기
 	 * @return
 	 */
-	public List<FaqVo> getFaqAllList() {
-		return faqMapper.getFaqAllList();
+	public List<FaqVo> getFaqAllList(FaqVo faqVo) {
+		return faqMapper.getFaqAllList(faqVo);
 	}
 	
 	/**
@@ -83,6 +83,7 @@ public class FaqService {
 	@Transactional
 	public void deleteFaq(String[] faqSeq) {
 		for(int i = 0; i < faqSeq.length; i++) {
+			System.out.println(faqSeq[i]);
 			faqMapper.deleteFaqByFaqSeq(faqSeq[i]);
 		}
 	}
@@ -119,8 +120,9 @@ public class FaqService {
 	 */
 	@Transactional
 	public void insertFaqImg(FaqImgVo faqImgVo) {
-		if(faqImgVo.getFaqImg() != null && "".equals(faqImgVo.getFaqImg())) {
+		if(faqImgVo.getFaqImg() != null && !"".equals(faqImgVo.getFaqImg())) {
 			String[] imgList = faqImgVo.getFaqImg().split(",");
+			System.out.println(maxFaqSeq());
 			if(imgList != null && imgList.length > 0) {
 				faqImgVo.setFaqSeq(maxFaqSeq());
 				for(int i = 0; i<imgList.length; i++) {

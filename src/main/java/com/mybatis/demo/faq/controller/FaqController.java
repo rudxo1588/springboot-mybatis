@@ -89,9 +89,9 @@ public class FaqController {
 	 * @return
 	 */
 	@PostMapping("/getFaqList")
-	public ModelAndView faqListAsync() {
+	public ModelAndView faqListAsync(FaqVo faqVo) {
 		ModelAndView mv = new ModelAndView("/faq/faqListAsync");
-		mv.addObject("faqList", faqService.getFaqAllList());
+		mv.addObject("faqList", faqService.getFaqAllList(faqVo));
 		return mv;
 	}
 	
@@ -138,10 +138,11 @@ public class FaqController {
 	 * faq 삭제하기
 	 * @return
 	 */
-	@GetMapping("deleteFaq")
-	public void faqDelete(@Param(value = "faqSeq")String[] faqSeq) {
-		System.out.println(faqSeq);
+	@PostMapping("deleteFaq")
+	public ModelAndView faqDelete(@Param(value = "faqSeq")String[] faqSeq) {
 		faqService.deleteFaq(faqSeq);
+		ModelAndView mv = new ModelAndView("/faq/faqList");
+		return mv;
 	}
 	
 	/**
@@ -202,13 +203,17 @@ public class FaqController {
 	 * @return
 	 */
 	@GetMapping("/deleteFaqImg")
-	public void deleteFaqImg(@Param(value = "imgSeq")int imgSeq) {
-		faqService.deleteFaqImgByImgSeq(imgSeq);
+	public ModelAndView deleteFaqImg(FaqImgVo faqImgVo) {
+		System.out.println(faqImgVo);
+		faqService.deleteFaqImgByImgSeq(faqImgVo.getImgSeq());
+		ModelAndView mv = new ModelAndView("/faq/faqDetail?faqSeq="+faqImgVo.getFaqSeq());
+		
+		return mv;
 	}
 	
 	public int maxFaqSeq() {
 		return faqService.maxFaqSeq();
 	}
+	
 }
-
 

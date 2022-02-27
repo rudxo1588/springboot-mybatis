@@ -7,14 +7,7 @@
 		<script src="../js/lodash.min.js"></script>
 		<script>
 			$(function(){
-				
-				$.ajax({
-					url : "/faq/getFaqList",
-					type : "post",
-					success : function(html) {
-						$('#asyncBody').html(html);
-					}
-				});
+				fnSearch();
 			});
 			
 			
@@ -26,11 +19,10 @@
 					return;
 				}
 				if(confirm('삭제하시겠습니까?')) {
-					console.log($('#faqFrm').serialize());
 					$.ajax({
 						url: '/faq/deleteFaq',
 						data : $('#faqFrm').serialize(),
-						type : 'get',
+						type : 'post',
 						success : function(res) {
 							alert('삭제되었습니다.');
 							location.reload();
@@ -45,9 +37,43 @@
 			function faqWrite() {
 				location.href = '/faq/faqWrite';
 			}
+			
+			function fnSearch() {
+				$.ajax({
+					url : "/faq/getFaqList",
+					data : $('#searchFrm').serialize(),
+					type : "post",
+					success : function(html) {
+						$('#asyncBody').html(html);
+					}
+				});
+			}
+			
+			function enterkey() {
+				if (window.event.keyCode == 13) {
+					fnSearch();
+			    }
+			}
 		</script>
 	</head>
 	<body>
+		<form id="searchFrm">
+			<div align="center">
+				<table>
+					<tr>
+						<th>제목</th>
+						<td><input type="text" id="faqTitle" name="faqTitle" onkeyup="enterkey()">
+						<th>내용</th>
+						<td><input type="text" id="faqContent" name="faqContent" onkeyup="enterkey()">
+					</tr>
+					<tr>
+						<td colspan="4" align="right">
+							<button type="button" onclick="fnSearch()">검색</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</form>
 		<form id="faqFrm">
 			<div id="faqListDiv" align="center">
 				<h1>Faq 리스트</h1>

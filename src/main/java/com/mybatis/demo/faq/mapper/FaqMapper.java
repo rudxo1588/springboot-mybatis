@@ -32,7 +32,7 @@ public interface FaqMapper {
 	 * faq, faqImg select collcetion이용하여 전체리스트 가져오기
 	 * @return
 	 */
-	List<FaqVo> getFaqAllList();
+	List<FaqVo> getFaqAllList(FaqVo faqVo);
 	
 	/**
 	 * faqImg select association이용하여 리스트 가져오기

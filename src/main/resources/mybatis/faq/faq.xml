@@ -90,6 +90,12 @@
 			faq
 		where
 			faq_del_yn = 'N'
+		<if test="faqTitle != null and !''.equals(faqTitle)">
+			and	faq_title like CONCAT('%',#{faqTitle},'%')
+		</if>	
+		<if test="faqContent != null and !''.equals(faqContent)">
+			and	faq_content like CONCAT('%',#{faqContent},'%')
+		</if>	
 	</select>
 	
 	<update id="deleteFaqByFaqSeq" parameterType="String">
