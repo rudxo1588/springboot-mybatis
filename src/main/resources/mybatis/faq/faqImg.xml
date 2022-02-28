@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.demo.faq.mapper.FaqImgMapper">
-	
-	<select id="getList" resultType="FaqImgVo">
+
+	<select id="getImgDetail" resultType="FaqImgVo" parameterType="int">
 		select
 			*
-		from 
+		from
 			faq_img
-		where 
+		where
 			faq_seq = #{faqSeq}
 		and
-			del_yn = 'Y'
+			del_yn = 'N'
 	</select>
-	
+
 	<update id="delete" parameterType="int">
 		update
 			faq_img
 		set
 			del_yn = 'Y'
 		where
-			img_seq = #{imgSeq}	
+			img_seq = #{imgSeq}
 	</update>
-	
+
 	<delete id="deleteByFaqSeq" parameterType="int">
 		delete
 		from
@@ -29,7 +29,7 @@
 		where
 			faq_seq = #{faqSeq}
 	</delete>
-	
+
 	<insert id="insert" parameterType="FaqImgVo">
 		insert	into
 			faq_img

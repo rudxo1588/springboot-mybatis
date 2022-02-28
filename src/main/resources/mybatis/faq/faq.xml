@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.demo.faq.mapper.FaqMapper">
-	
+
 	<resultMap type="FaqVo" id="getDetailMap" autoMapping="true">
 		<id column="faq_seq" property="faqSeq" />
-		<collection property="faqImgList" column="faq_seq" select="getImgDetail" ofType="FaqImgVo" />
+		<collection column="faq_seq" property="faqImgList" javaType="java.util.ArrayList"
+		select="com.mybatis.demo.faq.mapper.FaqImgMapper.getImgDetail"
+		ofType="com.mybatis.demo.faq.domain.FaqImgVo" autoMapping="true"/>
 	</resultMap>
-	
+
 	<select id="getList" resultType="FaqVo">
 		select
 			*
-		from 
+		from
 			faq
 		where
 			faq_del_yn = 'N'
@@ -21,7 +23,7 @@
 			AND faq_Content like CONCAT('%',#{faqContent},'%')
 		</if>
 	</select>
-	
+
 	<insert id="insert" parameterType="FaqVo" useGeneratedKeys="true" keyProperty="faqSeq">
 		insert into
 		faq
@@ -29,33 +31,33 @@
 		values
 		(#{faqTitle}, #{faqContent}, 'N')
 	</insert>
-	
+
 	<update id="delete" parameterType="String">
-		update 
+		update
 			faq
-		set 
+		set
 			faq_del_yn = 'Y'
-		where 
+		where
 			faq_seq = #{faqSeq}
 	</update>
-	
+
 	<update id="update" parameterType="FaqVo">
-		update 
+		update
 			faq
-		set 
+		set
 			faq_title = #{faqTitle}
 			, faq_content = #{faqContent}
-		where 
+		where
 			faq_seq = #{faqSeq}
 	</update>
-	
-	<select id="getDetail" resultMap="getDetailMap">
+
+	<select id="getDetail" resultMap="getDetailMap" parameterType="int">
 		select
 			*
 		from faq
-		where faq_seq = #{faqSeq}	
+		where faq_seq = #{faqSeq}
 	</select>
-	
+
 	<select id="getImgDetail" resultType="FaqImgVo">
 		select
 			*

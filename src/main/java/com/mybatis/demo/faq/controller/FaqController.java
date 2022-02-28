@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 
 
 /**
-* @Controller는 해당 클래스가 Controller임을 나타냄 
+* @Controller는 해당 클래스가 Controller임을 나타냄
 */
 
 @Controller
@@ -36,8 +36,8 @@ import lombok.RequiredArgsConstructor;
 public class FaqController {
 
 	private final FaqService faqService;
-	
-	
+
+
 	/**
 	 * faqList 페이지로 이동하기
 	 * @return
@@ -47,7 +47,7 @@ public class FaqController {
 		ModelAndView mv = new ModelAndView("/faq/faqList");
 		return mv;
 	}
-	
+
 	/**
 	 * faqList 불러오기
 	 * @return
@@ -58,7 +58,7 @@ public class FaqController {
 		mv.addObject("faqList", faqService.getList(faqVo));
 		return mv;
 	}
-	
+
 	/**
 	 * faq등록페이지로 이동
 	 * @return
@@ -67,7 +67,7 @@ public class FaqController {
 	public String faqWrite() {
 		return "faq/faqWrite";
 	}
-	
+
 	/**
 	 * faq 등록하기
 	 * @return
@@ -75,25 +75,26 @@ public class FaqController {
 	@PostMapping("/add")
 	public ResponseEntity<List<String>> add(@RequestBody @Valid FaqVo faqVo, BindingResult bindingResult) {
 		String errorMsg = "";
+		System.out.println(faqVo);
 		List<String> errorList = new ArrayList<String>();
 		if(bindingResult.hasErrors()) {	// 객체에 선언해준 NotNull에 의해 값이 null이면 true를 반환
 			List<ObjectError> objectError = bindingResult.getAllErrors();
-			
-			for (ObjectError error : objectError) 
+
+			for (ObjectError error : objectError)
 				errorMsg = error.getDefaultMessage();
-				
+
 			errorList.add(errorMsg);
 			errorList.add("E");
 			return ResponseEntity.ok().body(errorList);
 		} else {
 			faqService.insertFaq(faqVo);
-			
+
 			errorList.add("등록되었습니다.");
 			errorList.add("S");
 			return ResponseEntity.ok().body(errorList);
 		}
 	}
-	
+
 	/**
 	 * faq 삭제하기
 	 * @return
@@ -104,19 +105,20 @@ public class FaqController {
 		ModelAndView mv = new ModelAndView("/faq/faqList");
 		return mv;
 	}
-	
+
 	/**
 	 * faq 상세페이지로 이동하기
 	 * @return
 	 */
-	@GetMapping("/getDetail")  
+	@GetMapping("/getDetail")
 	public ModelAndView getDetail(@Param(value = "faqSeq")int faqSeq) {
 		FaqVo faqVo = faqService.faqDetail(faqSeq);
 		ModelAndView mav = new ModelAndView("faq/faqDetail");
+		System.out.println(faqVo);
 		mav.addObject("faqVo", faqVo);
 		return mav;
 	}
-	
+
 	/**
 	 * faq 수정화면으로 이동하기
 	 * @return
@@ -128,7 +130,7 @@ public class FaqController {
 		mav.addObject("faqVo", faqVo);
 		return mav;
 	}
-	
+
 	/**
 	 * faq 수정하기
 	 * @return
@@ -140,17 +142,17 @@ public class FaqController {
 		List errorList = new ArrayList();
 		if(bindingResult.hasErrors()) {
 			List<ObjectError> objectError = bindingResult.getAllErrors();
-			
+
 			for(ObjectError error : objectError)
 				errorMsg = error.getDefaultMessage();
-			
+
 			errorList.add(errorMsg);
 			errorList.add("E");
-			return ResponseEntity.ok().body(errorList); 
+			return ResponseEntity.ok().body(errorList);
 		}
-		
+
 		faqService.modify(faqVo);
-		
+
 		errorList.add("수정되었습니다");
 		errorList.add("S");
 		return ResponseEntity.ok().body(errorList);
