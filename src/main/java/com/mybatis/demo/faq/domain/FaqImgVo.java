@@ -14,9 +14,4 @@ public class FaqImgVo {
 	private String faqImg;
 	
 	private String delYn;
-	
-	private FaqVo faqVo;
-	
-	private List<FaqVo> faqVoList;
-	
 }

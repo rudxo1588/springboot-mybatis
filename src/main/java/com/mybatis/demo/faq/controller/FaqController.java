@@ -53,10 +53,9 @@ public class FaqController {
 	 * @return
 	 */
 	@PostMapping("/getList")
-	public ModelAndView getList(FaqVo faqVo) {
-		ModelAndView mv = new ModelAndView("/faq/faqListAsync");
-		mv.addObject("faqList", faqService.getList(faqVo));
-		return mv;
+	@ResponseBody
+	public List<FaqVo> getList(FaqVo faqVo) {
+		return faqService.getList(faqVo);
 	}
 
 	/**
@@ -64,7 +63,7 @@ public class FaqController {
 	 * @return
 	 */
 	@GetMapping("/add")
-	public String faqWrite() {
+	public String addPage() {
 		return "faq/faqWrite";
 	}
 
@@ -87,7 +86,7 @@ public class FaqController {
 			errorList.add("E");
 			return ResponseEntity.ok().body(errorList);
 		} else {
-			faqService.insertFaq(faqVo);
+			faqService.add(faqVo);
 
 			errorList.add("등록되었습니다.");
 			errorList.add("S");
@@ -112,7 +111,7 @@ public class FaqController {
 	 */
 	@GetMapping("/getDetail")
 	public ModelAndView getDetail(@Param(value = "faqSeq")int faqSeq) {
-		FaqVo faqVo = faqService.faqDetail(faqSeq);
+		FaqVo faqVo = faqService.getDetail(faqSeq);
 		ModelAndView mav = new ModelAndView("faq/faqDetail");
 		System.out.println(faqVo);
 		mav.addObject("faqVo", faqVo);
@@ -125,7 +124,7 @@ public class FaqController {
 	 */
 	@GetMapping("/edit")
 	public ModelAndView edit(@Param(value = "faqSeq")int faqSeq) {
-		FaqVo faqVo = faqService.faqDetail(faqSeq);
+		FaqVo faqVo = faqService.getDetail(faqSeq);
 		ModelAndView mav = new ModelAndView("faq/faqUpdate");
 		mav.addObject("faqVo", faqVo);
 		return mav;
@@ -136,10 +135,10 @@ public class FaqController {
 	 * @return
 	 */
 	@PostMapping("/modify")
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public ResponseEntity<List> modify(@Valid FaqVo faqVo,BindingResult bindingResult , FaqImgVo faqImgVo) {
+	public ResponseEntity<List<String>> modify(@RequestBody @Valid FaqVo faqVo,BindingResult bindingResult) {
+		System.out.println(faqVo);
 		String errorMsg = "";
-		List errorList = new ArrayList();
+		List<String> errorList = new ArrayList<String>();
 		if(bindingResult.hasErrors()) {
 			List<ObjectError> objectError = bindingResult.getAllErrors();
 

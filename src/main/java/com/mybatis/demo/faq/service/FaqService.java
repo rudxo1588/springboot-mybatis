@@ -30,7 +30,7 @@ public class FaqService {
 	private final FaqImgService faqImgService;
 	
 	/**
-	 * faqImg select collcetion이용하여 리스트 가져오기
+	 * faqImg select collcetion이용하여 이미지리스트까지 가져오기
 	 * @return
 	 */
 	public List<FaqVo> getList(FaqVo faqVo) {
@@ -42,7 +42,7 @@ public class FaqService {
 	 * @return
 	 */
 	@Transactional
-	public int insertFaq(FaqVo faqVo) {
+	public int add(FaqVo faqVo) {
 		int result = faqMapper.insert(faqVo);
 		
 		if (result > 0) {
@@ -68,7 +68,7 @@ public class FaqService {
 	 * faq 상세페이지로 이동하기
 	 * @return
 	 */
-	public FaqVo faqDetail(int faqSeq) {
+	public FaqVo getDetail(int faqSeq) {
 		return faqMapper.getDetail(faqSeq);
 	}
 	

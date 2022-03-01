@@ -4,13 +4,13 @@
 		<meta charset="UTF-8">
 		<title>faq목록화면</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script src="../js/lodash.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.tmpl.min.js"></script>
 		<script>
 			$(function(){
 				fnSearch();
 			});
 			
-			
+			// 삭제
 			function deleteFaq() {
 				var checkbox = $("input:checkbox[name=faqSeq]:checked");
 				
@@ -34,25 +34,37 @@
 				}
 			}
 			
+			// 등록페이지
 			function faqWrite() {
 				location.href = '/faq/add';
 			}
 			
+			// 검색리스트
 			function fnSearch() {
 				$.ajax({
 					url : "/faq/getList",
 					data : $('#searchFrm').serialize(),
 					type : "post",
-					success : function(html) {
-						$('#asyncBody').html(html);
+					dataType : "json",
+					success : function(res) {
+						for(var i = 0; i<res.length; i++) {
+							$('#faqListTmpl').tmpl([{faqSeq : res[i].faqSeq, faqSeq : res[i].faqSeq, faqTitle : res[i].faqTitle
+								,faqContent : res[i].faqContent, faqCreatedt : res[i].faqCreatedt,faqSeq : res[i].faqSeq}]).prependTo('#listBody');
+						}
 					}
 				});
 			}
 			
+			// 인풋검색창 엔터검색시
 			function enterkey() {
 				if (window.event.keyCode == 13) {
 					fnSearch();
 			    }
+			}
+			
+			// 수정페에지
+			function fnUpdateBtn(seq) {
+				location.href = '/faq/edit?faqSeq='+seq;
 			}
 		</script>
 	</head>
@@ -94,13 +106,28 @@
 							<th>버튼</th>
 						</tr>
 					</thead>
-					<tbody id="asyncBody">
+					<tbody id="listBody">
 					
+						<tr>
+							<td colspan="5" align="right">
+								<button type="button" onclick="deleteFaq()">삭제</button>
+								<button type="button" onclick="faqWrite()">등록하기</button>
+							</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
 		</form>
 	</body>
+	<script type="text/x-jQuery-tmpl" id="faqListTmpl">
+		<tr>
+			<td><input type="checkbox" name="faqSeq" value="{{= faqSeq}}"></td>
+			<td><a href="/faq/getDetail?faqSeq={{= faqSeq}}">{{= faqTitle}}</a></td>
+			<td>{{= faqContent}}</td>
+			<td>{{= faqCreatedt.substring(0,10)}}</td>
+			<td><input type="button" value="수정" onclick="fnUpdateBtn({{= faqSeq}})"></td>
+		</tr>
+	</script>
 </html>
 
 

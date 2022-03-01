@@ -24,18 +24,24 @@ public class FaqImgService {
 
 	private final FaqImgMapper faqImgMapper;
 	
-	
-	public int insertFaqImg(FaqImgVo vo) {
-		System.out.println(vo);
+	/**
+	 * faqImg 등록
+	 * @return
+	 */
+	public int add(FaqImgVo vo) {
 		return faqImgMapper.insert(vo);
 	}
 	
+	/**
+	 * faqImg size만큼 등록 메소드 조회
+	 * @return
+	 */
 	public int addList(int faqSeq, List<FaqImgVo> list) {
 		int result = 0;
 		if (list != null && list.size() > 0) {
 			for (FaqImgVo vo : list) {
 				vo.setFaqSeq(faqSeq);
-				result += this.insertFaqImg(vo);
+				result += this.add(vo);
 			}
 		}
 		return result;
@@ -51,7 +57,7 @@ public class FaqImgService {
 	}
 	
 	/**
-	 * faqImg 삭제하기
+	 * faqImg faqSeq로 삭제하기 
 	 * @return
 	 */
 	@Transactional
@@ -72,7 +78,7 @@ public class FaqImgService {
 			if (list != null && list.size() > 0) {
 				for (FaqImgVo vo : list) {
 					vo.setFaqSeq(faqSeq);
-					result += this.insertFaqImg(vo);
+					result += this.add(vo);
 				}
 			}
 		}

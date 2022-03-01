@@ -27,6 +27,7 @@
 			}
 			var idx = 0;
 			function faqWrite() {
+				
 				if(confirm('등록하시겠습니까?')) {
 					
 					if($('#faqTitle').val() == '') {
@@ -53,10 +54,10 @@
 					}
 					
 					var formData = $('#faqFrm').serializeObject();
-					console.log(formData);
 					
 					var faqImgList = [];
 					$("[name=faqImg]").each(function(v) {
+						$(this).attr('id', 'faqImg'+Number(v+1))
 						faqImgList.push({faqImg: $(this).val()});
 					});
 					
