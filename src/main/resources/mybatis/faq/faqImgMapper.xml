@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.demo.faq.mapper.FaqImgMapper">
 
-	<select id="getImgDetail" resultType="FaqImgVo" parameterType="int">
+	<select id="getImgDetail" resultType="FaqImg" parameterType="int">
 		select
 			*
 		from
@@ -30,7 +30,7 @@
 			faq_seq = #{faqSeq}
 	</delete>
 
-	<insert id="insert" parameterType="FaqImgVo">
+	<insert id="insert" parameterType="FaqImg">
 		insert	into
 			faq_img
 			(faq_seq, faq_img, del_yn)

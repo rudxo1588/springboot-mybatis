@@ -97,12 +97,11 @@
 				}
 				 
 				$.ajax({
-					url: '/faq/deleteFaqImg',
+					url: '/faq/deleteImg',
 					data : {
 						'imgSeq' : imgSeq,
-						'faqSeq' : faqSeq
 						},
-					type : 'get',
+					type : 'post',
 					success : function(res) {
 						alert('삭제되었습니다.');
 						location.reload();
@@ -127,6 +126,26 @@
 			
 			function delRow(obj) {
 				$(obj).parent().parent().remove();	
+			}
+			
+			function fnDelBtn() {
+				var seq = $('#faqSeq').val()
+				if(confirm('삭제하시겠습니까?')) {
+				
+					$.ajax({
+						url : '/faq/deleteList',
+						data : {'faqSeq' : seq},
+						type : 'post',
+						success : function(res) {
+							alert('삭제되었습니다.');
+							location.href = '/faq/list';
+						}, 
+						error : function() {
+							console.log('에러발생');
+						}
+					});
+				}
+				
 			}
 		</script>
 	</head>
@@ -170,6 +189,7 @@
 				<br>
 				<div align="right" style="width:400px;">
 					<button type="button" onclick="updateFaq()">수정하기</button>
+					<button type="button" onclick="fnDelBtn()">삭제</button>
 					<button type="button" onclick="fnCnclBtn()">취소</button>
 				</div>
 			</form>

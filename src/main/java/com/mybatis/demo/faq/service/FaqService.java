@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mybatis.demo.faq.domain.FaqImgVo;
-import com.mybatis.demo.faq.domain.FaqVo;
+import com.mybatis.demo.faq.domain.FaqImg;
+import com.mybatis.demo.faq.domain.Faq;
 import com.mybatis.demo.faq.mapper.FaqMapper;
 
 import lombok.NonNull;
@@ -33,7 +33,7 @@ public class FaqService {
 	 * faqImg select collcetion이용하여 이미지리스트까지 가져오기
 	 * @return
 	 */
-	public List<FaqVo> getList(FaqVo faqVo) {
+	public List<Faq> getList(Faq faqVo) {
 		return faqMapper.getList(faqVo);
 	}
 	
@@ -42,7 +42,7 @@ public class FaqService {
 	 * @return
 	 */
 	@Transactional
-	public int add(FaqVo faqVo) {
+	public int add(Faq faqVo) {
 		int result = faqMapper.insert(faqVo);
 		
 		if (result > 0) {
@@ -68,7 +68,7 @@ public class FaqService {
 	 * faq 상세페이지로 이동하기
 	 * @return
 	 */
-	public FaqVo getDetail(int faqSeq) {
+	public Faq getDetail(int faqSeq) {
 		return faqMapper.getDetail(faqSeq);
 	}
 	
@@ -77,7 +77,7 @@ public class FaqService {
 	 * @return
 	 */
 	@Transactional
-	public int modify(FaqVo faqVo) {
+	public int modify(Faq faqVo) {
 		int result = faqMapper.update(faqVo);
 		
 		if(result > 0) {

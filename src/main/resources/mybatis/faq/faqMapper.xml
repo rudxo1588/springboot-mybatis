@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.demo.faq.mapper.FaqMapper">
 
-	<resultMap type="FaqVo" id="getDetailMap" autoMapping="true">
+	<resultMap type="Faq" id="getDetailMap" autoMapping="true">
 		<id column="faq_seq" property="faqSeq" />
 		<collection column="faq_seq" property="faqImgList" javaType="java.util.ArrayList"
 		select="com.mybatis.demo.faq.mapper.FaqImgMapper.getImgDetail"
-		ofType="com.mybatis.demo.faq.domain.FaqImgVo" autoMapping="true"/>
+		ofType="com.mybatis.demo.faq.domain.FaqImg" autoMapping="true"/>
 	</resultMap>
 
-	<select id="getList" resultType="FaqVo">
+	<select id="getList" resultType="Faq">
 		select
 			*
 		from
@@ -24,7 +24,7 @@
 		</if>
 	</select>
 
-	<insert id="insert" parameterType="FaqVo" useGeneratedKeys="true" keyProperty="faqSeq">
+	<insert id="insert" parameterType="Faq" useGeneratedKeys="true" keyProperty="faqSeq">
 		insert into
 		faq
 		(faq_title, faq_content, faq_del_yn)
@@ -41,7 +41,7 @@
 			faq_seq = #{faqSeq}
 	</update>
 
-	<update id="update" parameterType="FaqVo">
+	<update id="update" parameterType="Faq">
 		update
 			faq
 		set
@@ -58,7 +58,7 @@
 		where faq_seq = #{faqSeq}
 	</select>
 
-	<select id="getImgDetail" resultType="FaqImgVo">
+	<select id="getImgDetail" resultType="FaqImg">
 		select
 			*
 		from faq_img

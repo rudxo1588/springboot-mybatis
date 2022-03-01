@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class FaqImgVo {
+public class FaqImg {
 
 	private int imgSeq;
 	

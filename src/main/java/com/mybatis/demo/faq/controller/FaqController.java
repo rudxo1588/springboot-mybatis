@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mybatis.demo.faq.domain.FaqImgVo;
-import com.mybatis.demo.faq.domain.FaqVo;
+import com.mybatis.demo.faq.domain.FaqImg;
+import com.mybatis.demo.faq.domain.Faq;
+import com.mybatis.demo.faq.service.FaqImgService;
 import com.mybatis.demo.faq.service.FaqService;
 
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,8 @@ import lombok.RequiredArgsConstructor;
 public class FaqController {
 
 	private final FaqService faqService;
+	
+	private final FaqImgService faqImgService;
 
 
 	/**
@@ -54,7 +57,7 @@ public class FaqController {
 	 */
 	@PostMapping("/getList")
 	@ResponseBody
-	public List<FaqVo> getList(FaqVo faqVo) {
+	public List<Faq> getList(Faq faqVo) {
 		return faqService.getList(faqVo);
 	}
 
@@ -72,7 +75,7 @@ public class FaqController {
 	 * @return
 	 */
 	@PostMapping("/add")
-	public ResponseEntity<List<String>> add(@RequestBody @Valid FaqVo faqVo, BindingResult bindingResult) {
+	public ResponseEntity<List<String>> add(@RequestBody @Valid Faq faqVo, BindingResult bindingResult) {
 		String errorMsg = "";
 		System.out.println(faqVo);
 		List<String> errorList = new ArrayList<String>();
@@ -99,10 +102,9 @@ public class FaqController {
 	 * @return
 	 */
 	@PostMapping("deleteList")
-	public ModelAndView deleteList(@Param(value = "faqSeq")String[] faqSeq) {
+	@ResponseBody
+	public void deleteList(@Param(value = "faqSeq")String[] faqSeq) {
 		faqService.deleteList(faqSeq);
-		ModelAndView mv = new ModelAndView("/faq/faqList");
-		return mv;
 	}
 
 	/**
@@ -111,9 +113,8 @@ public class FaqController {
 	 */
 	@GetMapping("/getDetail")
 	public ModelAndView getDetail(@Param(value = "faqSeq")int faqSeq) {
-		FaqVo faqVo = faqService.getDetail(faqSeq);
+		Faq faqVo = faqService.getDetail(faqSeq);
 		ModelAndView mav = new ModelAndView("faq/faqDetail");
-		System.out.println(faqVo);
 		mav.addObject("faqVo", faqVo);
 		return mav;
 	}
@@ -124,7 +125,7 @@ public class FaqController {
 	 */
 	@GetMapping("/edit")
 	public ModelAndView edit(@Param(value = "faqSeq")int faqSeq) {
-		FaqVo faqVo = faqService.getDetail(faqSeq);
+		Faq faqVo = faqService.getDetail(faqSeq);
 		ModelAndView mav = new ModelAndView("faq/faqUpdate");
 		mav.addObject("faqVo", faqVo);
 		return mav;
@@ -135,8 +136,7 @@ public class FaqController {
 	 * @return
 	 */
 	@PostMapping("/modify")
-	public ResponseEntity<List<String>> modify(@RequestBody @Valid FaqVo faqVo,BindingResult bindingResult) {
-		System.out.println(faqVo);
+	public ResponseEntity<List<String>> modify(@RequestBody @Valid Faq faqVo,BindingResult bindingResult) {
 		String errorMsg = "";
 		List<String> errorList = new ArrayList<String>();
 		if(bindingResult.hasErrors()) {
@@ -156,5 +156,16 @@ public class FaqController {
 		errorList.add("S");
 		return ResponseEntity.ok().body(errorList);
 	}
+	
+	/**
+	 * faqImg 삭제하기
+	 * @return
+	 */
+	@PostMapping("/deleteImg")
+	@ResponseBody
+	public void deleteImg(FaqImg faqImgVo) {
+		faqImgService.delete(faqImgVo.getImgSeq());
+	}
+	
 }
 

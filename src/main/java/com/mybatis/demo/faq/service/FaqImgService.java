@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mybatis.demo.faq.domain.FaqImgVo;
+import com.mybatis.demo.faq.domain.FaqImg;
 import com.mybatis.demo.faq.mapper.FaqImgMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class FaqImgService {
 	 * faqImg 등록
 	 * @return
 	 */
-	public int add(FaqImgVo vo) {
+	public int add(FaqImg vo) {
 		return faqImgMapper.insert(vo);
 	}
 	
@@ -36,10 +36,10 @@ public class FaqImgService {
 	 * faqImg size만큼 등록 메소드 조회
 	 * @return
 	 */
-	public int addList(int faqSeq, List<FaqImgVo> list) {
+	public int addList(int faqSeq, List<FaqImg> list) {
 		int result = 0;
 		if (list != null && list.size() > 0) {
-			for (FaqImgVo vo : list) {
+			for (FaqImg vo : list) {
 				vo.setFaqSeq(faqSeq);
 				result += this.add(vo);
 			}
@@ -71,16 +71,17 @@ public class FaqImgService {
 	 * @param list
 	 */
 	@Transactional
-	public void modify(int faqSeq, List<FaqImgVo> list) {
+	public void modify(int faqSeq, List<FaqImg> list) {
 		int result = this.deleteByFaqSeq(faqSeq);
 		
 		if(result > 0) {
 			if (list != null && list.size() > 0) {
-				for (FaqImgVo vo : list) {
+				for (FaqImg vo : list) {
 					vo.setFaqSeq(faqSeq);
 					result += this.add(vo);
 				}
 			}
 		}
 	}
+	
 }

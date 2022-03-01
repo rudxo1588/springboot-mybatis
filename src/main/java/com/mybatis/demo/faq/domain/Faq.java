@@ -20,7 +20,7 @@ import lombok.Data;
  * 이런 부분들은 리펙토링 대상이기 때문에 롬복을 사용할 경우 리팩토링이 힘들어지는 단점이 있다.
  */
 @Data
-public class FaqVo extends PagingVo{
+public class Faq extends PagingVo{
 	
 	
 	private int faqSeq;
@@ -35,6 +35,6 @@ public class FaqVo extends PagingVo{
 	
 	private String faqDelYn;
 	
-	private List<FaqImgVo> faqImgList;
+	private List<FaqImg> faqImgList;
 	 
 }
