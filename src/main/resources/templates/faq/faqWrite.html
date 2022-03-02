@@ -30,6 +30,8 @@
 				
 				if(confirm('등록하시겠습니까?')) {
 					
+					
+					
 					if($('#faqTitle').val() == '') {
 						alert('제목을 입력해 주세요');
 						$('#faqTitle').focus();
@@ -44,6 +46,14 @@
 					
 					var cnt = $('input[name=faqImg]').length;
 					
+					var faqImgList = [];
+					
+					$('.imgIdxClass').each(function(v) {
+						$(this).attr('name', 'faqImgList['+v+'].faqImg')
+						$(this).attr('id', 'faqImg'+v)
+						faqImgList.push({faqImg: $(this).val()});
+					})
+					
 					if(cnt > 0) {
 						for(var i = 0; i<=cnt; i++) {
 							if($('#faqImg'+i).val() == '') {
@@ -54,12 +64,6 @@
 					}
 					
 					var formData = $('#faqFrm').serializeObject();
-					
-					var faqImgList = [];
-					$("[name=faqImg]").each(function(v) {
-						$(this).attr('id', 'faqImg'+Number(v+1))
-						faqImgList.push({faqImg: $(this).val()});
-					});
 					
 					formData.faqImgList = faqImgList;
 					
@@ -84,8 +88,8 @@
 			}
 			
 			function addRow() {
-				idx++;
-				var cnt = $('input[name=faqImg]').length+1;
+				
+				var cnt = $('.imgIdxClass').length+1;
 				
 				if(cnt > 5) {
 					alert('최대 등록가능한 이미지 갯수는 5개 입니다.');
@@ -96,6 +100,7 @@
 				
 				// 변수에 값 넣기 샘플
 				//$('#sampleData').tmpl([{ sample1: 1, sample2: 2 }]).appendTo('body');
+				idx++;
 			}
 			
 			function delRow(obj) {
@@ -140,7 +145,7 @@
 <!-- {{= sample1}} 변수선언 -->
 	<script type="text/x-jQuery-tmpl" id="addRowTmpl">
 		<tr>
-			<td><input type="text" id="faqImg{{= idx}}" name="faqImg">
+			<td><input type="text" class="imgIdxClass" id="faqImg{{= idx}}" name="faqImgList[{{= idx}}].faqImg">
 				<button type="button" onclick="delRow(this)">-</button>
 			</td>
 		</tr>

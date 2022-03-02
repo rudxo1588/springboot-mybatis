@@ -89,7 +89,7 @@ public class FaqController {
 			errorList.add("E");
 			return ResponseEntity.ok().body(errorList);
 		} else {
-			faqService.add(faqVo);
+//			faqService.add(faqVo);
 
 			errorList.add("등록되었습니다.");
 			errorList.add("S");

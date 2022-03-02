@@ -47,6 +47,14 @@
 					
 					var cnt = $('input[name=faqImg]').length;
 					
+					var faqImgList = [];
+					
+					$('.imgIdxClass').each(function(v) {
+						$(this).attr('name', 'faqImgList['+v+'].faqImg')
+						$(this).attr('id', 'faqImg'+v)
+						faqImgList.push({faqImg: $(this).val()});
+					})
+					
 					if(cnt > 0) {
 						for(var i = 0; i<=cnt; i++) {
 							if($('#faqImg'+i).val() == '') {
@@ -59,16 +67,10 @@
 					
 					var formData = $('#faqFrm').serializeObject();
 					
-					var faqImgList = [];
-					$("[name=faqImg]").each(function(v) {
-						$(this).attr('id', 'faqImg'+Number(v+1))
-						faqImgList.push({faqImg: $(this).val()});
-					});
-					
 					formData.faqImgList = faqImgList;
 					
 					var faqSeq = $('#faqSeq').val();
-					console.log(formData);
+					
 					$.ajax({
 						url : '/faq/modify',
 						type : 'post',
@@ -197,7 +199,7 @@
 	</body>
 	<script type="text/x-jQuery-tmpl" id="addRowTmpl">
 		<tr>
-			<td><input type="text" name="faqImg" id="faqImg{{= idx}}">
+			<td><input type="text" class="imgIdxClass" name="faqImgList[{{= idx}}].faqImg" id="faqImg{{= idx}}">
 				<button type="button" onclick="delRow(this)">-</button>
 			</td>
 		</tr>
