@@ -75,10 +75,14 @@
 			<div align="center">
 				<table>
 					<tr>
-						<th>제목</th>
-						<td><input type="text" id="faqTitle" name="faqTitle" onkeyup="enterkey()">
-						<th>내용</th>
-						<td><input type="text" id="faqContent" name="faqContent" onkeyup="enterkey()">
+						<th>검색조건</th>
+						<td>
+							제목<input type="radio" id="faqTitle" name="faqTitle" value="sFaqTitle">
+							번호<input type="radio" id="faqSeq" name="faqSeq" value="sFaqSeq">
+							내용<input type="radio" id="faqContent" name="faqContent" value="sFaqContent">
+						</td>
+						<th>검색어</th>
+						<td><input type="text" id="searchType" name="searchType" onkeyup="enterkey()">
 					</tr>
 					<tr>
 						<td colspan="4" align="right">

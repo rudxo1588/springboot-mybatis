@@ -57,8 +57,9 @@ public class FaqController {
 	 */
 	@PostMapping("/getList")
 	@ResponseBody
-	public List<Faq> getList(Faq faqVo) {
-		return faqService.getList(faqVo);
+	public List<Faq> getList(Faq faq) {
+		System.out.println(faq);
+		return faqService.getList(faq);
 	}
 
 	/**
@@ -75,9 +76,9 @@ public class FaqController {
 	 * @return
 	 */
 	@PostMapping("/add")
-	public ResponseEntity<List<String>> add(@RequestBody @Valid Faq faqVo, BindingResult bindingResult) {
+	public ResponseEntity<List<String>> add(@RequestBody @Valid Faq faq, BindingResult bindingResult) {
 		String errorMsg = "";
-		System.out.println(faqVo);
+		System.out.println(faq);
 		List<String> errorList = new ArrayList<String>();
 		if(bindingResult.hasErrors()) {	// 객체에 선언해준 NotNull에 의해 값이 null이면 true를 반환
 			List<ObjectError> objectError = bindingResult.getAllErrors();
@@ -89,7 +90,7 @@ public class FaqController {
 			errorList.add("E");
 			return ResponseEntity.ok().body(errorList);
 		} else {
-//			faqService.add(faqVo);
+//			faqService.add(faq);
 
 			errorList.add("등록되었습니다.");
 			errorList.add("S");
@@ -113,9 +114,9 @@ public class FaqController {
 	 */
 	@GetMapping("/getDetail")
 	public ModelAndView getDetail(@Param(value = "faqSeq")int faqSeq) {
-		Faq faqVo = faqService.getDetail(faqSeq);
+		Faq faq = faqService.getDetail(faqSeq);
 		ModelAndView mav = new ModelAndView("faq/faqDetail");
-		mav.addObject("faqVo", faqVo);
+		mav.addObject("faq", faq);
 		return mav;
 	}
 
@@ -125,9 +126,9 @@ public class FaqController {
 	 */
 	@GetMapping("/edit")
 	public ModelAndView edit(@Param(value = "faqSeq")int faqSeq) {
-		Faq faqVo = faqService.getDetail(faqSeq);
+		Faq faq = faqService.getDetail(faqSeq);
 		ModelAndView mav = new ModelAndView("faq/faqUpdate");
-		mav.addObject("faqVo", faqVo);
+		mav.addObject("faq", faq);
 		return mav;
 	}
 
@@ -136,7 +137,7 @@ public class FaqController {
 	 * @return
 	 */
 	@PostMapping("/modify")
-	public ResponseEntity<List<String>> modify(@RequestBody @Valid Faq faqVo,BindingResult bindingResult) {
+	public ResponseEntity<List<String>> modify(@RequestBody @Valid Faq faq,BindingResult bindingResult) {
 		String errorMsg = "";
 		List<String> errorList = new ArrayList<String>();
 		if(bindingResult.hasErrors()) {
@@ -150,7 +151,7 @@ public class FaqController {
 			return ResponseEntity.ok().body(errorList);
 		}
 
-		faqService.modify(faqVo);
+		faqService.modify(faq);
 
 		errorList.add("수정되었습니다");
 		errorList.add("S");

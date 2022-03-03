@@ -36,5 +36,7 @@ public class Faq extends PagingVo{
 	private String faqDelYn;
 	
 	private List<FaqImg> faqImgList;
+	
+	private String searchType;
 	 
 }

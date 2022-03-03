@@ -33,8 +33,8 @@ public class FaqService {
 	 * faqImg select collcetion이용하여 이미지리스트까지 가져오기
 	 * @return
 	 */
-	public List<Faq> getList(Faq faqVo) {
-		return faqMapper.getList(faqVo);
+	public List<Faq> getList(Faq faq) {
+		return faqMapper.getList(faq);
 	}
 	
 	/**
@@ -42,11 +42,11 @@ public class FaqService {
 	 * @return
 	 */
 	@Transactional
-	public int add(Faq faqVo) {
-		int result = faqMapper.insert(faqVo);
+	public int add(Faq faq) {
+		int result = faqMapper.insert(faq);
 		
 		if (result > 0) {
-			faqImgService.addList(faqVo.getFaqSeq(), faqVo.getFaqImgList());
+			faqImgService.addList(faq.getFaqSeq(), faq.getFaqImgList());
 		}
 		
 		return result;
@@ -77,11 +77,11 @@ public class FaqService {
 	 * @return
 	 */
 	@Transactional
-	public int modify(Faq faqVo) {
-		int result = faqMapper.update(faqVo);
+	public int modify(Faq faq) {
+		int result = faqMapper.update(faq);
 		
 		if(result > 0) {
-			faqImgService.modify(faqVo.getFaqSeq(), faqVo.getFaqImgList());
+			faqImgService.modify(faq.getFaqSeq(), faq.getFaqImgList());
 		}
 		return result;
 	}
