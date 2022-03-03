@@ -77,12 +77,12 @@
 					<tr>
 						<th>검색조건</th>
 						<td>
-							제목<input type="radio" id="faqTitle" name="faqTitle" value="sFaqTitle">
-							번호<input type="radio" id="faqSeq" name="faqSeq" value="sFaqSeq">
-							내용<input type="radio" id="faqContent" name="faqContent" value="sFaqContent">
+							<label for="faqTitle">제목</label><input type="radio" id="faqTitle" name="searchType" value="faqTitle">
+							<label for="faqSeq">번호</label><input type="radio" id="seq" name="searchType" value="faqSeq">
+							<label for="faqContent">내용</label><input type="radio" id="faqContent" name="searchType" value="faqContent">
 						</td>
 						<th>검색어</th>
-						<td><input type="text" id="searchType" name="searchType" onkeyup="enterkey()">
+						<td><input type="text" id="searchBox" name="searchBox">
 					</tr>
 					<tr>
 						<td colspan="4" align="right">

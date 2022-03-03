@@ -39,4 +39,6 @@ public class Faq extends PagingVo{
 	
 	private String searchType;
 	 
+	private String searchBox;
+	
 }

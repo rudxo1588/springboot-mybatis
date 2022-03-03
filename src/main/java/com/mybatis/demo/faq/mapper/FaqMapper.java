@@ -19,13 +19,13 @@ public interface FaqMapper {
 	 * faq 리스트
 	 * @return
 	 */
-	List<Faq> getList(Faq faqVo);
+	List<Faq> getList(Faq faq);
 	
 	/**
 	 * faq 등록하기
 	 * @return
 	 */
-	int insert(Faq faqVo);
+	int insert(Faq faq);
 	
 	/**
 	 * faq 삭제하기
@@ -43,6 +43,6 @@ public interface FaqMapper {
 	 * faq 수정하기
 	 * @return
 	 */
-	int update(Faq faqVo);
+	int update(Faq faq);
 	
 }

@@ -47,12 +47,9 @@
 					
 					var cnt = $('input[name=faqImg]').length;
 					
-					var faqImgList = [];
-					
 					$('.imgIdxClass').each(function(v) {
-						$(this).attr('name', 'faqImgList['+v+'].faqImg')
-						$(this).attr('id', 'faqImg'+v)
-						faqImgList.push({faqImg: $(this).val()});
+						$(this).attr('name', 'faqImgList['+v+'].faqImg');
+						$(this).attr('id', 'faqImg'+v);
 					})
 					
 					if(cnt > 0) {
@@ -66,11 +63,7 @@
 					}
 					
 					var formData = $('#faqFrm').serializeObject();
-					
-					formData.faqImgList = faqImgList;
-					
-					var faqSeq = $('#faqSeq').val();
-					
+					console.log(formData);
 					$.ajax({
 						url : '/faq/modify',
 						type : 'post',
@@ -81,42 +74,19 @@
 								alert(res[0]);
 							} else {
 								alert(res[0]);
-								location.href = '/faq/getDetail?faqSeq='+faqSeq
+								location.reload();
 							}
 						},
-						
 						error(request, status, error) {
 							console.log('에러발생');
 						}
-						
 					});
 				}
 			}
 		
-			function deleteImg(imgSeq, faqSeq) {
-				if(!confirm('삭제하시겠습니까?')) {
-					return;
-				}
-				 
-				$.ajax({
-					url: '/faq/deleteImg',
-					data : {
-						'imgSeq' : imgSeq,
-						},
-					type : 'post',
-					success : function(res) {
-						alert('삭제되었습니다.');
-						location.reload();
-					},
-					error : function(request, status, error) {
-						alert('error발생');
-					}
-				});
-			}
-		
 			function addRow() {
-				idx++;
-				var cnt = $('input[name=faqImg]').length+1;
+				
+				var cnt = $('.imgIdxClass').length+1;
 				
 				if(cnt > 5) {
 					alert('이미지는 최대 5개까지 등록 가능합니다.');
@@ -124,6 +94,8 @@
 				} 
 				
 				$('#addRowTmpl').tmpl([{idx : idx}]).appendTo('#faqImgTable');
+				
+				idx++;
 			}
 			
 			function delRow(obj) {
@@ -152,7 +124,7 @@
 		</script>
 	</head>
 	<body>
-		<div align="center" th:object="${faqVo}">
+		<div align="center" th:object="${faqInfo}">
 			<form id="faqFrm">
 				<input type="hidden" name="faqDelYn" value="N">
 				<input type="hidden" id="faqSeq" name="faqSeq" th:value="*{faqSeq}">
@@ -182,9 +154,9 @@
 						<th rowspan="6">첨부파일</th>
 						<td><button type="button" onclick="addRow()">+</button></td>
 					</tr>
-					<tr th:if="*{faqImgList != null && faqImgList.size() > 0}" th:each="faqImgList : *{faqImgList}">
-						<td><input type="text" id="faqImg" name="faqImg" th:value="${faqImgList.faqImg}">
-							<button type="button" th:onclick="|deleteImg('${faqImgList.imgSeq}','')|">삭제</button>
+					<tr th:if="*{faqImgList != null && faqImgList.size() > 0}" th:each="faqImgList, i : *{faqImgList}">
+						<td><input type="text" class="imgIdxClass" id="faqImg" th:name="'faqImgList['+${i.index}+'].faqImg'" th:value="${faqImgList.faqImg}">
+							<button type="button" onclick="delRow(this)">삭제</button>
 						</td>
 					</tr>
 				</table>

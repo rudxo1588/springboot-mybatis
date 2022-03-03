@@ -72,14 +72,13 @@ public class FaqImgService {
 	 */
 	@Transactional
 	public void modify(int faqSeq, List<FaqImg> list) {
-		int result = this.deleteByFaqSeq(faqSeq);
-		
-		if(result > 0) {
-			if (list != null && list.size() > 0) {
-				for (FaqImg vo : list) {
-					vo.setFaqSeq(faqSeq);
-					result += this.add(vo);
-				}
+		this.deleteByFaqSeq(faqSeq);
+		System.out.println("faqSeq " + faqSeq);
+		if (list != null && list.size() > 0) {
+			for (FaqImg vo : list) {
+				System.out.println(vo);
+				vo.setFaqSeq(faqSeq);
+				this.add(vo);
 			}
 		}
 	}

@@ -128,7 +128,7 @@ public class FaqController {
 	public ModelAndView edit(@Param(value = "faqSeq")int faqSeq) {
 		Faq faq = faqService.getDetail(faqSeq);
 		ModelAndView mav = new ModelAndView("faq/faqUpdate");
-		mav.addObject("faq", faq);
+		mav.addObject("faqInfo", faq);
 		return mav;
 	}
 
@@ -138,6 +138,7 @@ public class FaqController {
 	 */
 	@PostMapping("/modify")
 	public ResponseEntity<List<String>> modify(@RequestBody @Valid Faq faq,BindingResult bindingResult) {
+		System.out.println(faq);
 		String errorMsg = "";
 		List<String> errorList = new ArrayList<String>();
 		if(bindingResult.hasErrors()) {

@@ -16,11 +16,14 @@
 			faq
 		where
 			faq_del_yn = 'N'
-		<if test="faqTitle != null and !''.equals(faqTitle)">
-			AND faq_title like CONCAT('%',#{faqTitle},'%')
+		<if test="searchType != null and searchBox != '' and searchType.equals('faqTitle')">
+			AND faq_title like CONCAT('%',#{searchBox},'%')
 		</if>
-		<if test="faqContent != null and !''.equals(faqContent)">
-			AND faq_Content like CONCAT('%',#{faqContent},'%')
+		<if test="searchType != null and searchBox != '' and searchType.equals('faqContent')">
+			AND faq_Content like CONCAT('%',#{searchBox},'%')
+		</if>
+		<if test="searchType != null and searchBox != '' and searchType.equals('faqSeq')">
+			AND faq_seq = #{searchBox}
 		</if>
 	</select>
 
