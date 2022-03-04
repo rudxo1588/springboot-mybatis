@@ -49,29 +49,27 @@
 					type : "post",
 					dataType : "json",
 					success : function(res) {
+						var cnt;
+						console.log(res)
 						for(var i in res) {
 							$('#faqListTmpl').tmpl([{faqSeq : res[i].faqSeq, faqSeq : res[i].faqSeq, faqTitle : res[i].faqTitle
 								,faqContent : res[i].faqContent, faqCreatedt : res[i].faqCreatedt,faqSeq : res[i].faqSeq}]).prependTo('#listBody');
+							cnt = res[i].allCnt;
 						}
+						$('#cntTd').text(cnt);
 					}
 				});
-			}
-			
-			// 인풋검색창 엔터검색시
-			function enterkey() {
-				if (window.event.keyCode == 13) {
-					fnSearch();
-			    }
 			}
 			
 			// 수정페에지
 			function fnUpdateBtn(seq) {
 				location.href = '/faq/edit?faqSeq='+seq;
 			}
+			
 		</script>
 	</head>
 	<body>
-		<form id="searchFrm">
+		<form id="searchFrm" onsubmit="return false">
 			<div align="center">
 				<table>
 					<tr>
@@ -97,7 +95,7 @@
 				<h1>Faq 리스트</h1>
 				<table >
 					<colgroup>
-						<col width="40px">
+						<col width="80px">
 						<col width="150px">
 						<col width="150px">
 						<col width="120px">
@@ -113,6 +111,16 @@
 					<tbody id="listBody">
 					
 					</tbody>
+					<tbody>
+						<tr>
+							<th>총 건수</th>
+							<td id="cntTd"></td>
+						</tr>
+						<tr>
+							<td id="pageTd"></td>
+						</tr>
+					</tbody>
+					
 					<tfoot>
 						<tr>
 							<td colspan="5" align="right">

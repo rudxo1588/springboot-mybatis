@@ -51,8 +51,11 @@
 					$('.imgIdxClass').each(function(v) {
 						$(this).attr('name', 'faqImgList['+v+'].faqImg')
 						$(this).attr('id', 'faqImg'+v)
-						faqImgList.push({faqImg: $(this).val()});
 					})
+					
+					$('.imgIdxClass').each(function(v) {
+						faqImgList.push({faqImg: $(this).val()});
+					});
 					
 					if(cnt > 0) {
 						for(var i = 0; i<=cnt; i++) {

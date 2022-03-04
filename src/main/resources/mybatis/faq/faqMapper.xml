@@ -11,7 +11,7 @@
 
 	<select id="getList" resultType="Faq">
 		select
-			*
+			*, count(*) over() as allCnt
 		from
 			faq
 		where

@@ -46,11 +46,17 @@
 					}
 					
 					var cnt = $('input[name=faqImg]').length;
+					var faqImgList = [];
 					
 					$('.imgIdxClass').each(function(v) {
 						$(this).attr('name', 'faqImgList['+v+'].faqImg');
 						$(this).attr('id', 'faqImg'+v);
+						
 					})
+					
+					$('.imgIdxClass').each(function(v) {
+						faqImgList.push({faqImg: $(this).val()});
+					});
 					
 					if(cnt > 0) {
 						for(var i = 0; i<=cnt; i++) {
@@ -63,6 +69,8 @@
 					}
 					
 					var formData = $('#faqFrm').serializeObject();
+					formData.faqImgList = faqImgList;
+					
 					console.log(formData);
 					$.ajax({
 						url : '/faq/modify',

@@ -78,7 +78,7 @@ public class FaqController {
 	@PostMapping("/add")
 	public ResponseEntity<List<String>> add(@RequestBody @Valid Faq faq, BindingResult bindingResult) {
 		String errorMsg = "";
-		System.out.println(faq);
+		
 		List<String> errorList = new ArrayList<String>();
 		if(bindingResult.hasErrors()) {	// 객체에 선언해준 NotNull에 의해 값이 null이면 true를 반환
 			List<ObjectError> objectError = bindingResult.getAllErrors();
@@ -90,7 +90,7 @@ public class FaqController {
 			errorList.add("E");
 			return ResponseEntity.ok().body(errorList);
 		} else {
-//			faqService.add(faq);
+			faqService.add(faq);
 
 			errorList.add("등록되었습니다.");
 			errorList.add("S");
@@ -138,7 +138,7 @@ public class FaqController {
 	 */
 	@PostMapping("/modify")
 	public ResponseEntity<List<String>> modify(@RequestBody @Valid Faq faq,BindingResult bindingResult) {
-		System.out.println(faq);
+		
 		String errorMsg = "";
 		List<String> errorList = new ArrayList<String>();
 		if(bindingResult.hasErrors()) {

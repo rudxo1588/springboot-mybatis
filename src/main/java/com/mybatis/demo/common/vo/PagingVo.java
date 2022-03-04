@@ -19,4 +19,7 @@ public class PagingVo {
 	private boolean isFstPage = false;
 	//마지막 페이지 여부
 	private boolean isLstPage = false;
+	// 총 카운트
+	private int allCnt;
+	
 }
