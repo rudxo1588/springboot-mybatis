@@ -11,20 +11,24 @@
 
 	<select id="getList" resultType="Faq">
 		select
-			*, count(*) over() as allCnt
+			*, count(*) over() as totalCnt
 		from
 			faq
 		where
 			faq_del_yn = 'N'
-		<if test="searchType != null and searchBox != '' and searchType.equals('faqTitle')">
-			AND faq_title like CONCAT('%',#{searchBox},'%')
-		</if>
-		<if test="searchType != null and searchBox != '' and searchType.equals('faqContent')">
-			AND faq_Content like CONCAT('%',#{searchBox},'%')
-		</if>
-		<if test="searchType != null and searchBox != '' and searchType.equals('faqSeq')">
-			AND faq_seq = #{searchBox}
-		</if>
+		<choose>
+			<when test="searchKeyWord != null and searchKeyWord">
+				<if test="searchType == 'faqTitle'">
+					AND faq_title like CONCAT('%',#{searchBox},'%')
+				</if>
+				<if test="searchType == 'faqContent'">
+					AND faq_Content like CONCAT('%',#{searchBox},'%')
+				</if>
+				<if test="searchType == 'faqSeq'">
+					AND faq_seq = #{searchBox}
+				</if>
+			</when>
+		</choose>
 	</select>
 
 	<insert id="insert" parameterType="Faq" useGeneratedKeys="true" keyProperty="faqSeq">

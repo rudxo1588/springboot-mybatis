@@ -6,20 +6,20 @@ import lombok.Data;
 public class PagingVo {
 	
 	// 현재 페이지
-	private int pageNum;
+	private int currentPageNo;
 	// 페이지당 갯수
 	private int pageSize;
-	// 현재 페이지 수 
-	private int size;
-	// 다음 페이지
-	private int nextPage;
-	// 이전 페이지
-	private int prePage;
-	// 첫 페이지 여부
-	private boolean isFstPage = false;
-	//마지막 페이지 여부
-	private boolean isLstPage = false;
+	// 화면당 출력 수
+	private int recordsPerPage;
 	// 총 카운트
-	private int allCnt;
+	private int totalCnt;
 	
+	public PagingVo() {
+		this.recordsPerPage = 10;
+	}
+	
+	public int getStartPage() {
+		return (currentPageNo - 1) * recordsPerPage;
+	}
+
 }

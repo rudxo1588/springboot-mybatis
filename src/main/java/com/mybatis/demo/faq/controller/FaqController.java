@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mybatis.demo.faq.domain.FaqImg;
+import com.mybatis.demo.common.vo.PagingVo;
 import com.mybatis.demo.faq.domain.Faq;
 import com.mybatis.demo.faq.service.FaqImgService;
 import com.mybatis.demo.faq.service.FaqService;
@@ -57,8 +58,9 @@ public class FaqController {
 	 */
 	@PostMapping("/getList")
 	@ResponseBody
-	public List<Faq> getList(Faq faq) {
+	public List<Faq> getList(Faq faq, PagingVo pagingVo) {
 		System.out.println(faq);
+		System.out.println(pagingVo);
 		return faqService.getList(faq);
 	}
 
