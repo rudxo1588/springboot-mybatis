@@ -1,11 +1,14 @@
 package com.mybatis.demo.faq.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -22,6 +25,7 @@ import com.mybatis.demo.faq.domain.Faq;
 import com.mybatis.demo.faq.domain.FaqImg;
 import com.mybatis.demo.faq.service.FaqImgService;
 import com.mybatis.demo.faq.service.FaqService;
+import com.mybatis.demo.faq.validated.FaqValidated;
 
 import lombok.RequiredArgsConstructor;
 
@@ -38,6 +42,8 @@ public class FaqController {
 	private final FaqService faqService;
 	
 	private final FaqImgService faqImgService;
+	
+	private final FaqValidated faqValidated;
 
 
 	/**
@@ -71,12 +77,40 @@ public class FaqController {
 	}
 
 	/**
-	 * faq 등록하기
+	 * faq 등록하기(@Valid 체크해서 유효성검사)
 	 * @return
 	 */
 	@PostMapping("/add")
 	public void add(@RequestBody @Valid Faq faq) {
 		faqService.add(faq);
+	}
+	
+	/**
+	 * faq 등록하기(Validator 체크해서 유효성검사)
+	 * @return
+	 */
+	@PostMapping("/add")
+	public ResponseEntity<Object> addByValidate(@RequestBody Faq faq, BindingResult bindResult) {
+		faqValidated.validate(faq, bindResult);
+		
+		Map<String, Object> returnMsg = new HashMap<>();
+		String msg = "";
+		if(bindResult.hasErrors()) {
+			msg = bindResult.getAllErrors().get(0).getDefaultMessage();
+			returnMsg.put("reason", msg);
+			
+			return new ResponseEntity<>(returnMsg, HttpStatus.BAD_REQUEST);
+		}
+		
+		int result = faqService.add(faq);
+		if(result > 0) {
+			msg = "등록되었습니다";
+			returnMsg.put("reason", msg);
+		} else {
+			msg = "등록 실패";
+			returnMsg.put("reason", msg);
+		}
+		return new ResponseEntity<>(msg, HttpStatus.OK);
 	}
 
 	/**

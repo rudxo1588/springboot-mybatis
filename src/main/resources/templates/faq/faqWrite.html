@@ -30,14 +30,6 @@
 				
 				if(confirm('등록하시겠습니까?')) {
 					
-					
-					
-					if($('#faqTitle').val() == '') {
-						alert('제목을 입력해 주세요');
-						$('#faqTitle').focus();
-						return;
-					}
-					
 					if($('#faqContent').val() == '') {
 						alert('내용을 입력해 주세요');
 						$('#faqContent').focus();
@@ -71,16 +63,22 @@
 					formData.faqImgList = faqImgList;
 					
 					$.ajax({
-						url : '/faq/add',
+						url : '/faq/addByValidate',
 						type : 'post',
 						contentType: 'application/json',
 						data : JSON.stringify(formData),
 						success : function(res) {
 							alert('저장 성공');
 						}, 
-						error : function(request, status, error) {
-							alert(request.responseText);
+						error : function(request) {
+							// json데이터로 넘어오기때문에 json.parse로 변환 후 가져옴
+							alert(JSON.parse(request.responseText).reason);
+							
+							if(request.status == 400) {
+								console.log('BAD REQUEST');
+							}
 						},
+						
 						
 					});
 				}
