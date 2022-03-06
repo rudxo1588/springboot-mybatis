@@ -76,16 +76,12 @@
 						contentType: 'application/json',
 						data : JSON.stringify(formData),
 						success : function(res) {
-							if(res[1] == 'E') {
-								alert(res[0]);
-							} else {
-								alert(res[0]);
-								location.href = '/faq/list';
-							}
+							alert('저장 성공');
 						}, 
 						error : function(request, status, error) {
-							console.log('에러');
-						}
+							alert(request.responseText);
+						},
+						
 					});
 				}
 			}

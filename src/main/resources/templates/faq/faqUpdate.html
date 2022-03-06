@@ -33,11 +33,11 @@
 		
 			function updateFaq() {
 				if(confirm('수정하시겠습니까?')) {
-					if($('#faqTitle').val() == '') {
-						alert('제목을 입력해 주세요');
-						$('#faqTitle').focus();
-						return;
-					}
+// 					if($('#faqTitle').val() == '') {
+// 						alert('제목을 입력해 주세요');
+// 						$('#faqTitle').focus();
+// 						return;
+// 					}
 					
 					if($('#faqContent').val() == '') {
 						alert('내용을 입력해 주세요');
@@ -78,15 +78,10 @@
 						contentType: 'application/json',
 						data : JSON.stringify(formData),
 						success : function(res) {
-							if(res[1] == 'E') {
-								alert(res[0]);
-							} else {
-								alert(res[0]);
-								location.reload();
-							}
+							alert('수정 성공');
 						},
 						error(request, status, error) {
-							console.log('에러발생');
+							alert(request.responseText);
 						}
 					});
 				}

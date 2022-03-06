@@ -75,26 +75,8 @@ public class FaqController {
 	 * @return
 	 */
 	@PostMapping("/add")
-	public ResponseEntity<List<String>> add(@RequestBody @Valid Faq faq, BindingResult bindingResult) {
-		String errorMsg = "";
-		
-		List<String> errorList = new ArrayList<String>();
-		if(bindingResult.hasErrors()) {	// 객체에 선언해준 NotNull에 의해 값이 null이면 true를 반환
-			List<ObjectError> objectError = bindingResult.getAllErrors();
-
-			for (ObjectError error : objectError)
-				errorMsg = error.getDefaultMessage();
-
-			errorList.add(errorMsg);
-			errorList.add("E");
-			return ResponseEntity.ok().body(errorList);
-		} else {
-			faqService.add(faq);
-
-			errorList.add("등록되었습니다.");
-			errorList.add("S");
-			return ResponseEntity.ok().body(errorList);
-		}
+	public void add(@RequestBody @Valid Faq faq) {
+		faqService.add(faq);
 	}
 
 	/**
@@ -136,26 +118,8 @@ public class FaqController {
 	 * @return
 	 */
 	@PostMapping("/modify")
-	public ResponseEntity<List<String>> modify(@RequestBody @Valid Faq faq,BindingResult bindingResult) {
-		
-		String errorMsg = "";
-		List<String> errorList = new ArrayList<String>();
-		if(bindingResult.hasErrors()) {
-			List<ObjectError> objectError = bindingResult.getAllErrors();
-
-			for(ObjectError error : objectError)
-				errorMsg = error.getDefaultMessage();
-
-			errorList.add(errorMsg);
-			errorList.add("E");
-			return ResponseEntity.ok().body(errorList);
-		}
-
+	public void modify(@RequestBody @Valid Faq faq) {
 		faqService.modify(faq);
-
-		errorList.add("수정되었습니다");
-		errorList.add("S");
-		return ResponseEntity.ok().body(errorList);
 	}
 	
 	/**
