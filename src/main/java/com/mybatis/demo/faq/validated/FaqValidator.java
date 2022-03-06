@@ -6,12 +6,12 @@ import org.springframework.validation.Validator;
 
 import com.mybatis.demo.faq.domain.Faq;
 
-public class FaqValidated implements Validator{
+public class FaqValidator implements Validator{
 
 	@Override
 	public boolean supports(Class<?> clazz) {
 		// TODO Auto-generated method stub
-		return false;
+		return Faq.class.equals(clazz);
 	}
 
 	@Override

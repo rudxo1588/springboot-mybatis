@@ -25,7 +25,7 @@ import com.mybatis.demo.faq.domain.Faq;
 import com.mybatis.demo.faq.domain.FaqImg;
 import com.mybatis.demo.faq.service.FaqImgService;
 import com.mybatis.demo.faq.service.FaqService;
-import com.mybatis.demo.faq.validated.FaqValidated;
+import com.mybatis.demo.faq.validated.FaqValidator;
 
 import lombok.RequiredArgsConstructor;
 
@@ -43,7 +43,7 @@ public class FaqController {
 	
 	private final FaqImgService faqImgService;
 	
-	private final FaqValidated faqValidated;
+	private final FaqValidator faqValidator;
 
 
 	/**
@@ -89,9 +89,9 @@ public class FaqController {
 	 * faq 등록하기(Validator 체크해서 유효성검사)
 	 * @return
 	 */
-	@PostMapping("/add")
-	public ResponseEntity<Object> addByValidate(@RequestBody Faq faq, BindingResult bindResult) {
-		faqValidated.validate(faq, bindResult);
+	@PostMapping("/addByValidator")
+	public ResponseEntity<Object> addByValidator(@RequestBody Faq faq, BindingResult bindResult) {
+//		faqValidator.validate(faq, bindResult);
 		
 		Map<String, Object> returnMsg = new HashMap<>();
 		String msg = "";
@@ -100,15 +100,17 @@ public class FaqController {
 			returnMsg.put("reason", msg);
 			
 			return new ResponseEntity<>(returnMsg, HttpStatus.BAD_REQUEST);
-		}
-		
-		int result = faqService.add(faq);
-		if(result > 0) {
-			msg = "등록되었습니다";
-			returnMsg.put("reason", msg);
 		} else {
-			msg = "등록 실패";
-			returnMsg.put("reason", msg);
+			
+			int result = faqService.add(faq);
+			if(result > 0) {
+				msg = "등록되었습니다";
+				returnMsg.put("reason", msg);
+			} else {
+				msg = "등록 실패";
+				returnMsg.put("reason", msg);
+			}
+			
 		}
 		return new ResponseEntity<>(msg, HttpStatus.OK);
 	}
