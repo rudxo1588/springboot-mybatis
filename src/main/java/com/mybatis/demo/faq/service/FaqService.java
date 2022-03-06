@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mybatis.demo.faq.domain.FaqImg;
 import com.mybatis.demo.faq.domain.Faq;
 import com.mybatis.demo.faq.mapper.FaqMapper;
 
@@ -69,6 +68,7 @@ public class FaqService {
 	 * @return
 	 */
 	public Faq getDetail(int faqSeq) {
+		
 		return faqMapper.getDetail(faqSeq);
 	}
 	
@@ -81,7 +81,7 @@ public class FaqService {
 		int result = faqMapper.update(faq);
 		
 		if(result > 0) {
-			faqImgService.modify(faq.getFaqSeq(), faq.getFaqImgList());
+			faqImgService.modifyList(faq.getFaqSeq(), faq.getFaqImgList());
 		}
 		return result;
 	}

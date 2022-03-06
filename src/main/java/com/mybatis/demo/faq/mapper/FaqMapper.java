@@ -2,7 +2,6 @@ package com.mybatis.demo.faq.mapper;
 
 import java.util.List;
 
-import com.mybatis.demo.faq.domain.FaqImg;
 import com.mybatis.demo.faq.domain.Faq;
 
 /**

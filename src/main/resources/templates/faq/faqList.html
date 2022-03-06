@@ -5,7 +5,7 @@
 		<title>faq목록화면</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script type="text/javascript" src="../js/jquery.tmpl.min.js"></script>
-		<script>
+		<script type="text/javascript">
 			$(function(){
 				fnSearch();
 			});
@@ -56,12 +56,13 @@
 						for(var i in res) {
 							$('#faqListTmpl').tmpl([{faqSeq : res[i].faqSeq, faqSeq : res[i].faqSeq, faqTitle : res[i].faqTitle
 								,faqContent : res[i].faqContent, faqCreatedt : res[i].faqCreatedt,faqSeq : res[i].faqSeq}]).prependTo('#listBody');
-							cnt = res[i].totalCnt; 
+							cnt = res[i].totalCnt;
 						}
-						pageSize = cnt / 10;
+						pageSize = Math.ceil(cnt / 10);
+						
 						var html = '';
-						for(var x = 1; x < pageSize; x++) {
-							html += '<a href="#" onclick="fnSearch()" name="currentPageNo"> '+x+' </a>'
+						for(var x = 1; x <= pageSize; x++) {
+							html += ' <a href="#" onclick="fnPageClick('+x+')" value='+x+'> '+x+' </a> '
 						}
 						$('#pageTd').append(html);
 						
@@ -71,22 +72,36 @@
 				});
 			}
 			
+			function fnPageClick(pageNum) {
+				$('#currentPageNo').val(pageNum);
+				fnSearch();
+			}
+			
 			// 수정페에지
 			function fnUpdateBtn(seq) {
 				location.href = '/faq/edit?faqSeq='+seq;
 			}
 			
+			function fnSeqSearch() {
+				$('#searchKeyWord').attr('type', 'number');
+			}
+			
 		</script>
+		<style>
+			a { text-decoration:none !important } 
+			a:hover { text-decoration:none !important }
+		</style>
 	</head>
 	<body>
-		<form id="searchFrm" onsubmit="return false">
+		<form id="searchFrm">
+			<input type="hidden" name="currentPageNo" id="currentPageNo" value="1">
 			<div align="center">
 				<table>
 					<tr>
 						<th>검색조건</th>
 						<td>
-							<label for="faqTitle">제목</label><input type="radio" id="faqTitle" name="searchType" value="faqTitle">
-							<label for="faqSeq">번호</label><input type="radio" id="seq" name="searchType" value="faqSeq">
+							<label for="faqTitle">제목</label><input type="radio" id="faqTitle" name="searchType" value="faqTitle" >
+							<label for="faqSeq">번호</label><input type="radio" id="seq" name="searchType" value="faqSeq" onclick="fnRadioSearch(this)">
 							<label for="faqContent">내용</label><input type="radio" id="faqContent" name="searchType" value="faqContent">
 						</td>
 						<th>검색어</th>
@@ -123,8 +138,8 @@
 					</tbody>
 					<tbody>
 						<tr>
-							<th>총 건수</th>
-							<td id="cntTd"></td>
+							<th >총 건수</th>
+							<td colspan="3" id="cntTd"></td>
 						</tr>
 						<tr>
 							<td id="pageTd" colspan="4" style="text-align:center"></td>

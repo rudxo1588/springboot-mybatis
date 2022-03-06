@@ -3,8 +3,6 @@ package com.mybatis.demo.faq.domain;
 import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.mybatis.demo.common.vo.PagingVo;
 
@@ -23,7 +21,7 @@ import lombok.Data;
 public class Faq extends PagingVo{
 	
 	
-	private int faqSeq;
+	private Integer faqSeq;
 	
 	@NotEmpty(message = "제목은 필수 입력값입니다.")
 	private String faqTitle;

@@ -19,16 +19,20 @@
 		<choose>
 			<when test="searchKeyWord != null and searchKeyWord">
 				<if test="searchType == 'faqTitle'">
-					AND faq_title like CONCAT('%',#{searchBox},'%')
+					AND faq_title like CONCAT('%',#{searchKeyWord},'%')
 				</if>
 				<if test="searchType == 'faqContent'">
-					AND faq_Content like CONCAT('%',#{searchBox},'%')
+					AND faq_Content like CONCAT('%',#{searchKeyWord},'%')
 				</if>
 				<if test="searchType == 'faqSeq'">
-					AND faq_seq = #{searchBox}
+					AND faq_seq = #{searchKeyWord}
 				</if>
 			</when>
 		</choose>
+		ORDER BY faq_seq DESC
+		<if test="startPage != null and startPage != '-10' ">
+			LIMIT #{startPage} , #{recordsPerPage}
+		</if>
 	</select>
 
 	<insert id="insert" parameterType="Faq" useGeneratedKeys="true" keyProperty="faqSeq">

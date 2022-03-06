@@ -10,18 +10,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mybatis.demo.faq.domain.FaqImg;
 import com.mybatis.demo.common.vo.PagingVo;
 import com.mybatis.demo.faq.domain.Faq;
+import com.mybatis.demo.faq.domain.FaqImg;
 import com.mybatis.demo.faq.service.FaqImgService;
 import com.mybatis.demo.faq.service.FaqService;
 
@@ -47,8 +45,9 @@ public class FaqController {
 	 * @return
 	 */
 	@GetMapping("/list")
-	public ModelAndView list() {
+	public ModelAndView list(Faq faq, PagingVo pagingVo) {
 		ModelAndView mv = new ModelAndView("/faq/faqList");
+		mv.addObject("list" , faqService.getList(faq));
 		return mv;
 	}
 
@@ -59,8 +58,6 @@ public class FaqController {
 	@PostMapping("/getList")
 	@ResponseBody
 	public List<Faq> getList(Faq faq, PagingVo pagingVo) {
-		System.out.println(faq);
-		System.out.println(pagingVo);
 		return faqService.getList(faq);
 	}
 
