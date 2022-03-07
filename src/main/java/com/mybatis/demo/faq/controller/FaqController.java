@@ -154,6 +154,7 @@ public class FaqController {
 	 * @return
 	 */
 	@PostMapping("/modify")
+	@ResponseBody
 	public void modify(@RequestBody @Valid Faq faq) {
 		faqService.modify(faq);
 	}

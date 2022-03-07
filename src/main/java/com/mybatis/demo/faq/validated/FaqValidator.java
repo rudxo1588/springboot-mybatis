@@ -14,13 +14,14 @@ public class FaqValidator implements Validator{
 	 *  동적으로 필수값을 변경해줘야 할때
 	 *  해당 추상화 validator를 사용하여 필수값을 변경해 줄 수 있다.
 	 */
-	
+	// 해당 객체에만 이벤트(유효성검사) 를 진행하겠다.
 	@Override
 	public boolean supports(Class<?> clazz) {
 		// TODO Auto-generated method stub
 		return Faq.class.equals(clazz);
 	}
 
+	// 유효성을 검증하여 메세지를 던진다.
 	@Override
 	public void validate(Object target, Errors errors) {
 		Faq faq = (Faq)target;
