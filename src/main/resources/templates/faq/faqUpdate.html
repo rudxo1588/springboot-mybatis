@@ -78,6 +78,7 @@
 						data : JSON.stringify(formData),
 						success : function(res) {
 							alert('수정 성공');
+							location.href = '/faq/list'
 						},
 						error(request, status, error) {
 							alert(request.responseText);

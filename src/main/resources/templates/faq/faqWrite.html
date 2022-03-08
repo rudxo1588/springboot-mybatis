@@ -75,6 +75,7 @@
 						data : JSON.stringify(formData),
 						success : function(res) {
 							alert('저장 성공');
+							location.href = '/faq/list'
 						}, 
 						error : function(request) {
 							// json데이터로 넘어오기때문에 json.parse로 변환 후 가져옴
