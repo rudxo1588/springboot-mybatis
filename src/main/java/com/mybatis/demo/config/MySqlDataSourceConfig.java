@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 /**
-* @Configuration는 해당 클래스가 Configuration임을 나타냄 
+* @Configuration는 해당 클래스가 Configuration임을 나타냄
 */
 @Configuration
 /**
@@ -27,9 +27,9 @@ public class MySqlDataSourceConfig {
 
 	/**
 	 * @Primary는 기본 DB를 지정해줄때 사용한다. 해당 어노테이션 사용시 매퍼스캔이 따로 필요하지않다.
-	 * 
+	 *
 	 */
-	@Primary 
+	@Primary
 	/**
 	* @Bean은 직접 제어가 불가능한 외부 라이브러리등을 Bean으로 만들때 사용.
 	*/
@@ -42,7 +42,7 @@ public class MySqlDataSourceConfig {
 	public DataSource mySqlDataSource() {
 		return DataSourceBuilder.create().build();	// yml 파일에서 spring.datasource-mysql 의 데이터 베이스를 사용하여 빌드 하겠다.
 	}
-	
+
 	@Primary
 	@Bean(name ="mySqlSessionFactory")
 	/**
@@ -55,11 +55,12 @@ public class MySqlDataSourceConfig {
 		sqlSessionFactoryBean.setDataSource(mySqlDataSource); // 해당 메소드에서 빌드한 데이터베이스를 세션으로 등록
 		sqlSessionFactoryBean.setTypeAliasesPackage("com.mybatis.demo.faq.**.domain");	// xml파일에서 타입 지정시 해당 경로는 따로 작성하지 않아도 사용가능
 		sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:mybatis/faq/*.xml"));	// xml매퍼파일의 위치를 찾기위해 사용
+		sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:mybatis/user/*.xml"));	// xml매퍼파일의 위치를 찾기위해 사용
 		sqlSessionFactoryBean.setConfigLocation(applicationContext.getResource("classpath:mybatis-config.xml"));	// mybatis를 설정해준 config파일을 사용.
-		
+
 		return sqlSessionFactoryBean.getObject();
 	}
-	
+
 	@Primary
 	@Bean(name = "mysqlSessionTemplate")
 	/**
