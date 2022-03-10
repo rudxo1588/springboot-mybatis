@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<title>로그인</title>
+		<script>
+			function join() {
+				if(confirm('회원가입 하시겠습니까?')) {
+					location.href = '/user/join'
+				}
+			}
+
+			function login() {
+				
+				if($('#id').val() == '' ){
+					alert('id를 입력하세요');
+					$('#id').focus();
+					return;
+				}
+				if($('#password').val() == '' ){
+					alert('password를 입력하세요');
+					$('#password').focus();
+					return;
+				}
+				
+				$.ajax({
+					url : '/user/login',
+					data : $('#loginFrm').serialize(),
+					type : 'posr',
+					success : function() {
+						location.href = '/main'
+					},
+					error : function() {
+						
+					}
+				})
+			}
+		</script>
+	</head>
+	<body>
+		<form id="loginFrm">
+			<div align="center" style="margin:150px 0px">
+				<h1>로그인</h1>
+				<table>
+					<tr>
+						<th>ID</th>
+						<td><input type="text" name="id" id="id"></td>
+					</tr>
+					<tr>
+						<th>PASSWORD</th>
+						<td><input type="text" name="password" id="password"></td>
+					</tr>
+					<tr>
+						<td colspan="2" style="text-align: right">
+							<button type="button" onclick="join()">회원가입</button>
+							<button type="button" onclick="login()">로그인</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</form>
+	</body>
+</html>
