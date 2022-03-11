@@ -20,5 +20,12 @@
 			,#{phone}
 		)
 	</insert>
+	
+	<select id="selectById" parameterType="String">
+		SELECT
+			*
+		FROM user
+		WHERE id = #{id}
+	</select>
 
 </mapper>
