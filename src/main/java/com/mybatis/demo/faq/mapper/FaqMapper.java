@@ -2,7 +2,7 @@ package com.mybatis.demo.faq.mapper;
 
 import java.util.List;
 
-import com.mybatis.demo.faq.domain.Faq;
+import com.mybatis.demo.faq.vo.Faq;
 
 /**
  * MySqlDataSourceConfig에서 매퍼스캔을 사용했기때문애 따로 @Mapper 어노테이션이 필요하지 않음.

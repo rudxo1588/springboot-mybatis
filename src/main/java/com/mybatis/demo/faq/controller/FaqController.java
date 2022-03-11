@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mybatis.demo.common.vo.PagingVo;
-import com.mybatis.demo.faq.domain.Faq;
-import com.mybatis.demo.faq.domain.FaqImg;
 import com.mybatis.demo.faq.service.FaqImgService;
 import com.mybatis.demo.faq.service.FaqService;
 import com.mybatis.demo.faq.validated.FaqValidator;
+import com.mybatis.demo.faq.vo.Faq;
+import com.mybatis.demo.faq.vo.FaqImg;
 
 import lombok.RequiredArgsConstructor;
 

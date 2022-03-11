@@ -1,4 +1,4 @@
-package com.mybatis.demo.faq.domain;
+package com.mybatis.demo.faq.vo;
 
 import java.util.List;
 

@@ -5,7 +5,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.mybatis.demo.faq.domain.Faq;
+import com.mybatis.demo.faq.vo.Faq;
 
 @Repository
 public class FaqValidator implements Validator{

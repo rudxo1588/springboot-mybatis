@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mybatis.demo.faq.domain.FaqImg;
 import com.mybatis.demo.faq.mapper.FaqImgMapper;
+import com.mybatis.demo.faq.vo.FaqImg;
 
 import lombok.RequiredArgsConstructor;
 
