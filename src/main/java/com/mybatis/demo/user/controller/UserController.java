@@ -20,7 +20,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController {
 
-	private final UserService userService;
+//	private final UserService userService;
+	
+	private UserService userService;
 
 	// 초기화면 진입시 로그인페이지로
 	@RequestMapping("/")
