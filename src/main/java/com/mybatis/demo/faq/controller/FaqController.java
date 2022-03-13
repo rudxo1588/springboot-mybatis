@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.ibatis.annotations.Param;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,7 +74,9 @@ public class FaqController {
 	 * @return
 	 */
 	@GetMapping("/add")
-	public String addPage() {
+	public String addPage(Model model, HttpSession session) {
+		model.addAttribute("test", "내용 1");
+		model.addAttribute("id", session.getAttribute("id"));
 		return "faq/faqWrite";
 	}
 

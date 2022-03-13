@@ -10,34 +10,12 @@
 			}
 
 			function login() {
-				
-				if($('#id').val() == '' ){
-					alert('id를 입력하세요');
-					$('#id').focus();
-					return;
-				}
-				if($('#password').val() == '' ){
-					alert('password를 입력하세요');
-					$('#password').focus();
-					return;
-				}
-				
-				$.ajax({
-					url : '/user/login',
-					data : $('#loginFrm').serialize(),
-					type : 'posr',
-					success : function() {
-						location.href = '/main'
-					},
-					error : function() {
-						
-					}
-				})
+				$('#loginFrm').submit();
 			}
 		</script>
 	</head>
 	<body>
-		<form id="loginFrm">
+		<form id="loginFrm" action="/login" method="post">
 			<div align="center" style="margin:150px 0px">
 				<h1>로그인</h1>
 				<table>
