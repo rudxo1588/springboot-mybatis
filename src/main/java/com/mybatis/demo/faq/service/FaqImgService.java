@@ -28,6 +28,7 @@ public class FaqImgService {
 	 * faqImg 등록
 	 * @return
 	 */
+	@Transactional(rollbackFor = {Exception.class})
 	public int add(FaqImg vo) {
 		return faqImgMapper.insert(vo);
 	}
