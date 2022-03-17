@@ -1,4 +1,4 @@
-package com.mybatis.demo.biz2.domain;
+package com.mybatis.demo.h2.board.vo;
 
 import lombok.Data;
 

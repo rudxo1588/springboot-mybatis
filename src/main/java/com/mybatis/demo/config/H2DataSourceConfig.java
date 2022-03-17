@@ -22,7 +22,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 * @MapperScan은 basePackages나 value로 해당 위치에 있는 파일을 매퍼로 인식시키게 하며
 *  sqlSessionFactoryRef는 myBatis에서 복수의 DataSource를 활용하기 위해 사용한다.
 */
-@MapperScan(basePackages =  "com.mybatis.demo.biz2.mapper", sqlSessionFactoryRef = "h2SqlSessionFactory")
+@MapperScan(basePackages =  "com.mybatis.demo.h2.**.**.mapper", sqlSessionFactoryRef = "h2SqlSessionFactory")
 public class H2DataSourceConfig {
 
 	/**
@@ -47,8 +47,7 @@ public class H2DataSourceConfig {
 		
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 		sqlSessionFactoryBean.setDataSource(h2DataSource);
-		sqlSessionFactoryBean.setTypeAliasesPackage("com.mybatis.demo.biz2.**.domain");
-		sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:mybatis/h2Database/*.xml"));
+		sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:mybatis/h2/*.xml"));
 		sqlSessionFactoryBean.setConfigLocation(applicationContext.getResource("classpath:mybatis-config.xml"));
 		return sqlSessionFactoryBean.getObject();
 

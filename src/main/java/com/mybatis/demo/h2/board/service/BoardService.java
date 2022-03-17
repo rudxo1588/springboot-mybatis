@@ -1,11 +1,11 @@
-package com.mybatis.demo.biz2.service;
+package com.mybatis.demo.h2.board.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.mybatis.demo.biz2.domain.BoardVo;
-import com.mybatis.demo.biz2.mapper.BoardMapper;
+import com.mybatis.demo.h2.board.mapper.BoardMapper;
+import com.mybatis.demo.h2.board.vo.BoardVo;
 
 import lombok.RequiredArgsConstructor;
 

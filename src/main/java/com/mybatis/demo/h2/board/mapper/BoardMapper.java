@@ -1,8 +1,8 @@
-package com.mybatis.demo.biz2.mapper;
+package com.mybatis.demo.h2.board.mapper;
 
 import java.util.List;
 
-import com.mybatis.demo.biz2.domain.BoardVo;
+import com.mybatis.demo.h2.board.vo.BoardVo;
 
 public interface BoardMapper {
 
