@@ -1,6 +1,6 @@
-package com.mybatis.demo.faq.mapper;
+package com.mybatis.demo.biz.faq.mapper;
 
-import com.mybatis.demo.faq.vo.FaqImg;
+import com.mybatis.demo.biz.faq.vo.FaqImg;
 
 /**
  * MySqlDataSourceConfig에서 매퍼스캔을 사용했기때문애 따로 @Mapper 어노테이션이 필요하지 않음.

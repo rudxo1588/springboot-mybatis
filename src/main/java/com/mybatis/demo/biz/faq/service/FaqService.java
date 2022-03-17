@@ -1,12 +1,12 @@
-package com.mybatis.demo.faq.service;
+package com.mybatis.demo.biz.faq.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mybatis.demo.faq.mapper.FaqMapper;
-import com.mybatis.demo.faq.vo.Faq;
+import com.mybatis.demo.biz.faq.mapper.FaqMapper;
+import com.mybatis.demo.biz.faq.vo.Faq;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

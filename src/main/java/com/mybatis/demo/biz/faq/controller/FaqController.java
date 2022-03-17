@@ -1,4 +1,4 @@
-package com.mybatis.demo.faq.controller;
+package com.mybatis.demo.biz.faq.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mybatis.demo.biz.faq.service.FaqImgService;
+import com.mybatis.demo.biz.faq.service.FaqService;
+import com.mybatis.demo.biz.faq.validated.FaqValidator;
+import com.mybatis.demo.biz.faq.vo.Faq;
+import com.mybatis.demo.biz.faq.vo.FaqImg;
 import com.mybatis.demo.common.vo.PagingVo;
-import com.mybatis.demo.faq.service.FaqImgService;
-import com.mybatis.demo.faq.service.FaqService;
-import com.mybatis.demo.faq.validated.FaqValidator;
-import com.mybatis.demo.faq.vo.Faq;
-import com.mybatis.demo.faq.vo.FaqImg;
 
 import lombok.RequiredArgsConstructor;
 

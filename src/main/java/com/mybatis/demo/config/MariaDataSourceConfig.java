@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Primary;
 * @MapperScan은 basePackages나 value로 해당 위치에 있는 파일을 매퍼로 인식시키게 하며
 *  sqlSessionFactoryRef는 myBatis에서 복수의 DataSource를 활용하기 위해 사용한다.
 */
-@MapperScan(basePackages = "com.mybatis.demo.**.mapper", sqlSessionFactoryRef = "mySqlSessionFactory")
+@MapperScan(basePackages = "com.mybatis.demo.biz.**.**.mapper", sqlSessionFactoryRef = "mySqlSessionFactory")
 public class MariaDataSourceConfig {
 
 	/**
@@ -53,7 +53,7 @@ public class MariaDataSourceConfig {
 	DataSource mySqlDataSource , ApplicationContext applicationContext) throws Exception {
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 		sqlSessionFactoryBean.setDataSource(mySqlDataSource); // 해당 메소드에서 빌드한 데이터베이스를 세션으로 등록
-		sqlSessionFactoryBean.setTypeAliasesPackage("com.mybatis.demo.faq.**.vo");	// xml파일에서 타입 지정시 해당 경로는 따로 작성하지 않아도 사용가능
+		sqlSessionFactoryBean.setTypeAliasesPackage("com.mybatis.demo.biz.**.vo");	// xml파일에서 타입 지정시 해당 경로는 따로 작성하지 않아도 사용가능
 		sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:mybatis/maria/*.xml"));	// xml매퍼파일의 위치를 찾기위해 사용
 		sqlSessionFactoryBean.setConfigLocation(applicationContext.getResource("classpath:mybatis-config.xml"));	// mybatis를 설정해준 config파일을 사용.
 

@@ -1,11 +1,11 @@
-package com.mybatis.demo.faq.validated;
+package com.mybatis.demo.biz.faq.validated;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.mybatis.demo.faq.vo.Faq;
+import com.mybatis.demo.biz.faq.vo.Faq;
 
 @Repository
 public class FaqValidator implements Validator{

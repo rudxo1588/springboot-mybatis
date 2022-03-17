@@ -1,4 +1,4 @@
-package com.mybatis.demo.faq.vo;
+package com.mybatis.demo.biz.faq.vo;
 
 import java.util.List;
 
