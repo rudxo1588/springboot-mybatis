@@ -24,8 +24,9 @@ public class FaqValidator implements Validator{
 	// 유효성을 검증하여 메세지를 던진다.
 	@Override
 	public void validate(Object target, Errors errors) {
-		Faq faq = (Faq)target;
 		
+		Faq faq = (Faq)target;
+		System.out.println(faq.getFaqType());
 		if("T".equals(faq.getFaqType())) {
 			if(faq.getFaqTitle() == null || "".equals(faq.getFaqTitle())) {
 				ValidationUtils.rejectIfEmptyOrWhitespace(errors, "faqTitle", "notempty", "제목은 빈값일 수 없습니다.");
@@ -34,6 +35,8 @@ public class FaqValidator implements Validator{
 			if(faq.getFaqContent() == null || "".equals(faq.getFaqContent())) {
 				ValidationUtils.rejectIfEmptyOrWhitespace(errors, "faqContent", "notempty", "내용은 빈값일 수 없습니다.");
 			}
+		} else if("".equals(faq.getFaqType()) || faq.getFaqType() == null) {
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "faqType", "필수값을 선택해 주세요.");
 		}
 		
 		 

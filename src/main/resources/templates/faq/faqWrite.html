@@ -30,11 +30,11 @@
 				
 				if(confirm('등록하시겠습니까?')) {
 					
-					if($('#faqTitle').val() == '') {
-						alert('제목을 입력해 주세요');
-						$('#faqTitle').focus();
-						return;
-					}
+// 					if($('#faqTitle').val() == '') {
+// 						alert('제목을 입력해 주세요');
+// 						$('#faqTitle').focus();
+// 						return;
+// 					}
 					
 					if($('#faqContent').val() == '') {
 						alert('내용을 입력해 주세요');
@@ -124,6 +124,11 @@
 						<td colspan="2">
 							<h1>FAQ등록하기</h1>
 						</td>
+					</tr>
+					<tr>
+						<th>필수값</th>
+						<td><label for="title">제목<input type="radio" name="faqType" id="title" value="T"></label>
+							<label for="content">내용<input type="radio" name="faqType" id="content" value="C"></label></td>
 					</tr>
 					<tr>
 						<th>작성자</th>
