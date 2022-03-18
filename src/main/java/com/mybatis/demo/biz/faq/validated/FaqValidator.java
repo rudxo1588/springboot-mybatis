@@ -25,9 +25,17 @@ public class FaqValidator implements Validator{
 	@Override
 	public void validate(Object target, Errors errors) {
 		Faq faq = (Faq)target;
-		if(faq.getFaqTitle() == null || "".equals(faq.getFaqTitle())) {
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "faqTitle", "notempty", "제목은 빈값일 수 없습니다.");
+		
+		if("T".equals(faq.getFaqType())) {
+			if(faq.getFaqTitle() == null || "".equals(faq.getFaqTitle())) {
+				ValidationUtils.rejectIfEmptyOrWhitespace(errors, "faqTitle", "notempty", "제목은 빈값일 수 없습니다.");
+			}
+		} else if("C".equals(faq.getFaqType())) {
+			if(faq.getFaqContent() == null || "".equals(faq.getFaqContent())) {
+				ValidationUtils.rejectIfEmptyOrWhitespace(errors, "faqContent", "notempty", "내용은 빈값일 수 없습니다.");
+			}
 		}
+		
 		 
 	}
 
