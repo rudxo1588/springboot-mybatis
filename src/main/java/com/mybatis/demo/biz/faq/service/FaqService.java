@@ -76,7 +76,7 @@ public class FaqService {
 	 * faq 수정하기
 	 * @return
 	 */
-	@Transactional
+	@Transactional(readOnly = true)
 	public int modify(Faq faq) {
 		int result = faqMapper.update(faq);
 		
