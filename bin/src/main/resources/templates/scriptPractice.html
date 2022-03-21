@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script>
+	// forEach, map, find, filter, every, some, reduce
+	let list = [
+		{name : "test1", age : 34},
+		{name : "aes1", age : 50},
+		{name : "sha1", age : 28},
+		{name : "jdw2", age : 19},
+		{name : "aes1", age : 29}
+	];
+	
+	// es5, es6
+	// babel -> es6로 작성을 해도 es5 로 문법을 전환 해줌.
+	
+	// forEach 값을 변경하거나, 조건에따라 값을 바꿀때
+	list.forEach(function(v, idx) {	
+		if(v.name == "sha1") {
+			v.text = "텍스트";
+		}
+	});
+	console.log(list);
+	
+	// 새로운 배열 탄생시킴.
+	let listMap = list.map(function(v, idx) {
+		return {
+			name : v.name
+		}
+	})
+	
+	console.log(listMap);
+	
+	// 리스트내 만족하는 조건중 최상위 요소를 반환.
+	let obj1 = list.find(function(v) {
+		return v.name == "aes1";
+	})
+	
+	console.log(obj1)
+	
+	// 리스트 내 만족하는 조건을 리스트로 반환.
+	let filterList = list.filter(function(v) {
+		return v.name == "aes1";
+	});
+	
+	console.log(filterList);
+	
+	// 리스트 모두가 조건을 만족해야 true반환 아니라면 false
+	let isEvery = list.every(function(v) {
+		return v.name == "aes1";
+	});
+	
+	console.log(isEvery);
+	
+	// 리스트 내 조건이 하나라도 맞으면 true반환. 값체크할때 유용
+	let isSome = list.some(function(v) {
+		return v.name == "aes1";
+	})
+	
+	console.log(isSome);
+	</script>
+<title>script 연습</title>
+</head>
+<body>
+<h1>JS연습</h1>
+</body>
+</html>
