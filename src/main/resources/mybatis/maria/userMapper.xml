@@ -8,4 +8,21 @@
 		FROM user
 		WHERE id = #{id}
 	</select>
+
+
+	<insert id="insert" parameterType="com.mybatis.demo.biz.user.vo.User">
+		INSERT INTO USER
+		(
+			 id
+			,password
+			,name
+		)
+		VALUES
+		(
+ 			 #{id}
+			,#{password}
+			,#{name}
+		)
+
+	</insert>
 </mapper>
