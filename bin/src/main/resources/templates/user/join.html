@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<title>회원가입</title>
+		<script>
+			$.fn.serializeObject = function() {
+			  var result = {}
+			  var extend = function(i, element) {
+			    var node = result[element.name]
+			    if ("undefined" !== typeof node && node !== null) {
+			      if ($.isArray(node)) {
+			        node.push(element.value)
+			      } else {
+			        result[element.name] = [node, element.value]
+			      }
+			    } else {
+			      result[element.name] = element.value
+			    }
+			  }
+
+			  $.each(this.serializeArray(), extend)
+			  return result
+			}
+		
+			function join() {
+				if(confirm('입력한 정보로 가입 하시겠습니까?')) {
+					$.ajax({
+						url : 'user/signUp',
+						type : 'post',
+						data : $('#joinFrm').serializeObject(),
+						success : function() {
+							location.href = '/'
+						},
+						error : function() {
+							
+						}
+					})
+				}
+			}
+
+			function cancel() {
+				location.href = '/'
+			}
+		</script>
+	</head>
+	<body>
+		<form id="joinFrm">
+			<div align="center" style="margin:150px 0px">
+				<h1>회원가입</h1>
+				<table>
+					<tr>
+						<th>ID</th>
+						<td><input type="text" name="id" id="id"></td>
+					</tr>
+					<tr>
+						<th>PASSWORD</th>
+						<td><input type="text" name="password" id="password"></td>
+					</tr>
+					<tr>
+						<th>NAME</th>
+						<td><input type="text" name="name" id="name"></td>
+					</tr>
+					<tr>
+						<th>EMAIL</th>
+						<td><input type="text" name="email" id="email"></td>
+					</tr>
+					<tr>
+						<th>PHONE</th>
+						<td><input type="text" name="phone" id="phone"></td>
+					</tr>
+					<tr>
+						<td colspan="2" style="text-align: right">
+							<button type="button" onclick="join()">가입</button>
+							<button type="button" onclick="cancel()">취소</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</form>
+	</body>
+</html>
