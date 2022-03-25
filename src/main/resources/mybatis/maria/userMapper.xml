@@ -9,6 +9,12 @@
 		WHERE id = #{id}
 	</select>
 
+	<select id="getUser" parameterType="com.mybatis.demo.biz.user.vo.User" resultType="int">
+		SELECT
+			count(*)
+		FROM user
+		WHERE id = #{id}
+	</select>
 
 	<insert id="insert" parameterType="com.mybatis.demo.biz.user.vo.User">
 		INSERT INTO USER
@@ -25,4 +31,5 @@
 		)
 
 	</insert>
+
 </mapper>

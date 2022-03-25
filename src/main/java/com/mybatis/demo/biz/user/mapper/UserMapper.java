@@ -7,4 +7,6 @@ public interface UserMapper {
 	User login(User user);
 
 	int insert(User user);
+
+	int getUser(User user);
 }

@@ -7,7 +7,6 @@
 		<script type="text/javascript" src="../js/jquery.tmpl.min.js"></script>
 		<script>
 			$.fn.serializeObject = function() {
-			  "use strict"
 			  var result = {}
 			  var extend = function(i, element) {
 			    var node = result[element.name]
@@ -27,34 +26,34 @@
 			}
 			var idx = 0;
 			function faqWrite() {
-				
+
 				if(confirm('등록하시겠습니까?')) {
-					
+
 // 					if($('#faqTitle').val() == '') {
 // 						alert('제목을 입력해 주세요');
 // 						$('#faqTitle').focus();
 // 						return;
 // 					}
-					
+
 					if($('#faqContent').val() == '') {
 						alert('내용을 입력해 주세요');
 						$('#faqContent').focus();
 						return;
 					}
-					
+
 					var cnt = $('input[name=faqImg]').length;
-					
+
 					var faqImgList = [];
-					
+
 					$('.imgIdxClass').each(function(v) {
 						$(this).attr('name', 'faqImgList['+v+'].faqImg')
 						$(this).attr('id', 'faqImg'+v)
 					})
-					
+
 					$('.imgIdxClass').each(function(v) {
 						faqImgList.push({faqImg: $(this).val()});
 					});
-					
+
 					if(cnt > 0) {
 						for(var i = 0; i<=cnt; i++) {
 							if($('#faqImg'+i).val() == '') {
@@ -63,11 +62,11 @@
 							}
 						}
 					}
-					
+
 					var formData = $('#faqFrm').serializeObject();
-					
+
 					formData.faqImgList = faqImgList;
-					
+
 					$.ajax({
 						url : '/faq/addByValidator',
 						type : 'post',
@@ -76,41 +75,41 @@
 						success : function(res) {
 							alert('저장 성공');
 							location.href = '/faq/list'
-						}, 
+						},
 						error : function(request) {
 							// json데이터로 넘어오기때문에 json.parse로 변환 후 가져옴
 							alert(JSON.parse(request.responseText).reason);
-							
+
 							if(request.status == 400) {
 								console.log('BAD REQUEST');
 							}
 						},
-						
-						
+
+
 					});
 				}
 			}
-			
+
 			function addRow() {
-				
+
 				var cnt = $('.imgIdxClass').length+1;
-				
+
 				if(cnt > 5) {
 					alert('최대 등록가능한 이미지 갯수는 5개 입니다.');
 					return;
 				}
-				
+
 				$('#addRowTmpl').tmpl([{idx : idx}]).appendTo('#insertFaqTable');
-				
+
 				// 변수에 값 넣기 샘플
 				//$('#sampleData').tmpl([{ sample1: 1, sample2: 2 }]).appendTo('body');
 				idx++;
 			}
-			
+
 			function delRow(obj) {
 				$(obj).parent().parent().remove();
 			}
-			
+
 			function fnCnclBtn() {
 				location.href = '/faq/list';
 			}
