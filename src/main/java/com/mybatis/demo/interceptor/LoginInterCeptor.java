@@ -9,6 +9,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mybatis.demo.biz.user.vo.User;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class LoginInterCeptor implements HandlerInterceptor{
 
 	@Override
@@ -19,6 +22,7 @@ public class LoginInterCeptor implements HandlerInterceptor{
 	 */
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		log.debug("preHandle " + response.toString());
 		HttpSession session = request.getSession(false); // true라면 세션이 없을때 새로 만들어준다. false 면 null을 리턴한다(없을때)
 
 		boolean result = true;
@@ -44,8 +48,7 @@ public class LoginInterCeptor implements HandlerInterceptor{
 	 */
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		System.out.println("===============PostHandle=======================" + modelAndView.toString());
-		System.out.println("===============PostHandle=======================" + handler.toString());
+		log.debug("postHandle " + modelAndView.toString());
 		HttpSession session = request.getSession();
 	}
 
@@ -57,7 +60,7 @@ public class LoginInterCeptor implements HandlerInterceptor{
 	 */
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		System.out.println("===============afterCompletion=======================");
+		log.debug("afterCompletion ");
 	}
 
 
