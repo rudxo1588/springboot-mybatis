@@ -113,7 +113,7 @@ public class FaqController {
 		
 		if(!file.isEmpty()) {
 			String fileNm = file.getOriginalFilename().replaceAll(" ", "");
-			String regex = "^([\\S]+(\\.(?i)(jpg|jpeg|png|gif|bmp))$)";
+			String regex = "^([\\S]+(\\.(?i)(jpg|jpeg|png|gif|bmp))$)";		// 파일 정규식 체크
 			
 			if(!fileNm.matches(regex)) {
 				throw new Exception("이미지만 등록해주세요");
