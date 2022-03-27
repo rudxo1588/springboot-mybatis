@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>faq작성화면</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.tmpl.min.js"></script>
+		<script>
+			var idx = 0;
+			function faqWrite() {
+
+				if(confirm('등록하시겠습니까?')) {
+
+					var formData = new FormData($('#faqFrm')[0]);
+
+					$.ajax({
+						url : '/faq/addByMultiPart',
+						type : 'post',
+						processData : false,
+						// 기본 true로 넘어가는데 true일시 스트링화 된다. 
+						// 하지만 file이 담겨있다면 String으로 넘어가면 안되기
+						// 때문에 false로 지정해준다.
+						contentType: false,
+						// false로 지정해주면 폼에 file이 담겨있으면 multipart-formData로 넘어간다.
+						dataType : 'json',
+						data : formData,
+						success : function(res) {
+							alert('저장 성공');
+							location.href = '/faq/list'
+						},
+						error : function(request) {
+							// json데이터로 넘어오기때문에 json.parse로 변환 후 가져옴
+							alert(JSON.parse(request.responseText).reason);
+
+							if(request.status == 400) {
+								console.log('BAD REQUEST');
+							}
+						},
+
+
+					});
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div align="center">
+			<form id="faqFrm">
+				<table id="insertFaqTable">
+					<tr>
+						<td>제목</td>
+						<td><input type="text" id="faqTitle" name="faqTitle"></td>
+					</tr>
+					<tr>
+						<th>파일</th>
+						<td><input type="file" id="file" name="file"></td>
+					</tr>
+					<tr>
+						<th>파일</th>
+						<td><img src="/upload/관리비ERD.png"></td>
+					</tr>
+				</table>
+			</form>
+			<div>
+				<button onclick="faqWrite()">등록하기</button>
+				<button onclick="fnCnclBtn()">취소</button>
+			</div>
+		</div>
+	</body>
+</html>
