@@ -108,9 +108,6 @@ public class FaqController {
 	@PostMapping("/addByMultiPart")
 	@ResponseBody
 	public String addByMultiPart(@RequestParam(value = "file" , required = false) MultipartFile file, Faq faq) throws Exception {
-		System.out.println(file.getOriginalFilename());
-		System.out.println(faq.getFaqTitle());
-		
 		if(!file.isEmpty()) {
 			String fileNm = file.getOriginalFilename().replaceAll(" ", "");
 			String regex = "^([\\S]+(\\.(?i)(jpg|jpeg|png|gif|bmp))$)";		// 파일 정규식 체크
